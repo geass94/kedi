@@ -1,6 +1,7 @@
-package ge.idealab.kedi.model;
+package ge.idealab.kedi.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.enums.AuthProvider;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -11,14 +12,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
+@Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class User extends BaseStatusAuditEntity {
     @Column(nullable = false)
     private String name;
 
@@ -45,6 +42,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personal_information_id")
+    private PersonalInformation personalInformation;
 
     public Long getId() {
         return id;
@@ -116,6 +117,14 @@ public class User {
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public PersonalInformation getPersonalInformation() {
+        return personalInformation;
+    }
+
+    public void setPersonalInformation(PersonalInformation personalInformation) {
+        this.personalInformation = personalInformation;
     }
 }
 

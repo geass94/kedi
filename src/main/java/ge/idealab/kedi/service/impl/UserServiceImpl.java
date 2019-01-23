@@ -2,8 +2,8 @@ package ge.idealab.kedi.service.impl;
 
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.enums.AuthProvider;
-import ge.idealab.kedi.model.Authority;
-import ge.idealab.kedi.model.User;
+import ge.idealab.kedi.model.user.Authority;
+import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.SignUpRequest;
 import ge.idealab.kedi.repository.AuthorityRepository;
 import ge.idealab.kedi.repository.UserRepository;

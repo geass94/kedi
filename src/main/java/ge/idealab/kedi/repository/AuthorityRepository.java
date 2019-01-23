@@ -1,6 +1,6 @@
 package ge.idealab.kedi.repository;
 
-import ge.idealab.kedi.model.Authority;
+import ge.idealab.kedi.model.user.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package ge.idealab.kedi.controller;
 
 import ge.idealab.kedi.exception.BadRequestException;
-import ge.idealab.kedi.model.User;
+import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.response.ApiResponse;
 import ge.idealab.kedi.payload.response.AuthResponse;
 import ge.idealab.kedi.payload.request.LoginRequest;

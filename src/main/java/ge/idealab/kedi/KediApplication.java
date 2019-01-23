@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class KediApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(KediApplication.class, args);
     }
 

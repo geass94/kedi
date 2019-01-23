@@ -1,7 +1,7 @@
 package ge.idealab.kedi.security;
 
 import ge.idealab.kedi.exception.ResourceNotFoundException;
-import ge.idealab.kedi.model.User;
+import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

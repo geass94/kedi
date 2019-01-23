@@ -2,8 +2,8 @@ package ge.idealab.kedi.security.oauth2;
 
 import ge.idealab.kedi.exception.OAuth2AuthenticationProcessingException;
 import ge.idealab.kedi.model.enums.AuthProvider;
-import ge.idealab.kedi.model.Authority;
-import ge.idealab.kedi.model.User;
+import ge.idealab.kedi.model.user.Authority;
+import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.repository.AuthorityRepository;
 import ge.idealab.kedi.repository.UserRepository;
 import ge.idealab.kedi.security.UserPrincipal;

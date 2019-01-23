@@ -1,4 +1,4 @@
-package ge.idealab.kedi.model;
+package ge.idealab.kedi.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
