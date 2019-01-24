@@ -2,6 +2,7 @@ package ge.idealab.kedi.service.impl;
 
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.enums.AuthProvider;
+import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.user.Authority;
 import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.SignUpRequest;
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setStatus(Status.ACTIVE);
 
         return userRepository.save(user);
     }

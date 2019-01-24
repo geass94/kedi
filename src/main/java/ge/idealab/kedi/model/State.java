@@ -14,7 +14,7 @@ public class State extends BaseEntity {
     @Column
     private String name;
     @ManyToOne
-    @JoinColumn(name="country_id", nullable=false)
+    @JoinColumn(name="country_id", nullable = false, foreignKey = @ForeignKey(name="fk_cntr_country_id"))
     private Country country;
 
     public String getName() {

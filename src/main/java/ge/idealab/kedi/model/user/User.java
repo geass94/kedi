@@ -1,6 +1,8 @@
 package ge.idealab.kedi.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.enums.AuthProvider;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,9 @@ import java.util.List;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User extends BaseStatusAuditEntity {
     @Column(nullable = false)
     private String name;
@@ -39,13 +44,16 @@ public class User extends BaseStatusAuditEntity {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_user_id")),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_authority_id")))
     private List<Authority> authorities;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "personal_information_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "personal_information_id", nullable = false, foreignKey = @ForeignKey(name="fk_prsinf_personal_information_id"))
     private PersonalInformation personalInformation;
+
+    @OneToMany(mappedBy="user")
+    private List<Address> addresses;
 
     public Long getId() {
         return id;
@@ -125,6 +133,14 @@ public class User extends BaseStatusAuditEntity {
 
     public void setPersonalInformation(PersonalInformation personalInformation) {
         this.personalInformation = personalInformation;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }
 
