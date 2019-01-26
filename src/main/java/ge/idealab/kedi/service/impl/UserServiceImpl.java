@@ -3,7 +3,9 @@ package ge.idealab.kedi.service.impl;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.enums.AuthProvider;
 import ge.idealab.kedi.model.enums.Status;
+import ge.idealab.kedi.model.user.Address;
 import ge.idealab.kedi.model.user.Authority;
+import ge.idealab.kedi.model.user.PersonalInformation;
 import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.SignUpRequest;
 import ge.idealab.kedi.repository.AuthorityRepository;
@@ -35,6 +37,12 @@ public class UserServiceImpl implements UserService {
     public User create(SignUpRequest signUpRequest) {
         User user = new User();
         List<Authority> authorities = authorityRepository.findAllByIdIn(Collections.singletonList(2L)); // Default ROLE_USER
+        PersonalInformation personalInformation = new PersonalInformation();
+        personalInformation.setStatus(Status.ACTIVE);
+        Address address = new Address();
+        address.setStatus(Status.ACTIVE);
+        user.setAddresses(Collections.singletonList(address));
+        user.setPersonalInformation(personalInformation);
         user.setName(signUpRequest.getName());
         user.setAuthorities(authorities);
         user.setEmail(signUpRequest.getEmail());
@@ -42,7 +50,7 @@ public class UserServiceImpl implements UserService {
         user.setProvider(AuthProvider.local);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus(Status.ACTIVE);
-
+        userRepository.flush();
         return userRepository.save(user);
     }
 

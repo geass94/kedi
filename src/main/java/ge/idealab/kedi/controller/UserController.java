@@ -1,6 +1,7 @@
 package ge.idealab.kedi.controller;
 
 import ge.idealab.kedi.dto.PersonalInformationDTO;
+import ge.idealab.kedi.dto.UserDTO;
 import ge.idealab.kedi.payload.response.UserResponse;
 import ge.idealab.kedi.security.CurrentUser;
 import ge.idealab.kedi.security.UserPrincipal;
@@ -27,10 +28,10 @@ public class UserController {
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public UserResponse getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<?> getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         ModelMapper modelMapper = new ModelMapper();
-        UserResponse userResponse = modelMapper.map(userService.getUserById(userPrincipal.getId()), UserResponse.class);
-        return userResponse;
+        UserDTO userDTO = modelMapper.map(userService.getUserById(userPrincipal.getId()), UserDTO.class);
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping("/personalinfo")

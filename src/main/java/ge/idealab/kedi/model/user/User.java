@@ -3,8 +3,10 @@ package ge.idealab.kedi.model.user;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import ge.idealab.kedi.dto.PersonalInformationDTO;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.enums.AuthProvider;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -48,7 +50,7 @@ public class User extends BaseStatusAuditEntity {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_authority_id")))
     private List<Authority> authorities;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "personal_information_id", nullable = false, foreignKey = @ForeignKey(name="fk_prsinf_personal_information_id"))
     private PersonalInformation personalInformation;
 
@@ -129,6 +131,11 @@ public class User extends BaseStatusAuditEntity {
 
     public PersonalInformation getPersonalInformation() {
         return personalInformation;
+    }
+
+    public PersonalInformationDTO getPersonalInformationDTO(){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this.personalInformation, PersonalInformationDTO.class);
     }
 
     public void setPersonalInformation(PersonalInformation personalInformation) {

@@ -1,5 +1,6 @@
 package ge.idealab.kedi.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ge.idealab.kedi.model.Country;
 import ge.idealab.kedi.model.State;
 import ge.idealab.kedi.model.enums.Status;
@@ -26,7 +27,7 @@ public class PersonalInformationDTO {
     public void setId(Long id) {
         this.id = id;
     }
-
+    @JsonIgnore
     public Status getStatus() {
         return status;
     }
@@ -106,7 +107,7 @@ public class PersonalInformationDTO {
     public void setState(State state) {
         this.state = state;
     }
-
+    @JsonIgnore
     public User getUser() {
         return user;
     }
