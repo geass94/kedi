@@ -6,14 +6,12 @@ import ge.idealab.kedi.model.enums.Status;
 
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class BaseStatusEntity extends BaseEntity {
 
-    @NotNull
     @Convert(converter = StatusConverter.class)
-    protected Status status;
+    protected Status status = Status.ACTIVE;
 
     public Status getStatus() {
         return status;

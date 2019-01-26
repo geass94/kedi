@@ -1,9 +1,5 @@
-package ge.idealab.kedi.model.product;
+package ge.idealab.kedi.dto;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import ge.idealab.kedi.model.BaseStatusAuditEntity;
-import ge.idealab.kedi.model.Category;
 import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.converters.SizeConverter;
 import ge.idealab.kedi.model.enums.Sex;
@@ -14,38 +10,22 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Entity
-@Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class Product extends BaseStatusAuditEntity {
-    @Column
+public class ProductDTO {
     @NotNull
     private String name;
-    @Column
     @NotNull
     private BigDecimal price;
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="color_id", nullable=false)
-    private Color color;
+    private ColorDTO color;
     @Convert(converter = SizeConverter.class)
     @NotNull
     private Size size;
     @NotNull
     @Convert(converter = SexConverter.class)
     private Sex sex;
-    @Column
     private String description;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="manufavturer_id", nullable=false)
-    private Manufacturer manufacturer;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
-    private List<Category> categoryList;
+    private ManufacturerDTO manufacturer;
+    private List<CategoryDTO> categoryList;
 
     public String getName() {
         return name;
@@ -63,11 +43,11 @@ public class Product extends BaseStatusAuditEntity {
         this.price = price;
     }
 
-    public Color getColor() {
+    public ColorDTO getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(ColorDTO color) {
         this.color = color;
     }
 
@@ -95,19 +75,19 @@ public class Product extends BaseStatusAuditEntity {
         this.description = description;
     }
 
-    public Manufacturer getManufacturer() {
+    public ManufacturerDTO getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(Manufacturer manufacturer) {
+    public void setManufacturer(ManufacturerDTO manufacturer) {
         this.manufacturer = manufacturer;
     }
 
-    public List<Category> getCategoryList() {
+    public List<CategoryDTO> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
+    public void setCategoryList(List<CategoryDTO> categoryList) {
         this.categoryList = categoryList;
     }
 }
