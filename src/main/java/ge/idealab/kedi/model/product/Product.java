@@ -39,13 +39,15 @@ public class Product extends BaseStatusAuditEntity {
     @Column
     private String description;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="manufavturer_id", nullable=false)
+    @JoinColumn(name="manufacturer_id", nullable=false)
     private Manufacturer manufacturer;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
     private List<Category> categoryList;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    private List<ProductFile> productFileList;
 
     public String getName() {
         return name;
@@ -109,5 +111,13 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public List<ProductFile> getProductFileList() {
+        return productFileList;
+    }
+
+    public void setProductFileList(List<ProductFile> productFileList) {
+        this.productFileList = productFileList;
     }
 }

@@ -1,6 +1,7 @@
 package ge.idealab.kedi.service.impl;
 
 import ge.idealab.kedi.dto.ProductDTO;
+import ge.idealab.kedi.dto.ProductFileDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.Category;
 import ge.idealab.kedi.model.product.Color;
@@ -54,7 +55,6 @@ public class ProductServiceImpl implements ProductService {
                 categories.add(categoryRepository.save(category));
             }
         }
-
         product.setCategoryList(categories);
         product = productRepository.save(product);
         return product;

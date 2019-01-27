@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductDTO {
+    private Long id;
     @NotNull
     private String name;
     @NotNull
@@ -26,6 +27,15 @@ public class ProductDTO {
     private String description;
     private ManufacturerDTO manufacturer;
     private List<CategoryDTO> categoryList;
+    private List<ProductFileDTO> productFiles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -89,5 +99,13 @@ public class ProductDTO {
 
     public void setCategoryList(List<CategoryDTO> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public List<ProductFileDTO> getProductFiles() {
+        return productFiles;
+    }
+
+    public void setProductFiles(List<ProductFileDTO> productFiles) {
+        this.productFiles = productFiles;
     }
 }
