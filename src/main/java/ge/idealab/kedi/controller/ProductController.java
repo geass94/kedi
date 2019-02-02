@@ -2,7 +2,6 @@ package ge.idealab.kedi.controller;
 
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.dto.ProductFileDTO;
-import ge.idealab.kedi.model.File;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.product.ProductFile;
 import ge.idealab.kedi.service.FileService;
@@ -40,7 +39,7 @@ public class ProductController {
 
     @PostMapping("/add-product-file")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> addProductFile(@RequestParam("product-id") Long productId, @RequestParam("files") MultipartFile[] multipartFiles){
+    public ResponseEntity<?> addProductFile(@Valid @RequestParam("product-id") Long productId, @Valid @RequestParam("files") MultipartFile[] multipartFiles){
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.getOne(productId);
         List<ProductFileDTO> productFileDTOS = new ArrayList<>();
@@ -68,15 +67,20 @@ public class ProductController {
 
         List<ProductDTO> productDTOS = new ArrayList<>();
         Page<Product> productPage = productService.getPaginatedProducts(sortedByName);
+
         for(Product product: productPage.getContent()){
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            /* START Map recent product files entity to Protuct files DTO START */
             List<ProductFileDTO> productFileDTOS = new ArrayList<>();
             for(ProductFile productFile: product.getProductFileList()){
                 productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
             }
             productDTO.setProductFiles(productFileDTOS);
+            /* END Map recent product files entity to Protuct files DTO END */
             productDTOS.add(productDTO);
         }
-        return ResponseEntity.ok(new PageImpl<>(productDTOS, sortedByName, productPage.getTotalElements()));
+
+//        return ResponseEntity.ok(new PageImpl<>(productDTOS, sortedByName, productPage.getTotalElements()));
+        return ResponseEntity.ok(productDTOS);
     }
 }

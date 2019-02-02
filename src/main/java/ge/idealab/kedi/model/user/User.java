@@ -54,9 +54,6 @@ public class User extends BaseStatusAuditEntity {
     @JoinColumn(name = "personal_information_id", nullable = false, foreignKey = @ForeignKey(name="fk_prsinf_personal_information_id"))
     private PersonalInformation personalInformation;
 
-    @OneToMany(mappedBy="user")
-    private List<Address> addresses;
-
     public Long getId() {
         return id;
     }
@@ -140,14 +137,6 @@ public class User extends BaseStatusAuditEntity {
 
     public void setPersonalInformation(PersonalInformation personalInformation) {
         this.personalInformation = personalInformation;
-    }
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
     }
 }
 

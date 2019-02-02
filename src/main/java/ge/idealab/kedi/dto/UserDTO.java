@@ -10,8 +10,7 @@ public class UserDTO {
     private String name;
     private String email;
     private String imageUrl;
-    private PersonalInformationDTO personalInformationDTO;
-    private List<Address> addresses;
+    private PersonalInformationDTO personalInformation;
 
     public Long getId() {
         return id;
@@ -45,19 +44,12 @@ public class UserDTO {
         this.imageUrl = imageUrl;
     }
 
-    public PersonalInformationDTO getPersonalInformationDTO() {
-        return personalInformationDTO;
+    public PersonalInformationDTO getPersonalInformation() {
+        return personalInformation;
     }
 
-    public void setPersonalInformationDTO(PersonalInformationDTO personalInformationDTO) {
-        this.personalInformationDTO = personalInformationDTO;
+    public void setPersonalInformation(PersonalInformationDTO personalInformation) {
+        this.personalInformation = personalInformation;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
 }

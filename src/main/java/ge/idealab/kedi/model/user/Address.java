@@ -117,4 +117,12 @@ public class Address extends BaseStatusAuditEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

@@ -1,5 +1,6 @@
 package ge.idealab.kedi.service.impl;
 
+import ge.idealab.kedi.dto.UserDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.enums.AuthProvider;
 import ge.idealab.kedi.model.enums.Status;
@@ -39,9 +40,6 @@ public class UserServiceImpl implements UserService {
         List<Authority> authorities = authorityRepository.findAllByIdIn(Collections.singletonList(2L)); // Default ROLE_USER
         PersonalInformation personalInformation = new PersonalInformation();
         personalInformation.setStatus(Status.ACTIVE);
-        Address address = new Address();
-        address.setStatus(Status.ACTIVE);
-        user.setAddresses(Collections.singletonList(address));
         user.setPersonalInformation(personalInformation);
         user.setName(signUpRequest.getName());
         user.setAuthorities(authorities);
@@ -57,5 +55,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean emailExists(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User update(Long id, UserDTO userDTO) {
+        User u = userRepository.getOne(id);
+        if(userDTO.getEmail() != null){
+            u.setEmail(userDTO.getEmail());
+        }
+        if(userDTO.getPersonalInformation().getFirstName() != null){
+            u.getPersonalInformation().setFirstName(userDTO.getPersonalInformation().getFirstName());
+        }
+        if(userDTO.getPersonalInformation().getLastName() != null){
+            u.getPersonalInformation().setLastName(userDTO.getPersonalInformation().getLastName());
+        }
+        return null;
     }
 }
