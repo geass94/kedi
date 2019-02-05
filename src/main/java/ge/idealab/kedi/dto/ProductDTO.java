@@ -29,6 +29,10 @@ public class ProductDTO {
     private List<CategoryDTO> categoryList;
     private List<ProductFileDTO> productFiles;
 
+    private Boolean baseProduct;
+    private Long productVariantId;
+    private Long[] productVariantIds;
+
     public Long getId() {
         return id;
     }
@@ -107,5 +111,29 @@ public class ProductDTO {
 
     public void setProductFiles(List<ProductFileDTO> productFiles) {
         this.productFiles = productFiles;
+    }
+
+    public Boolean getBaseProduct() {
+        return baseProduct;
+    }
+
+    public void setBaseProduct(Boolean baseProduct) {
+        this.baseProduct = baseProduct;
+    }
+
+    public Long getProductVariantId() {
+        return productVariantId;
+    }
+
+    public void setProductVariantId(Long productVariantId) {
+        this.productVariantId = productVariantId;
+    }
+
+    public Long[] getProductVariantIds() {
+        return productVariantIds;
+    }
+
+    public void setProductVariantIds(Long[] productVariantIds) {
+        this.productVariantIds = productVariantIds;
     }
 }

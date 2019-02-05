@@ -21,6 +21,12 @@ import java.util.List;
         property = "id")
 public class Product extends BaseStatusAuditEntity {
     @Column
+    private Boolean baseProduct = false;
+    @Column
+    private Long productVariantId;
+    @Column
+    private Long[] productVariantIds;
+    @Column
     @NotNull
     private String name;
     @Column
@@ -119,5 +125,29 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setProductFileList(List<ProductFile> productFileList) {
         this.productFileList = productFileList;
+    }
+
+    public Boolean getBaseProduct() {
+        return baseProduct;
+    }
+
+    public void setBaseProduct(Boolean baseProduct) {
+        this.baseProduct = baseProduct;
+    }
+
+    public Long getProductVariantId() {
+        return productVariantId;
+    }
+
+    public void setProductVariantId(Long productVariantId) {
+        this.productVariantId = productVariantId;
+    }
+
+    public Long[] getProductVariantIds() {
+        return productVariantIds;
+    }
+
+    public void setProductVariantIds(Long[] productVariantIds) {
+        this.productVariantIds = productVariantIds;
     }
 }

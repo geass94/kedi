@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -56,7 +57,25 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         product.setCategoryList(categories);
-        product = productRepository.save(product);
+
+        if (product.getProductVariantId() != null && product.getProductVariantIds() != null && product.getProductVariantIds().length > 0){
+            product.setBaseProduct(false);
+            product = productRepository.save(product);
+            product.setProductVariantId(product.getId());
+
+            Long[] variants = Arrays.copyOf(product.getProductVariantIds(), product.getProductVariantIds().length + 1);
+            variants[product.getProductVariantIds().length] = product.getProductVariantId();
+            product.setProductVariantIds(variants);
+            product = productRepository.save(product);
+            updateProductVariants(product.getProductVariantIds());
+        }else{
+            product.setBaseProduct(true);
+            product = productRepository.save(product);
+
+            product.setProductVariantId(product.getId());
+            product.setProductVariantIds(new Long[]{product.getProductVariantId()});
+            product = productRepository.save(product);
+        }
         return product;
     }
 
@@ -69,7 +88,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getPaginatedProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+        return productRepository.findAllByBaseProductIsTrue(pageable);
+    }
+
+    @Override
+    public List<Product> getProductVariants(Long[] variantIds) {
+        return productRepository.findAllByBaseProductIsFalseAndProductVariantIdIn(variantIds);
+    }
+
+    private void updateProductVariants(Long[] ids){
+        for(Long id: ids){
+            Product product = productRepository.getOne(id);
+            product.setProductVariantIds(ids);
+            productRepository.save(product);
+        }
     }
 
 }
