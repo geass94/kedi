@@ -1,5 +1,6 @@
 package ge.idealab.kedi.service.impl;
 
+import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.dto.ProductFileDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
@@ -94,6 +95,29 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductVariants(Long[] variantIds) {
         return productRepository.findAllByBaseProductIsFalseAndProductVariantIdIn(variantIds);
+    }
+
+    @Override
+    public List<Category> addCategories(List<CategoryDTO> categoryDTOS) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        List<Category> categoryList = new ArrayList<>();
+
+        for (CategoryDTO categoryDTO : categoryDTOS){
+            Category category = modelMapper.map(categoryDTO, Category.class);
+            Category savedCategory = categoryRepository.save(category);
+            if (category.getChildren() != null){
+                List<Category> children = new ArrayList<>();
+                for (Category subitem : category.getChildren()){
+                    subitem.setParent(savedCategory);
+                    Category savedChild = categoryRepository.save(subitem);
+                    children.add(savedChild);
+                }
+                savedCategory.setChildren(children);
+            }
+            categoryList.add(savedCategory);
+        }
+        return categoryList;
     }
 
     private void updateProductVariants(Long[] ids){

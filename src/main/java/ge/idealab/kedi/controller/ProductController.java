@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,6 +46,17 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.create(productDTO);
         return ResponseEntity.ok(modelMapper.map(product, ProductDTO.class));
+    }
+
+    @PostMapping("/add-categories")
+    public ResponseEntity<?> addCategories(@RequestBody List<CategoryDTO> categoryDTOList){
+        ModelMapper modelMapper = new ModelMapper();
+        List<Category> categories = productService.addCategories(categoryDTOList);
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        for(Category category : categories){
+            categoryDTOS.add(modelMapper.map(category, CategoryDTO.class));
+        }
+        return ResponseEntity.ok(categoryDTOS);
     }
 
     @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})
