@@ -5,7 +5,7 @@ import ge.idealab.kedi.model.File;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "product_files")
 public class ProductFile extends File {
     @ManyToOne
     @JoinColumn(name="product_id")

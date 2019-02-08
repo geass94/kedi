@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "categories")
 public class Category extends BaseStatusAuditEntity {
     @Column
     private String name;

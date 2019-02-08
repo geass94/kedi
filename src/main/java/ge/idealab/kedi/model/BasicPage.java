@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table
+@Table(name = "basic_pages")
 public class BasicPage extends BaseStatusAuditEntity {
     @NotNull
     @Column

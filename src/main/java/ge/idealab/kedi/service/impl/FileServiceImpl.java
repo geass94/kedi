@@ -46,7 +46,7 @@ public class FileServiceImpl implements FileService {
             if(fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
-            String uuid = UUID.randomUUID().toString()+"."+multipartFile.getOriginalFilename().split("\\.")[1];
+            String uuid = UUID.randomUUID().toString()+"."+multipartFile.getOriginalFilename().split("\\.")[1].toLowerCase();
             Path targetLocation = this.fileStorageLocation.resolve(uuid);
             Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -58,7 +58,7 @@ public class FileServiceImpl implements FileService {
             file.setFileType(multipartFile.getContentType());
             file.setName(uuid);
             file.setOriginalName(multipartFile.getOriginalFilename());
-            file.setExtension(multipartFile.getOriginalFilename().split("\\.")[1]);
+            file.setExtension(multipartFile.getOriginalFilename().split("\\.")[1].toLowerCase());
             return file;
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);

@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
 @JsonIdentityInfo(
@@ -44,15 +44,26 @@ public class User extends BaseStatusAuditEntity {
 
     private String providerId;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_user_id")),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_authority_id")))
     private List<Authority> authorities;
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
-    @JoinColumn(name = "personal_information_id", nullable = false, foreignKey = @ForeignKey(name="fk_prsinf_personal_information_id"))
-    private PersonalInformation personalInformation;
+    @JoinColumn(name = "personal_information_id", nullable = true, foreignKey = @ForeignKey(name="fk_prsinf_personal_information_id"))
+    private PersonalInformation personalInformation = new PersonalInformation();
+
+    public User() {
+    }
+
+    public User(String name, @Email String email, String password, @NotNull AuthProvider provider, List<Authority> authorities) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.provider = provider;
+        this.authorities = authorities;
+    }
 
     public Long getId() {
         return id;

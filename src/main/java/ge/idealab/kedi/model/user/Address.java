@@ -8,7 +8,7 @@ import ge.idealab.kedi.model.State;
 
 import javax.persistence.*;
 
-@Table
+@Table(name = "addresses")
 @Entity
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
