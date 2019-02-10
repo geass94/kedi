@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,9 +56,10 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO){
-
-        return null;
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody @Valid UserDTO userDTO){
+        ModelMapper modelMapper = new ModelMapper();
+        UserDTO userDTOResponse = modelMapper.map(userService.update(userId, userDTO), UserDTO.class);
+        return ResponseEntity.ok(userDTOResponse);
     }
 }

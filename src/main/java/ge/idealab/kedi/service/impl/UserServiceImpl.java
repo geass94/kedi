@@ -13,6 +13,7 @@ import ge.idealab.kedi.repository.AuthorityRepository;
 import ge.idealab.kedi.repository.UserRepository;
 import ge.idealab.kedi.security.UserPrincipal;
 import ge.idealab.kedi.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,17 +67,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(Long id, UserDTO userDTO) {
-        User u = userRepository.getOne(id);
-        if(userDTO.getEmail() != null){
-            u.setEmail(userDTO.getEmail());
-        }
-        if(userDTO.getPersonalInformation().getFirstName() != null){
-            u.getPersonalInformation().setFirstName(userDTO.getPersonalInformation().getFirstName());
-        }
-        if(userDTO.getPersonalInformation().getLastName() != null){
-            u.getPersonalInformation().setLastName(userDTO.getPersonalInformation().getLastName());
-        }
-        return null;
+        ModelMapper modelMapper = new ModelMapper();
+        User user = userRepository.getOne(id);
+        user.setPersonalInformation( modelMapper.map(userDTO.getPersonalInformation(), PersonalInformation.class) );
+        user = userRepository.save(user);
+        return user;
     }
 
     @Override

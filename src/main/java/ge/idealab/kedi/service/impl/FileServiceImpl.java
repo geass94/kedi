@@ -27,6 +27,9 @@ public class FileServiceImpl implements FileService {
     private final Path fileStorageLocation;
 
     @Autowired
+    private ImageCompressor imageCompressor;
+
+    @Autowired
     public FileServiceImpl(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
@@ -48,7 +51,7 @@ public class FileServiceImpl implements FileService {
             }
             String uuid = UUID.randomUUID().toString()+"."+multipartFile.getOriginalFilename().split("\\.")[1].toLowerCase();
             Path targetLocation = this.fileStorageLocation.resolve(uuid);
-            Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(imageCompressor.compress(multipartFile.getInputStream(), 500, 500), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/file/")
                     .path(uuid)

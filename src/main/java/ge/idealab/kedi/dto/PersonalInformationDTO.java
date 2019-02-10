@@ -8,7 +8,6 @@ import ge.idealab.kedi.model.user.User;
 
 public class PersonalInformationDTO {
     private Long id;
-    private Status status;
     private String firstName;
     private String lastName;
     private String company;
@@ -18,7 +17,6 @@ public class PersonalInformationDTO {
     private String postCode;
     private Country country;
     private State state;
-    private User user;
 
     public Long getId() {
         return id;
@@ -26,14 +24,6 @@ public class PersonalInformationDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-    @JsonIgnore
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public String getFirstName() {
@@ -106,13 +96,5 @@ public class PersonalInformationDTO {
 
     public void setState(State state) {
         this.state = state;
-    }
-    @JsonIgnore
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

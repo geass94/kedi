@@ -19,6 +19,7 @@ public class Cart extends BaseStatusAuditEntity {
             joinColumns = { @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_shpngcrt_cart_id")) },
             inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_shpngcrt_product_id")) })
     private List<Product> shoppingCart = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -28,6 +29,16 @@ public class Cart extends BaseStatusAuditEntity {
             joinColumns = { @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_svdltr_cart_id")) },
             inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_svdltr_product_id")) })
     private List<Product> savedForLater = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "wishlist",
+            joinColumns = { @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_wshlst_cart_id")) },
+            inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_wshlst_product_id")) })
+    private List<Product> wishList = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
@@ -56,5 +67,13 @@ public class Cart extends BaseStatusAuditEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Product> getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(List<Product> wishList) {
+        this.wishList = wishList;
     }
 }

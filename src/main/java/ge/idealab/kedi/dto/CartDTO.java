@@ -6,6 +6,7 @@ public class CartDTO {
     private Long id;
     private List<ProductDTO> shoppingCart;
     private List<ProductDTO> savedForLater;
+    private List<ProductDTO> wishList;
 
     public Long getId() {
         return id;
@@ -29,5 +30,13 @@ public class CartDTO {
 
     public void setSavedForLater(List<ProductDTO> savedForLater) {
         this.savedForLater = savedForLater;
+    }
+
+    public List<ProductDTO> getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(List<ProductDTO> wishList) {
+        this.wishList = wishList;
     }
 }

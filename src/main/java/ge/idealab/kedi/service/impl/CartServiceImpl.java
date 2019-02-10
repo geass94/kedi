@@ -36,9 +36,9 @@ public class CartServiceImpl implements CartService {
     public Cart addToWishList(Long productId) {
         Product product = productService.getOne(productId);
         Cart cart = this.loadCart();
-        List<Product> currentWishList = cart.getSavedForLater();
+        List<Product> currentWishList = cart.getWishList();
         currentWishList.add(product);
-        cart.setSavedForLater(currentWishList);
+        cart.setWishList(currentWishList);
         cart = cartRepository.save(cart);
         return cart;
     }
@@ -56,6 +56,19 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart saveForLater(Long productId) {
-        return null;
+        Product product = productService.getOne(productId);
+        Cart cart = loadCart();
+
+        List<Product> currentShoppingCart = cart.getShoppingCart();
+        List<Product> currentSavedForLater = cart.getSavedForLater();
+
+        currentShoppingCart.remove(product);
+        cart.setShoppingCart(currentShoppingCart);
+
+        currentSavedForLater.add(product);
+        cart.setSavedForLater(currentSavedForLater);
+
+        cart = cartRepository.save(cart);
+        return  cart;
     }
 }
