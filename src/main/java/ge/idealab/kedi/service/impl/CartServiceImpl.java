@@ -1,6 +1,5 @@
 package ge.idealab.kedi.service.impl;
 
-import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.model.Cart;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.user.User;
@@ -8,7 +7,6 @@ import ge.idealab.kedi.repository.CartRepository;
 import ge.idealab.kedi.service.CartService;
 import ge.idealab.kedi.service.ProductService;
 import ge.idealab.kedi.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +23,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart addToCart(Long productId) {
-        User user = userService.getUserFromContext();
         Product product = productService.getOne(productId);
-        Cart cart = cartRepository.findCartByUser(user);
-        if ( cart == null ) {
-            cart = new Cart();
-            cart.setUser(user);
-            cart = cartRepository.save(cart);
-        }
+        Cart cart = this.loadCart();
         List<Product> currentShoppingCart = cart.getShoppingCart();
         currentShoppingCart.add(product);
         cart.setShoppingCart(currentShoppingCart);
@@ -42,7 +34,24 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart addToWishList(Long productId) {
-        return null;
+        Product product = productService.getOne(productId);
+        Cart cart = this.loadCart();
+        List<Product> currentWishList = cart.getSavedForLater();
+        currentWishList.add(product);
+        cart.setSavedForLater(currentWishList);
+        cart = cartRepository.save(cart);
+        return cart;
+    }
+
+    private Cart loadCart() {
+        User user = userService.getUserFromContext();
+        Cart cart = cartRepository.findCartByUser(user);
+        if ( cart == null ) {
+            cart = new Cart();
+            cart.setUser(user);
+            cart = cartRepository.save(cart);
+        }
+        return cart;
     }
 
     @Override

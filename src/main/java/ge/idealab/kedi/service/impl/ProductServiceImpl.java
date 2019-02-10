@@ -94,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductVariants(Long[] variantIds) {
-        return productRepository.findAllByBaseProductIsFalseAndProductVariantIdIn(variantIds);
+        return productRepository.findAllByProductVariantIdIn(variantIds);
     }
 
     @Override

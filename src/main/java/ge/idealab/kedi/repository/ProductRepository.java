@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAllByBaseProductIsTrue(Pageable pageable);
-    List<Product> findAllByBaseProductIsFalseAndProductVariantIdIn(Long[] ids);
+    List<Product> findAllByProductVariantIdIn(Long[] ids);
 }

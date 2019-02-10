@@ -29,4 +29,12 @@ public class CartController {
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
         return ResponseEntity.ok(cartDTO);
     }
+
+    @PostMapping("/add-to-wishlist")
+    public ResponseEntity<?> addToWishList(@RequestBody @Valid AddtoCartRequest addtoCartRequest) {
+        ModelMapper modelMapper = new ModelMapper();
+        Cart cart = cartService.addToWishList(addtoCartRequest.getProductId());
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        return ResponseEntity.ok(cartDTO);
+    }
 }
