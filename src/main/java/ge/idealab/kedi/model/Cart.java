@@ -1,11 +1,12 @@
 package ge.idealab.kedi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.model.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Table(name = "carts")
 public class Cart extends BaseStatusAuditEntity {
@@ -28,6 +29,11 @@ public class Cart extends BaseStatusAuditEntity {
             inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_svdltr_product_id")) })
     private List<Product> savedForLater = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JsonIgnore
+    private User user;
+
     public List<Product> getShoppingCart() {
         return shoppingCart;
     }
@@ -42,5 +48,13 @@ public class Cart extends BaseStatusAuditEntity {
 
     public void setSavedForLater(List<Product> savedForLater) {
         this.savedForLater = savedForLater;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

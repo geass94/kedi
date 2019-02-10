@@ -1,5 +1,7 @@
 package ge.idealab.kedi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ public class Category extends BaseStatusAuditEntity {
     @Column
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Category parent;

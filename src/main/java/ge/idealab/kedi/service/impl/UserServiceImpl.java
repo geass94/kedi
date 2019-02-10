@@ -11,8 +11,10 @@ import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.SignUpRequest;
 import ge.idealab.kedi.repository.AuthorityRepository;
 import ge.idealab.kedi.repository.UserRepository;
+import ge.idealab.kedi.security.UserPrincipal;
 import ge.idealab.kedi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +77,12 @@ public class UserServiceImpl implements UserService {
             u.getPersonalInformation().setLastName(userDTO.getPersonalInformation().getLastName());
         }
         return null;
+    }
+
+    @Override
+    public User getUserFromContext() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.getOne(userPrincipal.getId());
+        return user;
     }
 }

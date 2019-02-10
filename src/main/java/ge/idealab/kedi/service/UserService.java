@@ -12,4 +12,6 @@ public interface UserService {
     Boolean emailExists(String email);
     List<User> getAllUsers();
     User update(Long id, UserDTO userDTO);
+
+    User getUserFromContext();
 }
