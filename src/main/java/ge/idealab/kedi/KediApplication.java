@@ -49,15 +49,17 @@ public class KediApplication {
             authorities.add(new Authority("ROLE_USER"));
             authorities = authorityRepository.saveAll(authorities);
 
-            User admin = new User("geass", "okoridze@yahoo.com", passwordEncoder.encode("1234"), AuthProvider.local, authorities);
+            User admin = new User("admin", "admin@localhost", passwordEncoder.encode("admin1234"), AuthProvider.local, authorities);
             userRepository.save(admin);
-            for (int i = 0; i < 50; i++){
-                if (i % 11 == 0){
+            User geass = new User("geass", "okoridze@yahoo.com", passwordEncoder.encode("1234"), AuthProvider.local, authorities);
+            userRepository.save(geass);
+            for (int i = 0; i < 10; i++){
+                if (i % 3 == 0){
                     Category category = new Category();
                     List<Category> subCategories = new ArrayList<>();
                     category.setName("Category ["+i+"]");
                     category = categoryRepository.save(category);
-                    for (int j = 0; j < 7; j++){
+                    for (int j = 0; j < 3; j++){
                         Category subCategory = new Category();
                         subCategory.setName("Category ["+i+"] - Subcategory ["+j+"]");
                         subCategory.setParent(category);
@@ -71,11 +73,11 @@ public class KediApplication {
                 }
             }
 
-            for (int i = 0; i < 15; i++){
+            for (int i = 0; i < 5; i++){
                 colorRepository.save(new Color("["+i+"] Color"));
             }
 
-            for (int i = 0; i < 15; i++){
+            for (int i = 0; i < 5; i++){
                 manufacturerRepository.save(new Manufacturer("["+i+"] Manufacturer"));
             }
         }
