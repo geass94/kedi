@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,15 +105,9 @@ public class ProductController {
 
     @GetMapping("/get-product-variants")
     public ResponseEntity<?> getProductVariants(@RequestParam("ids") String[] variantIds){
-        ModelMapper modelMapper = new ModelMapper();
 
-        List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productService.getProductVariants(stringArrayToLongArray(variantIds));
-        for(Product product: products){
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setProductFiles(mapFiles(product));
-            productDTOS.add(productDTO);
-        }
+        List<ProductDTO> productDTOS = this.mapProducts(products);
 
         return ResponseEntity.ok(productDTOS);
     }
@@ -150,6 +145,25 @@ public class ProductController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/get-products-by-filter")
+    public ResponseEntity<?> getProductsByFilter(@RequestParam("categories") String[] categorIds,
+                                                 @RequestParam("colors") String[] colorIds,
+                                                 @RequestParam("manufacturers") String[] manufacturerIds,
+                                                 @RequestParam("min_price") String min_price,
+                                                 @RequestParam("max_price") String max_price){
+        Long[] categories = this.stringArrayToLongArray(categorIds);
+        Long[] colors = this.stringArrayToLongArray(colorIds);
+        Long[] manufacturers = this.stringArrayToLongArray(manufacturerIds);
+        BigDecimal maxPrice = BigDecimal.valueOf(Double.valueOf(max_price));
+        BigDecimal minPrice = BigDecimal.valueOf(Double.valueOf(min_price));
+
+        List<Product> products = productService.getProductsByFilter(categories, colors, manufacturers, minPrice, maxPrice);
+        List<ProductDTO> productDTOS = this.mapProducts(products);
+
+        return ResponseEntity.ok(productDTOS);
+    }
+
+
     private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
         List<ProductFileDTO> productFileDTOS = new ArrayList<>();
@@ -157,6 +171,17 @@ public class ProductController {
             productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
         }
         return productFileDTOS;
+    }
+
+    private List<ProductDTO> mapProducts(List<Product> products) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for(Product product: products){
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setProductFiles(mapFiles(product));
+            productDTOS.add(productDTO);
+        }
+        return productDTOS;
     }
 
     private Long[] stringArrayToLongArray(String[] numbers) {

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -98,6 +99,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductsByFilter(Long[] catIds, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice) {
+        List<Category> categories = this.mapCategoryIdsToCategories(catIds);
+        List<Color> colors = this.mapColorIdsToColors(colorIds);
+        List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
+        return productRepository.findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(categories, colors, manufacturers, minPrice, maxPrice);
+    }
+
+    @Override
     public List<Category> addCategories(List<CategoryDTO> categoryDTOS) {
         ModelMapper modelMapper = new ModelMapper();
 
@@ -125,6 +134,30 @@ public class ProductServiceImpl implements ProductService {
             Product product = productRepository.getOne(id);
             product.setProductVariantIds(ids);
             productRepository.save(product);
+        }
+    }
+
+    private List<Category> mapCategoryIdsToCategories(Long[] ids){
+        if (ids.length > 0) {
+            return categoryRepository.findAllByIdIn(ids);
+        } else {
+            return categoryRepository.findAll();
+        }
+    }
+
+    private List<Color> mapColorIdsToColors(Long[] ids){
+        if (ids.length > 0) {
+            return colorRepository.findAllByIdIn(ids);
+        } else {
+            return colorRepository.findAll();
+        }
+    }
+
+    private List<Manufacturer> mapManufacturerIdsToManufacturers(Long[] ids){
+        if (ids.length > 0) {
+            return manufacturerRepository.findAllByIdIn(ids);
+        } else {
+            return manufacturerRepository.findAll();
         }
     }
 
