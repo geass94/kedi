@@ -81,7 +81,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getCategories(){
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAll()){
+        for(Category model: categoryRepository.findAllByStatus(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, CategoryDTO.class));
         }
         return ResponseEntity.ok(dtos);
