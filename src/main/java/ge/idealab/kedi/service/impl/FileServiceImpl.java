@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -52,7 +53,8 @@ public class FileServiceImpl implements FileService {
             String uuid = UUID.randomUUID().toString()+"."+multipartFile.getOriginalFilename().split("\\.")[1].toLowerCase();
             Path targetLocation = this.fileStorageLocation.resolve(uuid);
             Files.copy(imageCompressor.compress(multipartFile.getInputStream(), 500, 500), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentRequestUri()
+            String fileDownloadUri = UriComponentsBuilder.newInstance()
+                    .scheme("http").host("www.api.kedi.ge")
                     .path("/file/")
                     .path(uuid)
                     .toUriString();
