@@ -37,9 +37,9 @@ public class MenuController {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<ManufacturerDTO> manufacturerDTOList = new ArrayList<>();
         List<ColorDTO> colorDTOList = new ArrayList<>();
-        List<Category> categories = categoryRepository.findAllByParentIsNull();
-        List<Color> colors = colorRepository.findAll();
-        List<Manufacturer> manufacturers = manufacturerRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByActive();
+        List<Color> colors = colorRepository.findAllByActive();
+        List<Manufacturer> manufacturers = manufacturerRepository.findAllByActive();
 
         for (Category category : categories){
             categoryDTOList.add(modelMapper.map(category, CategoryDTO.class));

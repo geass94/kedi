@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ColorRepository extends JpaRepository<Color, Long> {
     List<Color> findAllByIdIn(Long[] ids);
+    List<Color> findAllByActive();
 }

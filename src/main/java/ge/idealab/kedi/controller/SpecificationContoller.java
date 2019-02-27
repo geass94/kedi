@@ -69,7 +69,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getColors(){
         ModelMapper modelMapper = new ModelMapper();
         List<ColorDTO> dtos = new ArrayList<>();
-        for(Color model: colorRepository.findAll()){
+        for(Color model: colorRepository.findAllByActive()){
             dtos.add(modelMapper.map(model, ColorDTO.class));
         }
         return ResponseEntity.ok(dtos);
@@ -91,7 +91,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getParentCategories(){
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByParentIsNull()){
+        for(Category model: categoryRepository.findAllByParentIsNullAndActive()){
             dtos.add(modelMapper.map(model, CategoryDTO.class));
         }
         return ResponseEntity.ok(dtos);
@@ -102,7 +102,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getManufacturers(){
         ModelMapper modelMapper = new ModelMapper();
         List<ManufacturerDTO> dtos = new ArrayList<>();
-        for(Manufacturer model: manufacturerRepository.findAll()){
+        for(Manufacturer model: manufacturerRepository.findAllByActive()){
             dtos.add(modelMapper.map(model, ManufacturerDTO.class));
         }
         return ResponseEntity.ok(dtos);

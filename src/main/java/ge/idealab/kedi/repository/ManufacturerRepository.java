@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long> {
     List<Manufacturer> findAllByIdIn(Long[] ids);
+    List<Manufacturer> findAllByActive();
 }
