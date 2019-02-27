@@ -69,8 +69,16 @@ public class ProductController {
     }
 
     @PutMapping("/save-category/{cid}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void saveCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long cid) {
         productService.saveCategory(categoryDTO, cid);
+    }
+
+    @DeleteMapping("/delete-category/{cid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public boolean deleteCategory(@PathVariable Long cid) {
+        productService.deleteCategory(cid);
+        return true;
     }
 
     @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})

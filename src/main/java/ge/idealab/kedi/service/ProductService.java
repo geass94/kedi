@@ -19,6 +19,7 @@ public interface ProductService {
 
     List<Category> addCategories(List<CategoryDTO> categoryDTOS);
     Category addCategory(CategoryDTO categoryDTO);
+    void deleteCategory(Long id);
 
     void saveCategory(CategoryDTO categoryDTO, Long id);
 }

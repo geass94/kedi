@@ -5,6 +5,7 @@ import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.dto.ProductFileDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
@@ -139,6 +140,17 @@ public class ProductServiceImpl implements ProductService {
         }
         category = categoryRepository.save(category);
         return category;
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        Category category = categoryRepository.getOne(id);
+        category.setStatus(Status.DELETED);
+        categoryRepository.save(category);
+        for (Category sub : category.getChildren()) {
+            sub.setStatus(Status.DELETED);
+            categoryRepository.save(sub);
+        }
     }
 
     @Override
