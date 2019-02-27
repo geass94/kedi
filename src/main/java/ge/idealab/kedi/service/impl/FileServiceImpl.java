@@ -54,7 +54,7 @@ public class FileServiceImpl implements FileService {
             Path targetLocation = this.fileStorageLocation.resolve(uuid);
             Files.copy(imageCompressor.compress(multipartFile.getInputStream(), 500, 500), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             String fileDownloadUri = UriComponentsBuilder.newInstance()
-                    .scheme("http").host("www.api.kedi.ge")
+                    .scheme("http").host("api.kedi.ge")
                     .path("/file/")
                     .path(uuid)
                     .toUriString();
