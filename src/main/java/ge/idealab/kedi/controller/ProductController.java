@@ -34,12 +34,6 @@ public class ProductController {
     private ProductFileService productFileService;
     @Autowired
     private FileService fileService;
-    @Autowired
-    private ColorRepository colorRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private ManufacturerRepository manufacturerRepository;
 
     @PostMapping("/add-product")
     @PreAuthorize("hasRole('ADMIN')")
@@ -47,38 +41,6 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.create(productDTO);
         return ResponseEntity.ok(modelMapper.map(product, ProductDTO.class));
-    }
-
-    @PostMapping("/add-categories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addCategories(@RequestBody List<CategoryDTO> categoryDTOList){
-        ModelMapper modelMapper = new ModelMapper();
-        List<Category> categories = productService.addCategories(categoryDTOList);
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
-        for(Category category : categories){
-            categoryDTOS.add(modelMapper.map(category, CategoryDTO.class));
-        }
-        return ResponseEntity.ok(categoryDTOS);
-    }
-
-    @PostMapping("/add-category")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addCategory(@RequestBody CategoryDTO categoryDTO){
-        Category category = productService.addCategory(categoryDTO);
-        return ResponseEntity.ok(category);
-    }
-
-    @PutMapping("/save-category/{cid}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public void saveCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long cid) {
-        productService.saveCategory(categoryDTO, cid);
-    }
-
-    @DeleteMapping("/delete-category/{cid}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public boolean deleteCategory(@PathVariable Long cid) {
-        productService.deleteCategory(cid);
-        return true;
     }
 
     @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})
@@ -109,7 +71,7 @@ public class ProductController {
     public ResponseEntity<?> getProducts(){
         ModelMapper modelMapper = new ModelMapper();
         Pageable sortedByName =
-                PageRequest.of(0, 50, Sort.by("id").descending());
+                PageRequest.of(0, 50, Sort.by("name").descending());
 
         List<ProductDTO> productDTOS = new ArrayList<>();
         Page<Product> productPage = productService.getPaginatedProducts(sortedByName);
@@ -131,50 +93,6 @@ public class ProductController {
         List<ProductDTO> productDTOS = this.mapProducts(products);
 
         return ResponseEntity.ok(productDTOS);
-    }
-
-    @GetMapping("/get-colors")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getColors(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<ColorDTO> dtos = new ArrayList<>();
-        for(Color model: colorRepository.findAll()){
-            dtos.add(modelMapper.map(model, ColorDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
-    }
-
-    @GetMapping("/get-categories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getCategories(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAll()){
-            dtos.add(modelMapper.map(model, CategoryDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
-    }
-    @GetMapping("/get-parent-categories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getParentCategories(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByParentIsNull()){
-            dtos.add(modelMapper.map(model, CategoryDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
-    }
-
-
-    @GetMapping("/get-manufacturers")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getManufacturers(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<ManufacturerDTO> dtos = new ArrayList<>();
-        for(Manufacturer model: manufacturerRepository.findAll()){
-            dtos.add(modelMapper.map(model, ManufacturerDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/get-products-by-filter")

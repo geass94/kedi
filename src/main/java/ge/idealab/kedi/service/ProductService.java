@@ -16,10 +16,4 @@ public interface ProductService {
     Page<Product> getPaginatedProducts(Pageable pageable);
     List<Product> getProductVariants(Long[] variantIds);
     List<Product> getProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice);
-
-    List<Category> addCategories(List<CategoryDTO> categoryDTOS);
-    Category addCategory(CategoryDTO categoryDTO);
-    void deleteCategory(Long id);
-
-    void saveCategory(CategoryDTO categoryDTO, Long id);
 }
