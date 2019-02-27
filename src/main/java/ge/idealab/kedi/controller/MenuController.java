@@ -5,6 +5,7 @@ import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
 import ge.idealab.kedi.dto.MenuDTO;
 import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.repository.CategoryRepository;
@@ -37,9 +38,9 @@ public class MenuController {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<ManufacturerDTO> manufacturerDTOList = new ArrayList<>();
         List<ColorDTO> colorDTOList = new ArrayList<>();
-        List<Category> categories = categoryRepository.findAllByActive();
-        List<Color> colors = colorRepository.findAllByActive();
-        List<Manufacturer> manufacturers = manufacturerRepository.findAllByActive();
+        List<Category> categories = categoryRepository.findAllByStatus(Status.ACTIVE);
+        List<Color> colors = colorRepository.findAllByStatus(Status.ACTIVE);
+        List<Manufacturer> manufacturers = manufacturerRepository.findAllByStatus(Status.ACTIVE);
 
         for (Category category : categories){
             categoryDTOList.add(modelMapper.map(category, CategoryDTO.class));

@@ -4,6 +4,7 @@ import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
 import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.repository.CategoryRepository;
@@ -69,7 +70,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getColors(){
         ModelMapper modelMapper = new ModelMapper();
         List<ColorDTO> dtos = new ArrayList<>();
-        for(Color model: colorRepository.findAllByActive()){
+        for(Color model: colorRepository.findAllByStatus(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, ColorDTO.class));
         }
         return ResponseEntity.ok(dtos);
@@ -91,7 +92,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getParentCategories(){
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByParentIsNullAndActive()){
+        for(Category model: categoryRepository.findAllByParentIsNullAndStatus(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, CategoryDTO.class));
         }
         return ResponseEntity.ok(dtos);
@@ -102,7 +103,7 @@ public class SpecificationContoller {
     public ResponseEntity<?> getManufacturers(){
         ModelMapper modelMapper = new ModelMapper();
         List<ManufacturerDTO> dtos = new ArrayList<>();
-        for(Manufacturer model: manufacturerRepository.findAllByActive()){
+        for(Manufacturer model: manufacturerRepository.findAllByStatus(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, ManufacturerDTO.class));
         }
         return ResponseEntity.ok(dtos);
