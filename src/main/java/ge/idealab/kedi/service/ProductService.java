@@ -18,4 +18,7 @@ public interface ProductService {
     List<Product> getProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice);
 
     List<Category> addCategories(List<CategoryDTO> categoryDTOS);
+    Category addCategory(CategoryDTO categoryDTO);
+
+    void saveCategory(CategoryDTO categoryDTO, Long id);
 }

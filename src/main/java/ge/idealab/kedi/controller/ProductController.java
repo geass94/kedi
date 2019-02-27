@@ -50,6 +50,7 @@ public class ProductController {
     }
 
     @PostMapping("/add-categories")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addCategories(@RequestBody List<CategoryDTO> categoryDTOList){
         ModelMapper modelMapper = new ModelMapper();
         List<Category> categories = productService.addCategories(categoryDTOList);
@@ -58,6 +59,18 @@ public class ProductController {
             categoryDTOS.add(modelMapper.map(category, CategoryDTO.class));
         }
         return ResponseEntity.ok(categoryDTOS);
+    }
+
+    @PostMapping("/add-category")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> addCategory(@RequestBody CategoryDTO categoryDTO){
+        Category category = productService.addCategory(categoryDTO);
+        return ResponseEntity.ok(category);
+    }
+
+    @PutMapping("/save-category/{cid}")
+    public void saveCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long cid) {
+        productService.saveCategory(categoryDTO, cid);
     }
 
     @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})
@@ -133,6 +146,17 @@ public class ProductController {
         }
         return ResponseEntity.ok(dtos);
     }
+    @GetMapping("/get-parent-categories")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getParentCategories(){
+        ModelMapper modelMapper = new ModelMapper();
+        List<CategoryDTO> dtos = new ArrayList<>();
+        for(Category model: categoryRepository.findAllByParentIsNull()){
+            dtos.add(modelMapper.map(model, CategoryDTO.class));
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
 
     @GetMapping("/get-manufacturers")
     @PreAuthorize("hasRole('ADMIN')")

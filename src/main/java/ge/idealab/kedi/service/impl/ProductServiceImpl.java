@@ -129,6 +129,39 @@ public class ProductServiceImpl implements ProductService {
         return categoryList;
     }
 
+    @Override
+    public Category addCategory(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
+        if (categoryDTO.getParent() != null) {
+            Category parent = categoryRepository.getOne(categoryDTO.getParent().getId());
+            category.setParent(parent);
+        }
+        category = categoryRepository.save(category);
+        return category;
+    }
+
+    @Override
+    public void saveCategory(CategoryDTO categoryDTO, Long id) {
+        ModelMapper modelMapper = new ModelMapper();
+        Category original = categoryRepository.getOne(id);
+        Category edited = modelMapper.map(categoryDTO, Category.class);
+
+        if (edited.getName() != null) {
+            original.setName(edited.getName());
+        }
+
+        if (edited.getChildren() != null) {
+//            original.setChildren(edited.getChildren());
+        }
+
+        if (edited.getParent() != null) {
+            original.setParent(edited.getParent());
+        }
+
+        categoryRepository.save(original);
+    }
+
     private void updateProductVariants(Long[] ids){
         for(Long id: ids){
             Product product = productRepository.getOne(id);
