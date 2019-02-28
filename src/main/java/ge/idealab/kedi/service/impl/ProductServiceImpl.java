@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -105,6 +106,36 @@ public class ProductServiceImpl implements ProductService {
         List<Color> colors = this.mapColorIdsToColors(colorIds);
         List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
         return productRepository.findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(categories, colors, manufacturers, minPrice, maxPrice);
+    }
+
+    @Override
+    public Product update(ProductDTO p, Long id) {
+        ModelMapper modelMapper = new ModelMapper();
+        Product p1 = productRepository.getOne(id);
+        if (p.getName() != null)
+            p1.setName(p.getName());
+        if (p.getPrice() != null)
+            p1.setPrice(p.getPrice());
+        if (p.getDescription() != null)
+            p1.setDescription(p.getDescription());
+        if (p.getCategoryList() != null) {
+            List<Category> categories = new ArrayList<>();
+            for (CategoryDTO c : p.getCategoryList()){
+                categories.add(modelMapper.map(c, Category.class));
+            }
+            p1.setCategoryList(categories);
+        }
+        if (p.getSex() != null)
+            p1.setSex(p.getSex());
+        if (p.getSex() != null)
+            p1.setSize(p.getSize());
+        if (p.getColor() != null)
+            p1.setColor(modelMapper.map(p.getColor(), Color.class));
+        if (p.getManufacturer() != null)
+            p1.setManufacturer(modelMapper.map(p.getManufacturer(), Manufacturer.class));
+        p1.setUpdatedAt(new Date());
+        p1 = productRepository.save(p1);
+        return p1;
     }
 
     private void updateProductVariants(Long[] ids){

@@ -113,6 +113,14 @@ public class ProductController {
         return ResponseEntity.ok(productDTOS);
     }
 
+    @PutMapping("/save-product/{pid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Long pid) {
+        ModelMapper modelMapper = new ModelMapper();
+        ProductDTO productDTO1 = modelMapper.map(productService.update(productDTO, pid), ProductDTO.class);
+        return ResponseEntity.ok(productDTO1);
+    }
+
 
     private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();

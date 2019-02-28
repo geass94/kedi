@@ -1,8 +1,6 @@
 package ge.idealab.kedi.service;
 
-import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
-import ge.idealab.kedi.model.Category;
 import ge.idealab.kedi.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +14,6 @@ public interface ProductService {
     Page<Product> getPaginatedProducts(Pageable pageable);
     List<Product> getProductVariants(Long[] variantIds);
     List<Product> getProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice);
+
+    Product update(ProductDTO productDTO, Long id);
 }
