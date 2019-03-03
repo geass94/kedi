@@ -112,6 +112,7 @@ public class ProductServiceImpl implements ProductService {
     public Product update(ProductDTO p, Long id) {
         ModelMapper modelMapper = new ModelMapper();
         Product p1 = productRepository.getOne(id);
+
         if (p.getName() != null)
             p1.setName(p.getName());
         if (p.getPrice() != null)
@@ -121,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
         if (p.getCategoryList() != null) {
             List<Category> categories = new ArrayList<>();
             for (CategoryDTO c : p.getCategoryList()){
-                categories.add(modelMapper.map(c, Category.class));
+                categories.add(categoryRepository.getOne(c.getId()));
             }
             p1.setCategoryList(categories);
         }
