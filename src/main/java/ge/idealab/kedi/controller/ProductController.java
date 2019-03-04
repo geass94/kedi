@@ -103,17 +103,26 @@ public class ProductController {
                                                  @RequestParam("colors") String[] colorIds,
                                                  @RequestParam("manufacturers") String[] manufacturerIds,
                                                  @RequestParam("min_price") String min_price,
-                                                 @RequestParam("max_price") String max_price){
+                                                 @RequestParam("max_price") String max_price,
+                                                 @RequestParam("sort") String sort,
+                                                 @RequestParam("order") String order,
+                                                 @RequestParam("page") String page){
+
         Long[] categories = this.stringArrayToLongArray(categorIds);
         Long[] colors = this.stringArrayToLongArray(colorIds);
         Long[] manufacturers = this.stringArrayToLongArray(manufacturerIds);
         BigDecimal maxPrice = BigDecimal.valueOf(Double.valueOf(max_price));
         BigDecimal minPrice = BigDecimal.valueOf(Double.valueOf(min_price));
 
-        List<Product> products = productService.getProductsByFilter(categories, colors, manufacturers, minPrice, maxPrice);
-        List<ProductDTO> productDTOS = this.mapProducts(products);
+        Pageable sorting =
+                PageRequest.of(Integer.valueOf(page), 30, Sort.by(sort).descending());
 
-        return ResponseEntity.ok(productDTOS);
+        Page<Product> productPage = productService.getPaginatedProductsByFilter(categories, colors, manufacturers, minPrice, maxPrice, sorting);
+        List<ProductDTO> productDTOS = this.mapProducts(productPage.getContent());
+
+        PageImpl<?> pageImpl = new PageImpl<>(productDTOS, sorting, productPage.getTotalElements());
+
+        return ResponseEntity.ok(pageImpl);
     }
 
     @PutMapping("/save-product/{pid}")

@@ -15,5 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAllByBaseProductIsTrue(Pageable pageable);
     List<Product> findAllByProductVariantIdIn(Long[] ids);
 
+    Page<Product> findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(Pageable pageable, List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max);
+
     List<Product> findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max);
 }

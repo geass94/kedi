@@ -1,6 +1,7 @@
 package ge.idealab.kedi.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.Category;
@@ -12,6 +13,7 @@ import ge.idealab.kedi.model.enums.Size;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +34,11 @@ public class Product extends BaseStatusAuditEntity {
     @Column
     @NotNull
     private BigDecimal price;
+    @Column
+    @NotNull
+    private Long quanityty;
+    @Column
+    private Float sale;
     @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="color_id", nullable=false)
@@ -54,6 +61,16 @@ public class Product extends BaseStatusAuditEntity {
     private List<Category> categoryList;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     private List<ProductFile> productFileList;
+    @Column
+    private Float bundleSale;
+    @Column
+    private BigDecimal bundlePrice;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Product product;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Product> bundle = new ArrayList<Product>();
 
     public String getName() {
         return name;
@@ -149,5 +166,45 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setProductVariantIds(Long[] productVariantIds) {
         this.productVariantIds = productVariantIds;
+    }
+
+    public Long getQuanityty() {
+        return quanityty;
+    }
+
+    public void setQuanityty(Long quanityty) {
+        this.quanityty = quanityty;
+    }
+
+    public Float getSale() {
+        return sale;
+    }
+
+    public void setSale(Float sale) {
+        this.sale = sale;
+    }
+
+    public Float getBundleSale() {
+        return bundleSale;
+    }
+
+    public void setBundleSale(Float bundleSale) {
+        this.bundleSale = bundleSale;
+    }
+
+    public List<Product> getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(List<Product> bundle) {
+        this.bundle = bundle;
+    }
+
+    public BigDecimal getBundlePrice() {
+        return bundlePrice;
+    }
+
+    public void setBundlePrice(BigDecimal bundlePrice) {
+        this.bundlePrice = bundlePrice;
     }
 }

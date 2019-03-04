@@ -102,10 +102,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByFilter(Long[] catIds, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice) {
+
         List<Category> categories = this.mapCategoryIdsToCategories(catIds);
         List<Color> colors = this.mapColorIdsToColors(colorIds);
         List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
         return productRepository.findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(categories, colors, manufacturers, minPrice, maxPrice);
+    }
+
+    @Override
+    public Page<Product> getPaginatedProductsByFilter(Long[] catIds, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+        List<Category> categories = this.mapCategoryIdsToCategories(catIds);
+        List<Color> colors = this.mapColorIdsToColors(colorIds);
+        List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
+        return productRepository.findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(pageable, categories, colors, manufacturers, minPrice, maxPrice);
     }
 
     @Override
