@@ -68,10 +68,13 @@ public class ProductController {
     }
 
     @GetMapping("/get-products")
-    public ResponseEntity<?> getProducts(){
+    public ResponseEntity<?> getProducts(@RequestParam("sort") String sort,
+                                         @RequestParam("order") String order,
+                                         @RequestParam("page") String page){
         ModelMapper modelMapper = new ModelMapper();
+
         Pageable sortedByName =
-                PageRequest.of(0, 50, Sort.by("name").descending());
+                PageRequest.of(Integer.valueOf(page), 30, Sort.by(sort).descending());
 
         List<ProductDTO> productDTOS = new ArrayList<>();
         Page<Product> productPage = productService.getPaginatedProducts(sortedByName);
@@ -82,8 +85,8 @@ public class ProductController {
             productDTOS.add(productDTO);
         }
 
-//        return ResponseEntity.ok(new PageImpl<>(productDTOS, sortedByName, productPage.getTotalElements()));
-        return ResponseEntity.ok(productDTOS);
+        PageImpl<?> pageImpl = new PageImpl<>(productDTOS, sortedByName, productPage.getTotalElements());
+        return ResponseEntity.ok(pageImpl);
     }
 
     @GetMapping("/get-product-variants")
