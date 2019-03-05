@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,11 @@ public class ProductController {
         return ResponseEntity.ok(this.mapProducts(products));
     }
 
+    @DeleteMapping("/delete-file/{fid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public boolean deleteFile(@PathVariable Long fid) throws IOException {
+        return productFileService.delete(fid);
+    }
 
     private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
