@@ -148,6 +148,18 @@ public class ProductServiceImpl implements ProductService {
         return p1;
     }
 
+    @Override
+    public List<Product> togglePromotion(List<ProductDTO> productDTOS) {
+        List<Product> products = new ArrayList<>();
+        for (ProductDTO p : productDTOS) {
+            Product o = productRepository.getOne(p.getId());
+            o.setPromoted( !o.getPromoted() );
+            products.add(o);
+        }
+        products = productRepository.saveAll(products);
+        return products;
+    }
+
     private void updateProductVariants(Long[] ids){
         for(Long id: ids){
             Product product = productRepository.getOne(id);

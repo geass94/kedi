@@ -33,6 +33,7 @@ public class ProductDTO {
     private Float bundleSale;
     private Long quantity;
     private BigDecimal bundlePrice;
+    private Boolean promoted;
 
     private Boolean baseProduct;
     private Long productVariantId;
@@ -180,5 +181,13 @@ public class ProductDTO {
 
     public void setBundlePrice(BigDecimal bundlePrice) {
         this.bundlePrice = bundlePrice;
+    }
+
+    public Boolean getPromoted() {
+        return promoted;
+    }
+
+    public void setPromoted(Boolean promoted) {
+        this.promoted = promoted;
     }
 }

@@ -6,6 +6,7 @@ import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.product.ProductFile;
+import ge.idealab.kedi.payload.request.PromotionRequest;
 import ge.idealab.kedi.repository.CategoryRepository;
 import ge.idealab.kedi.repository.ColorRepository;
 import ge.idealab.kedi.repository.ManufacturerRepository;
@@ -131,6 +132,13 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
         ProductDTO productDTO1 = modelMapper.map(productService.update(productDTO, pid), ProductDTO.class);
         return ResponseEntity.ok(productDTO1);
+    }
+
+    @PostMapping("/toggle-promotion")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> togglePromotion(@RequestBody List<ProductDTO> productDTOS) {
+        List<Product> products = productService.togglePromotion(productDTOS);
+        return ResponseEntity.ok(this.mapProducts(products));
     }
 
 

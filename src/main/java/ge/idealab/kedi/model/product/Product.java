@@ -33,12 +33,14 @@ public class Product extends BaseStatusAuditEntity {
     private String name;
     @Column
     @NotNull
-    private BigDecimal price;
+    private BigDecimal price = BigDecimal.valueOf(0);
     @Column
     @NotNull
-    private Long quanityty;
+    private Long quanityty = 1L;
     @Column
-    private Float sale;
+    private Float sale = 0f;
+    @Column
+    private Boolean promoted = false;
     @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="color_id", nullable=false)
@@ -62,9 +64,9 @@ public class Product extends BaseStatusAuditEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     private List<ProductFile> productFileList;
     @Column
-    private Float bundleSale;
+    private Float bundleSale = 0f;
     @Column
-    private BigDecimal bundlePrice;
+    private BigDecimal bundlePrice = BigDecimal.valueOf(0);
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_id")
@@ -206,5 +208,21 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setBundlePrice(BigDecimal bundlePrice) {
         this.bundlePrice = bundlePrice;
+    }
+
+    public Boolean getPromoted() {
+        return promoted;
+    }
+
+    public void setPromoted(Boolean promoted) {
+        this.promoted = promoted;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

@@ -16,4 +16,6 @@ public interface ProductService {
     List<Product> getProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice);
     Page<Product> getPaginatedProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
-    Product update(ProductDTO productDTO, Long id);}
+    Product update(ProductDTO productDTO, Long id);
+    List<Product> togglePromotion(List<ProductDTO> productDTOS);
+}
