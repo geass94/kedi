@@ -160,6 +160,18 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
+    @Override
+    public List<Product> setSale(List<ProductDTO> productDTOS, Float sale) {
+        List<Product> products = new ArrayList<>();
+        for (ProductDTO p : productDTOS) {
+            Product o = productRepository.getOne(p.getId());
+            o.setSale( sale );
+            products.add(o);
+        }
+        products = productRepository.saveAll(products);
+        return products;
+    }
+
     private void updateProductVariants(Long[] ids){
         for(Long id: ids){
             Product product = productRepository.getOne(id);

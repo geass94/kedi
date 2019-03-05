@@ -18,4 +18,6 @@ public interface ProductService {
 
     Product update(ProductDTO productDTO, Long id);
     List<Product> togglePromotion(List<ProductDTO> productDTOS);
+
+    List<Product> setSale(List<ProductDTO> productDTOS, Float sale);
 }

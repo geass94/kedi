@@ -1,15 +1,9 @@
 package ge.idealab.kedi.controller;
 
 import ge.idealab.kedi.dto.*;
-import ge.idealab.kedi.model.Category;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.product.ProductFile;
-import ge.idealab.kedi.payload.request.PromotionRequest;
-import ge.idealab.kedi.repository.CategoryRepository;
-import ge.idealab.kedi.repository.ColorRepository;
-import ge.idealab.kedi.repository.ManufacturerRepository;
+import ge.idealab.kedi.payload.request.SaleRequest;
 import ge.idealab.kedi.service.FileService;
 import ge.idealab.kedi.service.ProductFileService;
 import ge.idealab.kedi.service.ProductService;
@@ -138,6 +132,13 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> togglePromotion(@RequestBody List<ProductDTO> productDTOS) {
         List<Product> products = productService.togglePromotion(productDTOS);
+        return ResponseEntity.ok(this.mapProducts(products));
+    }
+
+    @PostMapping("/set-sale")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> setSale(@RequestBody SaleRequest saleRequest) {
+        List<Product> products = productService.setSale(saleRequest.getProducts(), saleRequest.getSale());
         return ResponseEntity.ok(this.mapProducts(products));
     }
 
