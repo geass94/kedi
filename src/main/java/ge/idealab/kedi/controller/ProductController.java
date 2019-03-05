@@ -71,7 +71,7 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
 
         Pageable sortedByName =
-                PageRequest.of(Integer.valueOf(page), 30, Sort.by(sort).descending());
+                PageRequest.of(Integer.valueOf(page), 30, order == "desc" ? Sort.by(sort).descending() : Sort.by(sort).ascending());
 
         List<ProductDTO> productDTOS = new ArrayList<>();
         Page<Product> productPage = productService.getPaginatedProducts(sortedByName);
@@ -112,7 +112,7 @@ public class ProductController {
         BigDecimal minPrice = BigDecimal.valueOf(Double.valueOf(min_price));
 
         Pageable sorting =
-                PageRequest.of(Integer.valueOf(page), 30, Sort.by(sort).descending());
+                PageRequest.of(Integer.valueOf(page), 30, order == "desc" ? Sort.by(sort).descending() : Sort.by(sort).ascending());
 
         Page<Product> productPage = productService.getPaginatedProductsByFilter(categories, colors, manufacturers, minPrice, maxPrice, sorting);
         List<ProductDTO> productDTOS = this.mapProducts(productPage.getContent());
