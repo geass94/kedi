@@ -2,10 +2,8 @@ package ge.idealab.kedi.service.impl;
 
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
-import ge.idealab.kedi.dto.ProductFileDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.Category;
-import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
@@ -166,6 +164,18 @@ public class ProductServiceImpl implements ProductService {
         for (ProductDTO p : productDTOS) {
             Product o = productRepository.getOne(p.getId());
             o.setSale( sale );
+            products.add(o);
+        }
+        products = productRepository.saveAll(products);
+        return products;
+    }
+
+    @Override
+    public List<Product> refillStock(List<ProductDTO> productDTOS, Long quantity) {
+        List<Product> products = new ArrayList<>();
+        for (ProductDTO p : productDTOS) {
+            Product o = productRepository.getOne(p.getId());
+            o.setQuanityty( quantity );
             products.add(o);
         }
         products = productRepository.saveAll(products);

@@ -3,6 +3,7 @@ package ge.idealab.kedi.controller;
 import ge.idealab.kedi.dto.*;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.product.ProductFile;
+import ge.idealab.kedi.payload.request.RefillStockRequest;
 import ge.idealab.kedi.payload.request.SaleRequest;
 import ge.idealab.kedi.service.FileService;
 import ge.idealab.kedi.service.ProductFileService;
@@ -139,6 +140,13 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> setSale(@RequestBody SaleRequest saleRequest) {
         List<Product> products = productService.setSale(saleRequest.getProducts(), saleRequest.getSale());
+        return ResponseEntity.ok(this.mapProducts(products));
+    }
+
+    @PostMapping("/refill-stock")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> refillStock(@RequestBody RefillStockRequest refillStockRequest) {
+        List<Product> products = productService.refillStock(refillStockRequest.getProducts(), refillStockRequest.getQuantity());
         return ResponseEntity.ok(this.mapProducts(products));
     }
 
