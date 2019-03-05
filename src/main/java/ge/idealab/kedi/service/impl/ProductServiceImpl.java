@@ -175,7 +175,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = new ArrayList<>();
         for (ProductDTO p : productDTOS) {
             Product o = productRepository.getOne(p.getId());
-            o.setQuanityty( quantity );
+            o.setQuantity( quantity );
             products.add(o);
         }
         products = productRepository.saveAll(products);

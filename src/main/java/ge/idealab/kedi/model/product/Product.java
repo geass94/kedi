@@ -36,7 +36,7 @@ public class Product extends BaseStatusAuditEntity {
     private BigDecimal price = BigDecimal.valueOf(0);
     @Column
     @NotNull
-    private Long quanityty = 1L;
+    private Long quantity = 1L;
     @Column
     private Float sale = 0f;
     @Column
@@ -170,12 +170,12 @@ public class Product extends BaseStatusAuditEntity {
         this.productVariantIds = productVariantIds;
     }
 
-    public Long getQuanityty() {
-        return quanityty;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setQuanityty(Long quanityty) {
-        this.quanityty = quanityty;
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
     public Float getSale() {
