@@ -159,6 +159,7 @@ public class ProductServiceImpl implements ProductService {
         for (Product p : bundleDTO.getProducts()) {
             products.add(modelMapper.map(p, Product.class));
         }
+        bundle.setProducts(products);
         bundle.setPrice(bundleDTO.getPrice());
         bundle.setSale(bundleDTO.getSale());
         parent.setBundle(bundle);

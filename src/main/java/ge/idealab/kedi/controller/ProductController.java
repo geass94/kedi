@@ -129,6 +129,14 @@ public class ProductController {
         return ResponseEntity.ok(productDTOS);
     }
 
+    @PostMapping("/add-bundle")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> addBundle(@RequestBody BundleDTO bundleDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        ProductDTO productDTO = modelMapper.map(productService.createBundle(bundleDTO), ProductDTO.class);
+        return ResponseEntity.ok(productDTO);
+    }
+
     @GetMapping("/get-bundles")
     public ResponseEntity<?> getBundles() {
         List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsWithBundles());

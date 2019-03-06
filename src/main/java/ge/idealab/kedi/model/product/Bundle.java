@@ -3,9 +3,10 @@ package ge.idealab.kedi.model.product;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -15,15 +16,14 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Bundle extends BaseStatusAuditEntity {
-    @NotNull
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="parent_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Product parent = null;
     @Column
-    private Product parent;
-    @Column
-    @NotNull
     @ElementCollection(targetClass=Product.class)
     private List<Product> products;
     @Column
-    @NotNull
     private BigDecimal price;
     @Column
     private Float sale;

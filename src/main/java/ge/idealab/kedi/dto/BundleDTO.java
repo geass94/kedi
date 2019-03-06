@@ -1,20 +1,35 @@
 package ge.idealab.kedi.dto;
 
+import com.fasterxml.jackson.annotation.*;
 import ge.idealab.kedi.model.product.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class BundleDTO {
+    private Long id;
     private Product parent;
     private List<Product> products;
     private BigDecimal price;
     private Float sale;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @JsonIgnore
     public Product getParent() {
         return parent;
     }
 
+    @JsonProperty
     public void setParent(Product parent) {
         this.parent = parent;
     }
