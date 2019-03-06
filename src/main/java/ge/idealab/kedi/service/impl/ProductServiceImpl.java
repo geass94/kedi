@@ -1,9 +1,12 @@
 package ge.idealab.kedi.service.impl;
 
+import ge.idealab.kedi.dto.BundleDTO;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.enums.Status;
+import ge.idealab.kedi.model.product.Bundle;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
@@ -147,6 +150,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product createBundle(BundleDTO bundleDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        Product parent = productRepository.getOne(bundleDTO.getParent().getId());
+        Bundle bundle = new Bundle();
+        bundle.setParent(parent);
+        List<Product> products = new ArrayList<>();
+        for (Product p : bundleDTO.getProducts()) {
+            products.add(modelMapper.map(p, Product.class));
+        }
+        bundle.setPrice(bundleDTO.getPrice());
+        bundle.setSale(bundleDTO.getSale());
+        parent.setBundle(bundle);
+        return productRepository.save(parent);
+    }
+
+    @Override
     public List<Product> togglePromotion(List<ProductDTO> productDTOS) {
         List<Product> products = new ArrayList<>();
         for (ProductDTO p : productDTOS) {
@@ -180,6 +199,16 @@ public class ProductServiceImpl implements ProductService {
         }
         products = productRepository.saveAll(products);
         return products;
+    }
+
+    @Override
+    public List<Product> getProductsForBundling() {
+        return productRepository.findAllByBundleIsNullAndStatus(Status.ACTIVE);
+    }
+
+    @Override
+    public List<Product> getProductsWithBundles() {
+        return productRepository.findAllByBundleIsNotNullAndStatus(Status.ACTIVE);
     }
 
     private void updateProductVariants(Long[] ids){

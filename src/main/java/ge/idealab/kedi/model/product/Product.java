@@ -63,16 +63,8 @@ public class Product extends BaseStatusAuditEntity {
     private List<Category> categoryList;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     private List<ProductFile> productFileList;
-    @Column
-    private Float bundleSale = 0f;
-    @Column
-    private BigDecimal bundlePrice = BigDecimal.valueOf(0);
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Product product;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Product> bundle = new ArrayList<Product>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    private Bundle bundle;
 
     public String getName() {
         return name;
@@ -186,29 +178,6 @@ public class Product extends BaseStatusAuditEntity {
         this.sale = sale;
     }
 
-    public Float getBundleSale() {
-        return bundleSale;
-    }
-
-    public void setBundleSale(Float bundleSale) {
-        this.bundleSale = bundleSale;
-    }
-
-    public List<Product> getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(List<Product> bundle) {
-        this.bundle = bundle;
-    }
-
-    public BigDecimal getBundlePrice() {
-        return bundlePrice;
-    }
-
-    public void setBundlePrice(BigDecimal bundlePrice) {
-        this.bundlePrice = bundlePrice;
-    }
 
     public Boolean getPromoted() {
         return promoted;
@@ -218,11 +187,11 @@ public class Product extends BaseStatusAuditEntity {
         this.promoted = promoted;
     }
 
-    public Product getProduct() {
-        return product;
+    public Bundle getBundle() {
+        return bundle;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
     }
 }

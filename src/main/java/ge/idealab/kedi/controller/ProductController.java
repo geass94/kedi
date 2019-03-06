@@ -122,6 +122,19 @@ public class ProductController {
         return ResponseEntity.ok(pageImpl);
     }
 
+    @GetMapping("/get-products-for-bundling")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getProductsForBundling() {
+        List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsForBundling());
+        return ResponseEntity.ok(productDTOS);
+    }
+
+    @GetMapping("/get-bundles")
+    public ResponseEntity<?> getBundles() {
+        List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsWithBundles());
+        return ResponseEntity.ok(productDTOS);
+    }
+
     @PutMapping("/save-product/{pid}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Long pid) {

@@ -28,12 +28,10 @@ public class ProductDTO {
     private ManufacturerDTO manufacturer;
     private List<CategoryDTO> categoryList;
     private List<ProductFileDTO> productFiles;
-    private List<ProductDTO> bundle;
     private Float sale;
-    private Float bundleSale;
     private Long quantity;
-    private BigDecimal bundlePrice;
     private Boolean promoted;
+    private BundleDTO bundle;
 
     private Boolean baseProduct;
     private Long productVariantId;
@@ -143,13 +141,6 @@ public class ProductDTO {
         this.productVariantIds = productVariantIds;
     }
 
-    public List<ProductDTO> getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(List<ProductDTO> bundle) {
-        this.bundle = bundle;
-    }
 
     public Float getSale() {
         return sale;
@@ -159,13 +150,6 @@ public class ProductDTO {
         this.sale = sale;
     }
 
-    public Float getBundleSale() {
-        return bundleSale;
-    }
-
-    public void setBundleSale(Float bundleSale) {
-        this.bundleSale = bundleSale;
-    }
 
     public Long getQuantity() {
         return quantity;
@@ -175,13 +159,6 @@ public class ProductDTO {
         this.quantity = quantity;
     }
 
-    public BigDecimal getBundlePrice() {
-        return bundlePrice;
-    }
-
-    public void setBundlePrice(BigDecimal bundlePrice) {
-        this.bundlePrice = bundlePrice;
-    }
 
     public Boolean getPromoted() {
         return promoted;
@@ -189,5 +166,13 @@ public class ProductDTO {
 
     public void setPromoted(Boolean promoted) {
         this.promoted = promoted;
+    }
+
+    public BundleDTO getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(BundleDTO bundle) {
+        this.bundle = bundle;
     }
 }
