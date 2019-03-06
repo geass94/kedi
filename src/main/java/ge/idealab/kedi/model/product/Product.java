@@ -53,7 +53,7 @@ public class Product extends BaseStatusAuditEntity {
     @NotNull
     @Convert(converter = SexConverter.class)
     private Sex sex;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="manufacturer_id", nullable=false)
