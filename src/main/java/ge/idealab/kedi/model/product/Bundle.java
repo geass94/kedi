@@ -16,11 +16,11 @@ import java.util.List;
         property = "id")
 public class Bundle extends BaseStatusAuditEntity {
     @NotNull
-    @ManyToOne
-    @JoinColumn(name="parent_id")
+    @Column
     private Product parent;
     @Column
     @NotNull
+    @ElementCollection(targetClass=Product.class)
     private List<Product> products;
     @Column
     @NotNull

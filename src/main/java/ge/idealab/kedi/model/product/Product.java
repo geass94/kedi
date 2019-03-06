@@ -63,7 +63,10 @@ public class Product extends BaseStatusAuditEntity {
     private List<Category> categoryList;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     private List<ProductFile> productFileList;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+
+    @NotNull
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="bundle_id", nullable=false)
     private Bundle bundle;
 
     public String getName() {
