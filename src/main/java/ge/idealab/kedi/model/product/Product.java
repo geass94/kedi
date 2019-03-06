@@ -9,6 +9,8 @@ import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.converters.SizeConverter;
 import ge.idealab.kedi.model.enums.Sex;
 import ge.idealab.kedi.model.enums.Size;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -63,8 +65,9 @@ public class Product extends BaseStatusAuditEntity {
     private List<Category> categoryList;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     private List<ProductFile> productFileList;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="bundle_id")
+    @NotFound(action = NotFoundAction.IGNORE)
     private Bundle bundle;
 
     public String getName() {
