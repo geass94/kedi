@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/specification")
-public class SpecificationController {
+public class ASpecificationController {
     @Autowired
     private SpecificationService specificationService;
 
