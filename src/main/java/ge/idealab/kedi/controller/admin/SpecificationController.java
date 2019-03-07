@@ -1,10 +1,9 @@
-package ge.idealab.kedi.controller;
+package ge.idealab.kedi.controller.admin;
 
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
 import ge.idealab.kedi.model.Category;
-import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.repository.CategoryRepository;
@@ -21,14 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/specification")
-public class SpecificationContoller {
-    @Autowired
-    private ColorRepository colorRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private ManufacturerRepository manufacturerRepository;
+@RequestMapping("/admin/specification")
+public class SpecificationController {
     @Autowired
     private SpecificationService specificationService;
 
@@ -63,50 +56,6 @@ public class SpecificationContoller {
     public boolean deleteCategory(@PathVariable Long cid) {
         specificationService.deleteCategory(cid);
         return true;
-    }
-
-    @GetMapping("/get-colors")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getColors(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<ColorDTO> dtos = new ArrayList<>();
-        for(Color model: colorRepository.findAllByStatus(Status.ACTIVE)){
-            dtos.add(modelMapper.map(model, ColorDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
-    }
-
-    @GetMapping("/get-categories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getCategories(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByStatusOrderByParent(Status.ACTIVE)){
-            dtos.add(modelMapper.map(model, CategoryDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
-    }
-
-    @GetMapping("/get-parent-categories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getParentCategories(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByParentIsNullAndStatus(Status.ACTIVE)){
-            dtos.add(modelMapper.map(model, CategoryDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
-    }
-
-    @GetMapping("/get-manufacturers")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getManufacturers(){
-        ModelMapper modelMapper = new ModelMapper();
-        List<ManufacturerDTO> dtos = new ArrayList<>();
-        for(Manufacturer model: manufacturerRepository.findAllByStatus(Status.ACTIVE)){
-            dtos.add(modelMapper.map(model, ManufacturerDTO.class));
-        }
-        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping("/add-color")

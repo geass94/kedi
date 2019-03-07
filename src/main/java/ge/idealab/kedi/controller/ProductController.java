@@ -27,33 +27,6 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @Autowired
-    private ProductFileService productFileService;
-    @Autowired
-    private FileService fileService;
-
-    @PostMapping("/add-product")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addProduct(@RequestBody @Valid ProductDTO productDTO){
-        ModelMapper modelMapper = new ModelMapper();
-        Product product = productService.create(productDTO);
-        return ResponseEntity.ok(modelMapper.map(product, ProductDTO.class));
-    }
-
-    @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addProductFile(@Valid @RequestPart("product-id") String productId, @Valid @RequestPart("files") MultipartFile[] multipartFiles){
-        ModelMapper modelMapper = new ModelMapper();
-        Product product = productService.getOne(Long.valueOf(productId));
-        List<ProductFileDTO> productFileDTOS = new ArrayList<>();
-        for(MultipartFile multipartFile: multipartFiles){
-            ProductFile productFile = modelMapper.map(fileService.uploadFile(multipartFile), ProductFile.class);
-            productFile.setProduct(product);
-            productFile = productFileService.create(productFile);
-            productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
-        }
-        return ResponseEntity.ok(productFileDTOS);
-    }
 
     @GetMapping("/get-product-by-id/{id}")
     public ResponseEntity<?> getProductById(@PathVariable Long id){
@@ -122,61 +95,13 @@ public class ProductController {
         return ResponseEntity.ok(pageImpl);
     }
 
-    @GetMapping("/get-products-for-bundling")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getProductsForBundling() {
-        List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsForBundling());
-        return ResponseEntity.ok(productDTOS);
-    }
-
-    @PostMapping("/add-bundle")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addBundle(@RequestBody BundleDTO bundleDTO) {
-        ModelMapper modelMapper = new ModelMapper();
-        ProductDTO productDTO = modelMapper.map(productService.createBundle(bundleDTO), ProductDTO.class);
-        return ResponseEntity.ok(productDTO);
-    }
-
     @GetMapping("/get-bundles")
     public ResponseEntity<?> getBundles() {
         List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsWithBundles());
         return ResponseEntity.ok(productDTOS);
     }
 
-    @PutMapping("/save-product/{pid}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Long pid) {
-        ModelMapper modelMapper = new ModelMapper();
-        ProductDTO productDTO1 = modelMapper.map(productService.update(productDTO, pid), ProductDTO.class);
-        return ResponseEntity.ok(productDTO1);
-    }
 
-    @PostMapping("/toggle-promotion")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> togglePromotion(@RequestBody List<ProductDTO> productDTOS) {
-        List<Product> products = productService.togglePromotion(productDTOS);
-        return ResponseEntity.ok(this.mapProducts(products));
-    }
-
-    @PostMapping("/set-sale")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> setSale(@RequestBody SaleRequest saleRequest) {
-        List<Product> products = productService.setSale(saleRequest.getProducts(), saleRequest.getSale());
-        return ResponseEntity.ok(this.mapProducts(products));
-    }
-
-    @PostMapping("/refill-stock")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> refillStock(@RequestBody RefillStockRequest refillStockRequest) {
-        List<Product> products = productService.refillStock(refillStockRequest.getProducts(), refillStockRequest.getQuantity());
-        return ResponseEntity.ok(this.mapProducts(products));
-    }
-
-    @DeleteMapping("/delete-file/{fid}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public boolean deleteFile(@PathVariable Long fid) throws IOException {
-        return productFileService.delete(fid);
-    }
 
     private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();

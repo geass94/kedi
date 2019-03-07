@@ -31,6 +31,7 @@ public class CartController {
     }
 
     @PostMapping("/add-to-wishlist")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addToWishList(@RequestBody @Valid AddtoCartRequest addtoCartRequest) {
         ModelMapper modelMapper = new ModelMapper();
         Cart cart = cartService.addToWishList(addtoCartRequest.getProductId());
