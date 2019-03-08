@@ -13,7 +13,7 @@ public class BasicPage extends BaseStatusAuditEntity {
     private String name;
     @Column
     private String alias;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String body;
 
     public String getName() {

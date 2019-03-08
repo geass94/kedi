@@ -3,6 +3,7 @@ package ge.idealab.kedi.service;
 import ge.idealab.kedi.dto.BundleDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.payload.response.PriceRange;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,11 +16,13 @@ public interface ProductService {
     Product update(ProductDTO productDTO, Long id);
     Product createBundle(BundleDTO bundleDTO);
 
+    PriceRange priceRange();
+
     Page<Product> getPaginatedProducts(Pageable pageable);
     Page<Product> getPaginatedProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
     List<Product> getProductVariants(Long[] variantIds);
-    List<Product> getProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice);
+
     List<Product> togglePromotion(List<ProductDTO> productDTOS);
     List<Product> setSale(List<ProductDTO> productDTOS, Float sale);
     List<Product> refillStock(List<ProductDTO> productDTOS, Long quantity);

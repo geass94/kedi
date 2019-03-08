@@ -10,6 +10,7 @@ import ge.idealab.kedi.model.product.Bundle;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.payload.response.PriceRange;
 import ge.idealab.kedi.repository.CategoryRepository;
 import ge.idealab.kedi.repository.ColorRepository;
 import ge.idealab.kedi.repository.ManufacturerRepository;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,20 +105,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByFilter(Long[] catIds, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice) {
-
-        List<Category> categories = this.mapCategoryIdsToCategories(catIds);
-        List<Color> colors = this.mapColorIdsToColors(colorIds);
-        List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
-        return productRepository.findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(categories, colors, manufacturers, minPrice, maxPrice);
-    }
-
-    @Override
     public Page<Product> getPaginatedProductsByFilter(Long[] catIds, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         List<Category> categories = this.mapCategoryIdsToCategories(catIds);
         List<Color> colors = this.mapColorIdsToColors(colorIds);
         List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
-        return productRepository.findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(pageable, categories, colors, manufacturers, minPrice, maxPrice);
+        if (maxPrice.doubleValue() == 0.0) {
+            maxPrice = this.priceRange().getMaxPrice();
+        }
+        maxPrice = maxPrice.add(BigDecimal.ONE);
+        minPrice = minPrice.subtract(BigDecimal.ONE);
+        return productRepository.findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetween(pageable, categories, colors, manufacturers, minPrice, maxPrice);
     }
 
     @Override
@@ -164,6 +163,14 @@ public class ProductServiceImpl implements ProductService {
         bundle.setSale(bundleDTO.getSale());
         parent.setBundle(bundle);
         return productRepository.save(parent);
+    }
+
+    @Override
+    public PriceRange priceRange() {
+        PriceRange priceRange = new PriceRange();
+        priceRange.setMinPrice(productRepository.getMinPrice());
+        priceRange.setMaxPrice(productRepository.getMaxPrice());
+        return priceRange;
     }
 
     @Override

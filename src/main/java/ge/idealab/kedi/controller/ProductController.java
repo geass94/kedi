@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
@@ -59,6 +60,11 @@ public class ProductController {
         return ResponseEntity.ok(pageImpl);
     }
 
+    @GetMapping("/get-price-range")
+    public ResponseEntity<?> getPriceRange() {
+        return ResponseEntity.ok(productService.priceRange());
+    }
+
     @GetMapping("/get-product-variants")
     public ResponseEntity<?> getProductVariants(@RequestParam("ids") String[] variantIds){
 
@@ -89,8 +95,8 @@ public class ProductController {
 
         Page<Product> productPage = productService.getPaginatedProductsByFilter(categories, colors, manufacturers, minPrice, maxPrice, sorting);
         List<ProductDTO> productDTOS = this.mapProducts(productPage.getContent());
-
-        PageImpl<?> pageImpl = new PageImpl<>(productDTOS, sorting, productPage.getTotalElements());
+        List<ProductDTO> deduped = productDTOS.stream().distinct().collect(Collectors.toList());
+        PageImpl<?> pageImpl = new PageImpl<>(deduped, sorting, productPage.getTotalElements());
 
         return ResponseEntity.ok(pageImpl);
     }
