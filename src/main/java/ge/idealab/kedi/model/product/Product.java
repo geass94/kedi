@@ -50,7 +50,6 @@ public class Product extends BaseStatusAuditEntity {
     @Convert(converter = SizeConverter.class)
     @NotNull
     private Size size;
-    @NotNull
     @Convert(converter = SexConverter.class)
     private Sex sex;
     @Column(columnDefinition = "TEXT")

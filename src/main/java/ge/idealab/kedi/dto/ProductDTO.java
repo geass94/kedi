@@ -21,7 +21,6 @@ public class ProductDTO {
     @Convert(converter = SizeConverter.class)
     @NotNull
     private Size size;
-    @NotNull
     @Convert(converter = SexConverter.class)
     private Sex sex;
     private String description;
