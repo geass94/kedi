@@ -27,4 +27,13 @@ public class BasicPageServiceImpl implements BasicPageService {
     public BasicPage getByAlias(String alias) {
         return basicPageRepository.findByAlias(alias);
     }
+
+    @Override
+    public BasicPage update(BasicPageDTO basicPageDTO, Long id) {
+        BasicPage o = basicPageRepository.getOne(id);
+        o.setName(basicPageDTO.getName());
+        o.setBody(basicPageDTO.getBody());
+        o = basicPageRepository.save(o);
+        return o;
+    }
 }
