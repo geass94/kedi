@@ -175,7 +175,11 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = new ArrayList<>();
         for (ProductDTO p : productDTOS) {
             Product o = productRepository.getOne(p.getId());
-            o.setPromoted( !o.getPromoted() );
+            if (o.getPromoted() == null) {
+                o.setPromoted(true);
+            } else {
+                o.setPromoted( !o.getPromoted() );
+            }
             products.add(o);
         }
         products = productRepository.saveAll(products);
