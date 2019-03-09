@@ -2,10 +2,13 @@ package ge.idealab.kedi.service.impl;
 
 import ge.idealab.kedi.dto.BasicPageDTO;
 import ge.idealab.kedi.model.BasicPage;
+import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.repository.BasicPageRepository;
 import ge.idealab.kedi.service.BasicPageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +38,10 @@ public class BasicPageServiceImpl implements BasicPageService {
         o.setBody(basicPageDTO.getBody());
         o = basicPageRepository.save(o);
         return o;
+    }
+
+    @Override
+    public Page<BasicPage> getAll(Pageable pageable) {
+        return basicPageRepository.findAllByStatus(pageable, Status.ACTIVE);
     }
 }
