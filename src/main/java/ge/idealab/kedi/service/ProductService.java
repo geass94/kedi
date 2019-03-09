@@ -27,5 +27,13 @@ public interface ProductService {
     List<Product> setSale(List<ProductDTO> productDTOS, Float sale);
     List<Product> refillStock(List<ProductDTO> productDTOS, Long quantity);
     List<Product> getProductsForBundling();
+
     List<Product> getProductsWithBundles();
+
+    List<Product> getFeaturedProducts();
+    List<Product> getBestSellerProducts();
+    List<Product> getProductsOnSale();
+    List<Product> getRealtedProducts(Long productId);
+    List<Product> getNewProducts();
+
 }

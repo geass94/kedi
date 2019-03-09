@@ -22,13 +22,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -114,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
         }
         maxPrice = maxPrice.add(BigDecimal.ONE);
         minPrice = minPrice.subtract(BigDecimal.ONE);
-        return productRepository.findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetween(pageable, categories, colors, manufacturers, minPrice, maxPrice);
+        return productRepository.findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndStatus(pageable, categories, colors, manufacturers, minPrice, maxPrice, Status.ACTIVE);
     }
 
     @Override
@@ -217,6 +214,35 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductsWithBundles() {
         return productRepository.findAllByBundleIsNotNullAndStatus(Status.ACTIVE);
+    }
+
+    @Override
+    public List<Product> getFeaturedProducts() {
+        return productRepository.findByPromotedIsTrueAndStatus(Status.ACTIVE);
+    }
+
+    @Override
+    public List<Product> getBestSellerProducts() {
+        return null;
+    }
+
+    @Override
+    public List<Product> getProductsOnSale() {
+        return productRepository.findAllBySaleIsGreaterThanAndStatus(0f, Status.ACTIVE);
+    }
+
+    @Override
+    public List<Product> getRealtedProducts(Long productId) {
+        Product product = productRepository.getOne(productId);
+        return productRepository.findAllByCategoryListInAndStatus(product.getCategoryList(), Status.ACTIVE);
+    }
+
+    @Override
+    public List<Product> getNewProducts() {
+        Instant now = Instant.now(); //current date
+        Instant before = now.minus(Duration.ofDays(30));
+        Date dateBefore = Date.from(before);
+        return productRepository.findAllByCreatedAtAfterAndStatus(dateBefore, Status.ACTIVE);
     }
 
     private void updateProductVariants(Long[] ids){

@@ -107,7 +107,25 @@ public class ProductController {
         return ResponseEntity.ok(productDTOS);
     }
 
+    @GetMapping("/get-featured-products")
+    public ResponseEntity<?> getFeaturedProducts() {
+        return ResponseEntity.ok(this.mapProducts(productService.getFeaturedProducts()));
+    }
 
+    @GetMapping("/get-new-products")
+    public ResponseEntity<?> getNewProducts() {
+        return ResponseEntity.ok(this.mapProducts(productService.getNewProducts()));
+    }
+
+    @GetMapping("/get-related-products/{pid}")
+    public ResponseEntity<?> getRelatedProcust(@PathVariable Long pid) {
+        return ResponseEntity.ok(this.mapProducts(productService.getRealtedProducts(pid)));
+    }
+
+    @GetMapping("/get-sale-off")
+    public ResponseEntity<?> getProductsOnSale() {
+        return ResponseEntity.ok(this.mapProducts(productService.getProductsOnSale()));
+    }
 
     private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
