@@ -232,7 +232,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsOnSale() {
-        return productRepository.findAllBySaleIsGreaterThanAndStatus(0f, Status.ACTIVE);
+        return productRepository.findSaleOff(0f, Status.ACTIVE);
     }
 
     @Override

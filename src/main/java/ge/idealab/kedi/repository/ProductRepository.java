@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,6 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByCategoryListInAndStatus(List<Category> categories, Status status);
     List<Product> findAllBySaleIsGreaterThanAndStatus(Float sale, Status status);
 
+    @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.status = :status ORDER BY RAND() ASC")
+    List<Product> findSaleOff(@Param("sale") Float sale, @Param("status") Status status);
 
 
     @Query("SELECT coalesce(max(p.price), 0) FROM Product p")
