@@ -1,12 +1,11 @@
 package ge.idealab.kedi.dto;
 
-import java.util.List;
-
 public class CartDTO {
     private Long id;
-    private List<ProductDTO> shoppingCart;
-    private List<ProductDTO> savedForLater;
-    private List<ProductDTO> wishList;
+    private ProductDTO product;
+    private Long quantity;
+    private Boolean savedForLater = false;
+    private Boolean wishlist = false;
 
     public Long getId() {
         return id;
@@ -16,27 +15,35 @@ public class CartDTO {
         this.id = id;
     }
 
-    public List<ProductDTO> getShoppingCart() {
-        return shoppingCart;
+    public ProductDTO getProduct() {
+        return product;
     }
 
-    public void setShoppingCart(List<ProductDTO> shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    public void setProduct(ProductDTO product) {
+        this.product = product;
     }
 
-    public List<ProductDTO> getSavedForLater() {
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
+
+    public Boolean getSavedForLater() {
         return savedForLater;
     }
 
-    public void setSavedForLater(List<ProductDTO> savedForLater) {
+    public void setSavedForLater(Boolean savedForLater) {
         this.savedForLater = savedForLater;
     }
 
-    public List<ProductDTO> getWishList() {
-        return wishList;
+    public Boolean getWishlist() {
+        return wishlist;
     }
 
-    public void setWishList(List<ProductDTO> wishList) {
-        this.wishList = wishList;
+    public void setWishlist(Boolean wishlist) {
+        this.wishlist = wishlist;
     }
 }

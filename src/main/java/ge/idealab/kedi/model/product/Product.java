@@ -24,12 +24,7 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Product extends BaseStatusAuditEntity {
-    @Column
-    private Boolean baseProduct = false;
-    @Column
-    private Long productVariantId;
-    @Column
-    private Long[] productVariantIds;
+//  Basic information
     @Column
     @NotNull
     private String name;
@@ -41,8 +36,12 @@ public class Product extends BaseStatusAuditEntity {
     private Long quantity = 1L;
     @Column
     private Float sale = 0f;
+    @Column(columnDefinition = "TEXT")
+    private String description;
     @Column
     private Boolean promoted = false;
+
+//  Specifications
     @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="color_id", nullable=false)
@@ -52,8 +51,6 @@ public class Product extends BaseStatusAuditEntity {
     private Size size;
     @Convert(converter = SexConverter.class)
     private Sex sex;
-    @Column(columnDefinition = "TEXT")
-    private String description;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="manufacturer_id", nullable=false)
     private Manufacturer manufacturer;
@@ -62,8 +59,20 @@ public class Product extends BaseStatusAuditEntity {
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
     private List<Category> categoryList;
+
+//  File attachments
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
-    private List<ProductFile> productFileList;
+    private List<ProductFile> productFileList = new ArrayList<>();
+
+//  Product Variants
+    @Column
+    private Boolean baseProduct = false;
+    @Column
+    private Long productVariantId;
+    @Column
+    private Long[] productVariantIds;
+
+//  Bundles and gifts
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="bundle_id")
     @NotFound(action = NotFoundAction.IGNORE)
@@ -83,6 +92,38 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
+
+    public Float getSale() {
+        return sale;
+    }
+
+    public void setSale(Float sale) {
+        this.sale = sale;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getPromoted() {
+        return promoted;
+    }
+
+    public void setPromoted(Boolean promoted) {
+        this.promoted = promoted;
     }
 
     public Color getColor() {
@@ -107,14 +148,6 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setSex(Sex sex) {
         this.sex = sex;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Manufacturer getManufacturer() {
@@ -163,31 +196,6 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setProductVariantIds(Long[] productVariantIds) {
         this.productVariantIds = productVariantIds;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    public Float getSale() {
-        return sale;
-    }
-
-    public void setSale(Float sale) {
-        this.sale = sale;
-    }
-
-
-    public Boolean getPromoted() {
-        return promoted;
-    }
-
-    public void setPromoted(Boolean promoted) {
-        this.promoted = promoted;
     }
 
     public Bundle getBundle() {

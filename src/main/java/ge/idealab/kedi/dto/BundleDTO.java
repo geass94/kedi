@@ -11,8 +11,8 @@ import java.util.List;
         property = "id")
 public class BundleDTO {
     private Long id;
-    private Product parent;
-    private List<Product> products;
+    private ProductDTO parent;
+    private List<ProductDTO> products;
     private BigDecimal price;
     private Float sale;
 
@@ -20,25 +20,24 @@ public class BundleDTO {
         return id;
     }
 
+    public ProductDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(ProductDTO parent) {
+        this.parent = parent;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @JsonIgnore
-    public Product getParent() {
-        return parent;
-    }
 
-    @JsonProperty
-    public void setParent(Product parent) {
-        this.parent = parent;
-    }
-
-    public List<Product> getProducts() {
+    public List<ProductDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductDTO> products) {
         this.products = products;
     }
 

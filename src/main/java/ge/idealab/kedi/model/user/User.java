@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.dto.PersonalInformationDTO;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.enums.AuthProvider;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -45,6 +47,7 @@ public class User extends BaseStatusAuditEntity {
     private String providerId;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_user_id")),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_usrauth_authority_id")))
