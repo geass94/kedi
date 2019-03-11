@@ -10,12 +10,19 @@ public class PaymentRequest {
     private String MerchantName;
     private String MerchantURL;
     private String MerchantCity;
-    private Long MerchantID;
+    private String MerchantID;
 
     public PaymentRequest() {
     }
 
-    public PaymentRequest(String purchaseDesc, BigDecimal purchaseAmt, Long countryCode, Long currencyCode, String merchantName, String merchantURL, String merchantCity, Long merchantID) {
+    public PaymentRequest(String purchaseDesc,
+                          BigDecimal purchaseAmt,
+                          Long countryCode,
+                          Long currencyCode,
+                          String merchantName,
+                          String merchantURL,
+                          String merchantCity,
+                          String merchantID) {
         PurchaseDesc = purchaseDesc;
         PurchaseAmt = purchaseAmt;
         CountryCode = countryCode;
@@ -82,11 +89,11 @@ public class PaymentRequest {
         MerchantCity = merchantCity;
     }
 
-    public Long getMerchantID() {
+    public String getMerchantID() {
         return MerchantID;
     }
 
-    public void setMerchantID(Long merchantID) {
+    public void setMerchantID(String merchantID) {
         MerchantID = merchantID;
     }
 }

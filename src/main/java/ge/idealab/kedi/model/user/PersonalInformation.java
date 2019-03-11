@@ -37,6 +37,8 @@ public class PersonalInformation extends BaseStatusAuditEntity {
     private Country country;
     @Column
     private State state;
+    @Column
+    private String phone;
     @JsonIgnore
     @OneToOne(mappedBy = "personalInformation")
     private @NonNull
@@ -120,5 +122,13 @@ public class PersonalInformation extends BaseStatusAuditEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

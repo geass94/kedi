@@ -31,9 +31,9 @@ public class Address extends BaseStatusAuditEntity {
     @Column
     private String phone;
     @Column
-    private Country country;
+    private String country;
     @Column
-    private State state;
+    private String state;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name="fk_usr_user_id"))
     private User user;
@@ -94,19 +94,19 @@ public class Address extends BaseStatusAuditEntity {
         this.postCode = postCode;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
-    public State getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(String state) {
         this.state = state;
     }
 

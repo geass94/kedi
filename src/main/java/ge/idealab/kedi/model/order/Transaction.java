@@ -9,19 +9,25 @@ import java.util.Set;
 @Entity
 @Table(name = "transactions")
 public class Transaction extends BaseStatusAuditEntity {
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "transactions")
-    private Set<Order> orders = new HashSet<>();
+    @Column
+    private String uuid;
+    @ManyToOne
+    @JoinColumn(name="order_id", nullable = false)
+    private Order order;
 
-    public Set<Order> getOrders() {
-        return orders;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

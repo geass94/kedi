@@ -17,6 +17,7 @@ public class PersonalInformationDTO {
     private String postCode;
     private Country country;
     private State state;
+    private String phone;
 
     public Long getId() {
         return id;
@@ -96,5 +97,13 @@ public class PersonalInformationDTO {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
