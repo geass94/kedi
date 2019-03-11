@@ -65,8 +65,8 @@ file:
 
 server:
   port: 7788
-  ssl:
-    key-store:  /etc/letsencrypt/live/api.kedi.ge/keystore.p12
-    key-store-password: gekedi
-    keyStoreType: PKCS12
-    keyAlias: tomcat
+#  ssl:
+#    key-store:  /etc/letsencrypt/live/api.kedi.ge/keystore.p12
+#    key-store-password: gekedi
+#    keyStoreType: PKCS12
+#    keyAlias: tomcat
