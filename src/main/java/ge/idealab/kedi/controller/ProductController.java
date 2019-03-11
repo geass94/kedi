@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin(origins = "https://kedi.ge")
 public class ProductController {
     @Autowired
     private ProductService productService;

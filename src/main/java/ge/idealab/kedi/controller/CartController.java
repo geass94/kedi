@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin(origins = "https://kedi.ge")
 public class CartController {
     @Autowired
     private CartService cartService;

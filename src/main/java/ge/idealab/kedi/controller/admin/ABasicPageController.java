@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/page")
+@CrossOrigin(origins = "https://admin.kedi.ge")
 public class ABasicPageController {
     @Autowired
     private BasicPageService basicPageService;

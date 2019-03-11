@@ -14,6 +14,7 @@ import ge.idealab.kedi.repository.ManufacturerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/menu")
+@CrossOrigin(origins = "https://kedi.ge")
 public class MenuController {
     @Autowired
     private CategoryRepository categoryRepository;

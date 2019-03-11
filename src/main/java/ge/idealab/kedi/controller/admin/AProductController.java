@@ -24,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/product")
+@CrossOrigin(origins = "https://admin.kedi.ge")
 public class AProductController {
     @Autowired
     private ProductService productService;

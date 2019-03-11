@@ -21,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/specification")
+@CrossOrigin(origins = "https://admin.kedi.ge")
 public class ASpecificationController {
     @Autowired
     private SpecificationService specificationService;
