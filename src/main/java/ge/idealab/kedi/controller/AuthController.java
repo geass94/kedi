@@ -22,7 +22,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "https://kedi.ge")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     @Autowired

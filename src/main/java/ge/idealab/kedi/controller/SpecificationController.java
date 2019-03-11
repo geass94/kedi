@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/specification")
-@CrossOrigin(origins = "https://kedi.ge")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class SpecificationController {
     @Autowired
     private ColorRepository colorRepository;

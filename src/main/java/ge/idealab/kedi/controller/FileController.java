@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/file")
-@CrossOrigin(origins = "https://kedi.ge")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
     @Autowired

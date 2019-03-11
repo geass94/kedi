@@ -1,16 +1,23 @@
 package ge.idealab.kedi.model.order;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.user.Address;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "orders")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Order extends BaseStatusAuditEntity {
     @Column
     private String uuid;
@@ -22,15 +29,9 @@ public class Order extends BaseStatusAuditEntity {
     @JoinTable(name = "order_products",
             joinColumns = { @JoinColumn(name = "order_id", foreignKey = @ForeignKey(name="fk_ordprd_order_id")) },
             inverseJoinColumns = { @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name="fk_ordprd_product_id")) })
-    private Set<Product> products = new HashSet<>();
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "order_transactions",
-            joinColumns = { @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_ordtrnsct_order_id")) },
-            inverseJoinColumns = { @JoinColumn(name = "transaction_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_ordtrnsct_transaction_id")) })
+    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy="order")
+    @Transient
     private Set<Transaction> transactions = new HashSet<>();
     @Column
     private Address shippingAddress;
@@ -43,11 +44,11 @@ public class Order extends BaseStatusAuditEntity {
     @Column
     private BigDecimal subTotal;
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

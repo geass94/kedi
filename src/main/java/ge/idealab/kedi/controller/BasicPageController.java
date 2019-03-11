@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/basic-page")
-@CrossOrigin(origins = "https://kedi.ge")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class BasicPageController {
     @Autowired
     private BasicPageService basicPageService;

@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "https://kedi.ge")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired

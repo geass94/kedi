@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PaymentController {
     @PostMapping("/cart/callback")
     public void cartuCallBack() {
-
+        System.out.println("CALLBACK");
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/menu")
-@CrossOrigin(origins = "https://kedi.ge")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class MenuController {
     @Autowired
     private CategoryRepository categoryRepository;

@@ -11,6 +11,7 @@ import ge.idealab.kedi.payload.request.InitPaymentRequest;
 import ge.idealab.kedi.repository.OrderRepository;
 import ge.idealab.kedi.repository.TransactionRepository;
 import ge.idealab.kedi.service.OrderService;
+import ge.idealab.kedi.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private ProductService productService;
 
     @Override
     public Order placeOrder(OrderDTO orderDTO) {
@@ -31,12 +34,22 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal subTotal = BigDecimal.ZERO;
         String uuid = UUID.randomUUID().toString();
         for (ProductDTO p : orderDTO.getProducts()) {
-            subTotal.add(p.getPrice());
+            subTotal = subTotal.add(p.getPrice());
         }
         order.setSubTotal(subTotal);
         order.setUuid(uuid);
-        order.setProducts(this.mapProductDTOs(orderDTO.getProducts()));
         order.setStatus(Status.ORDERED);
+        order.setProducts(this.mapProductDTOs(orderDTO.getProducts()));
+        order = orderRepository.save(order);
+
+        Transaction transaction = new Transaction();
+        String uuid2 = UUID.randomUUID().toString();
+        transaction.setOrder(order);
+        transaction.setStatus(Status.ORDERED);
+        transaction.setUuid(uuid2);
+        transaction = transactionRepository.save(transaction);
+
+        order.setTransactions(Collections.singleton(transaction));
         order = orderRepository.save(order);
         return order;
     }
@@ -54,22 +67,13 @@ public class OrderServiceImpl implements OrderService {
                 "Tbilisi",
                 "000000008001387-00000001"
         );
-        Transaction transaction = new Transaction();
-        String uuid = UUID.randomUUID().toString();
-        transaction.setOrder(order);
-        transaction.setStatus(Status.ORDERED);
-        transaction.setUuid(uuid);
-        transaction = transactionRepository.save(transaction);
-        order.setTransactions(Collections.singleton(transaction));
-        orderRepository.save(order);
         return paymentRequest;
     }
 
-    Set<Product> mapProductDTOs(Set<ProductDTO> productDTOS) {
-        ModelMapper modelMapper = new ModelMapper();
-        Set<Product> products = new HashSet<>();
+    List<Product> mapProductDTOs(List<ProductDTO> productDTOS) {
+        List<Product> products = new ArrayList<>();
         for (ProductDTO p : productDTOS) {
-            products.add(modelMapper.map(p, Product.class));
+            products.add(productService.getOne(p.getId()));
         }
         return products;
     }

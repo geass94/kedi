@@ -5,14 +5,16 @@ import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.user.Address;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class OrderDTO {
     private Long id;
     private String uuid;
-    private Set<ProductDTO> products = new HashSet<>();
-    private Set<Transaction> transactions = new HashSet<>();
+    private List<ProductDTO> products = new ArrayList<>();
+    private Set<TransactionDTO> transactions = new HashSet<>();
     private Address shippingAddress;
     private Address billingAddress;
     private String paymentMethod;
@@ -35,19 +37,19 @@ public class OrderDTO {
         this.uuid = uuid;
     }
 
-    public Set<ProductDTO> getProducts() {
+    public List<ProductDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<ProductDTO> products) {
+    public void setProducts(List<ProductDTO> products) {
         this.products = products;
     }
 
-    public Set<Transaction> getTransactions() {
+    public Set<TransactionDTO> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
+    public void setTransactions(Set<TransactionDTO> transactions) {
         this.transactions = transactions;
     }
 
