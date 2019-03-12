@@ -17,8 +17,8 @@ import java.io.IOException;
 @RequestMapping("/payment")
 public class PaymentController {
     @RequestMapping(value = "/cartu/callback", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = {MediaType.APPLICATION_ATOM_XML_VALUE})
+            consumes = {"application/x-www-form-urlencoded"},
+            produces = {"application/x-www-form-urlencoded"})
     public ConfirmResponse cartuCallBack(@RequestBody ConfirmRequest confirmRequest, HttpServletRequest request,
                                          HttpServletResponse response) throws IOException, ServletException {
         System.out.println(confirmRequest.getTransactionId());
