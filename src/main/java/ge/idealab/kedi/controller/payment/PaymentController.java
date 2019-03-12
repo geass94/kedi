@@ -4,11 +4,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
     @PostMapping("/cart/callback")
-    public void cartuCallBack() {
-        System.out.println("CALLBACK");
+    public void cartuCallBack(HttpServletRequest request,
+                              HttpServletResponse response) throws IOException, ServletException {
+        System.out.println(request.getContextPath());
+        System.out.println(request.getMethod());
+        System.out.println(request.getQueryString());
+        for (Part p : request.getParts()){
+            System.out.println(p.getName());
+        }
     }
 }
