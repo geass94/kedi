@@ -22,7 +22,7 @@ public class ProductDTO {
     @NotNull
     private Size size;
     @Convert(converter = SexConverter.class)
-    private Sex sex;
+    private Sex sex = Sex.MALE;
     private String description;
     private ManufacturerDTO manufacturer;
     private List<CategoryDTO> categoryList;

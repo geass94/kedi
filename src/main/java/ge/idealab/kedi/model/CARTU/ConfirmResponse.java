@@ -1,8 +1,19 @@
 package ge.idealab.kedi.model.CARTU;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ConfirmResponse {
+    @JacksonXmlProperty(localName = "TransactionId")
     private String TransactionId;
+    @JacksonXmlProperty(localName = "PaymentId")
     private String PaymentId;
+    @JacksonXmlProperty(localName = "Status")
     private String Status;
 
     public String getTransactionId() {

@@ -50,7 +50,7 @@ public class Product extends BaseStatusAuditEntity {
     @NotNull
     private Size size;
     @Convert(converter = SexConverter.class)
-    private Sex sex;
+    private Sex sex = Sex.MALE;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="manufacturer_id", nullable=false)
     private Manufacturer manufacturer;
