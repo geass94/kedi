@@ -13,7 +13,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
-    @PostMapping("/cart/callback")
+    @RequestMapping("/cart/callback")
     public void cartuCallBack(HttpServletRequest request,
                               HttpServletResponse response) throws IOException, ServletException {
         System.out.println(request.getContextPath());
