@@ -73,6 +73,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Boolean removeFromCart(Long cartId) {
+        Cart cart = cartRepository.getOne(cartId);
+        cart.setStatus(Status.DELETED);
+        cart = cartRepository.save(cart);
+        return cart.getStatus() == Status.DELETED;
+    }
+
+    @Override
     public List<Cart> getUserCart() {
         List<Cart> cartList = cartRepository.findAllByUserAndStatus(userService.getUserFromContext(), Status.ACTIVE);
         return cartList;

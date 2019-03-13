@@ -10,5 +10,7 @@ public interface CartService {
     Cart moveToCart(Long cartId);
     Cart addToWishlist(Long productId);
 
+    Boolean removeFromCart(Long cartId);
+
     List<Cart> getUserCart();
 }

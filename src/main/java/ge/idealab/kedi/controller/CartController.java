@@ -59,9 +59,17 @@ public class CartController {
         return ResponseEntity.ok(this.mapCart(cart));
     }
 
+    @DeleteMapping("/remove-from-cart/{cid}")
+    @PreAuthorize("hasRole('USER')")
+    public Boolean removeFromCart(@PathVariable Long cid) {
+        return cartService.removeFromCart(cid);
+    }
+
     private CartDTO mapCart(Cart cart) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(cart, CartDTO.class);
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        cartDTO.setProduct( this.mapProduct(cart.getProduct()) );
+        return cartDTO;
     }
 
     private List<CartDTO> mapCarts(List<Cart> carts) {

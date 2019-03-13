@@ -7,6 +7,8 @@ import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import ge.idealab.kedi.model.CARTU.ConfirmRequest;
 import ge.idealab.kedi.model.CARTU.ConfirmResponse;
+import ge.idealab.kedi.util.HttpServletRequestDebug;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +23,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
+    @Autowired
+    private HttpServletRequestDebug httpServletRequestDebug;
+
     @RequestMapping(value = "/cartu/callback", method = RequestMethod.POST,
             consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_XML_VALUE },
             produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public String cartuCallBack(@RequestParam Map<String, String> params, String signature, HttpServletRequest request,
                                 HttpServletResponse response) throws IOException {
-
+        this.receiveCallback(request);
         ConfirmRequest confirmRequest = this.mapConfirmRequestParams(params.get("ConfirmRequest"));
 
         ConfirmResponse confirmResponse = new ConfirmResponse();
@@ -46,7 +52,7 @@ public class PaymentController {
         String xmlString = "<ConfirmResponse>" +
                 "<TransactionId>"+confirmResponse.getTransactionId()+"</TransactionId>" +
                 "<PaymentId>"+confirmResponse.getPaymentId()+"</PaymentId>" +
-                "<Status>ACCEPTED</Status>" +
+                "<Status>"+confirmResponse.getStatus()+"</Status>" +
                 "</ConfirmResponse>";
 //        try {
 //            xmlString = xmlMapper.writeValueAsString(confirmResponse);
@@ -62,13 +68,13 @@ public class PaymentController {
         xmlMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         ConfirmRequest confirmRequest = xmlMapper.readValue(str, ConfirmRequest.class);
 
-        System.out.println("TRID: " + confirmRequest.getTransactionId());
-        System.out.println("PID: " + confirmRequest.getPaymentId());
-        System.out.println("STATUS :" +confirmRequest.getStatus());
-        System.out.println("AMOUNT: " + confirmRequest.getAmount());
-        System.out.println("TYPE: " + confirmRequest.getCardType());
-        System.out.println("DATE: " + confirmRequest.getPaymentDate());
-        System.out.println("REASON: " + confirmRequest.getReason());
+//        System.out.println("TRID: " + confirmRequest.getTransactionId());
+//        System.out.println("PID: " + confirmRequest.getPaymentId());
+//        System.out.println("STATUS :" +confirmRequest.getStatus());
+//        System.out.println("AMOUNT: " + confirmRequest.getAmount());
+//        System.out.println("TYPE: " + confirmRequest.getCardType());
+//        System.out.println("DATE: " + confirmRequest.getPaymentDate());
+//        System.out.println("REASON: " + confirmRequest.getReason());
 
         return confirmRequest;
     }
@@ -83,5 +89,9 @@ public class PaymentController {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         Date date = formatter.parse(dateStr);
         return date;
+    }
+
+    private void receiveCallback(HttpServletRequest request) {
+        httpServletRequestDebug.debugRequest(request);
     }
 }
