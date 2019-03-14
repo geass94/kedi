@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CarouselServiceImpl implements CarouselService {
     @Autowired
@@ -26,5 +28,15 @@ public class CarouselServiceImpl implements CarouselService {
     @Override
     public Carousel getOne(Long id) {
         return carouselRepository.getOne(id);
+    }
+
+    @Override
+    public Carousel getOneByArea(String area) {
+        return carouselRepository.findByAreaAndStatus(area, Status.ACTIVE);
+    }
+
+    @Override
+    public List<Carousel> getAll() {
+        return carouselRepository.findAllByStatus(Status.ACTIVE);
     }
 }

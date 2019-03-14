@@ -1,9 +1,12 @@
 package ge.idealab.kedi.model.enums;
 
 public enum Size {
-    S(1, "Small"),
-    M(2, "Medium"),
-    L(3, "Large");
+    XS(1, "XS"),
+    S(2, "S"),
+    M(3, "M"),
+    L(4, "Large"),
+    XL(5, "XL"),
+    XXL(6, "XXL");
     
     private int id;
     private String name;
