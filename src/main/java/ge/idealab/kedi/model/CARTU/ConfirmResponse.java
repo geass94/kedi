@@ -16,6 +16,15 @@ public class ConfirmResponse {
     @JacksonXmlProperty(localName = "Status")
     private String Status;
 
+    public ConfirmResponse() {
+    }
+
+    public ConfirmResponse(String transactionId, String paymentId, String status) {
+        TransactionId = transactionId;
+        PaymentId = paymentId;
+        Status = status;
+    }
+
     public String getTransactionId() {
         return TransactionId;
     }

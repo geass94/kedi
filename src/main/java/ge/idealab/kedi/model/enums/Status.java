@@ -7,10 +7,12 @@ public enum Status {
     LOCKED(3, "LOCKED"),
     EMAIL_NOT_VERIFIED(4, "EMAIL_NOT_VERIFIED"),
     TOO_MANY_FAILED_LOGIN(5, "TOO_MANY_FAILED_LOGIN"),
-    TENTATIVE(6, "TENTATIVE"),
+    VALIDATING(6, "VALIDATING"),
     ORDERED(7, "ORDERED"),
     CANCELED(8, "CANCELED"),
-    PAID(9, "PAID");
+    PAID(9, "PAID"),
+    DECLINED(10, "DECLINED"),
+    FAILED(11, "FAILED");
 
     private int id;
     private String name;

@@ -6,6 +6,7 @@ import ge.idealab.kedi.model.BaseStatusAuditEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,12 @@ public class Transaction extends BaseStatusAuditEntity {
     private Order order;
     @Column
     private BigDecimal amount;
+    @Column
+    private String paymentId;
+    @Column
+    private Date paymentDate;
+    @Column
+    private String transactionId;
 
     public Order getOrder() {
         return order;
@@ -45,5 +52,29 @@ public class Transaction extends BaseStatusAuditEntity {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }

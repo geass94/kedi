@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
         for (ProductDTO p : orderDTO.getProducts()) {
             subTotal = subTotal.add(p.getPrice());
         }
-        order.setSubTotal(subTotal);
+        order.setSubTotal(subTotal.setScale(2));
         order.setUuid(uuid);
         order.setStatus(Status.ORDERED);
         order.setProducts(this.mapProductDTOs(orderDTO.getProducts()));
@@ -47,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
         transaction.setOrder(order);
         transaction.setStatus(Status.ORDERED);
         transaction.setUuid(uuid2);
+        transaction.setAmount(order.getSubTotal());
+        transaction.setTransactionId(order.getUuid());
         transaction = transactionRepository.save(transaction);
 
         order.setTransactions(Collections.singleton(transaction));

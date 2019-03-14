@@ -1,7 +1,9 @@
 package ge.idealab.kedi.service.payment;
 
+import ge.idealab.kedi.model.CARTU.ConfirmRequest;
+import ge.idealab.kedi.model.CARTU.ConfirmResponse;
 import ge.idealab.kedi.model.CARTU.PaymentRequest;
 
 public interface PaymentService {
-    PaymentRequest initatePayment(Long orderId);
+    ConfirmResponse checkPayment(ConfirmRequest confirmRequest);
 }

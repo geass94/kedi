@@ -3,6 +3,8 @@ spring:
     url: jdbc:mysql://localhost/kedi_api?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
     username: root
     password: Root123$
+    testWhileIdle: true
+    validationQuery: SELECT 1
   jpa:
     show-sql: false
     hibernate:
@@ -16,7 +18,7 @@ spring:
       max-file-size: 250000KB
       max-request-size: 250000KB
   security:
-    require-ssl: true
+    require-ssl: false
     oauth2:
       client:
         registration:
@@ -70,3 +72,6 @@ server:
 #    key-store-password: gekedi
 #    keyStoreType: PKCS12
 #    keyAlias: tomcat
+
+logging:
+  file: "./uploads/log.txt"
