@@ -1,6 +1,7 @@
 package ge.idealab.kedi.service;
 
 import ge.idealab.kedi.model.bag.Cart;
+import ge.idealab.kedi.model.product.Product;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface CartService {
     Boolean removeFromCart(Long cartId);
 
     List<Cart> getUserCart();
+
+    void clearShoppingCartByProducts(List<Product> products);
 }

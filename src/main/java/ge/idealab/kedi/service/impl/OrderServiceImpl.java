@@ -3,16 +3,19 @@ package ge.idealab.kedi.service.impl;
 import ge.idealab.kedi.dto.OrderDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.model.CARTU.PaymentRequest;
+import ge.idealab.kedi.model.bag.Cart;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.order.Order;
 import ge.idealab.kedi.model.order.Transaction;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.InitPaymentRequest;
 import ge.idealab.kedi.repository.OrderRepository;
 import ge.idealab.kedi.repository.TransactionRepository;
+import ge.idealab.kedi.service.CartService;
 import ge.idealab.kedi.service.OrderService;
 import ge.idealab.kedi.service.ProductService;
-import org.modelmapper.ModelMapper;
+import ge.idealab.kedi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,10 @@ public class OrderServiceImpl implements OrderService {
     private TransactionRepository transactionRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CartService cartService;
 
     @Override
     public Order placeOrder(OrderDTO orderDTO) {
@@ -40,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUuid(uuid);
         order.setStatus(Status.ORDERED);
         order.setProducts(this.mapProductDTOs(orderDTO.getProducts()));
+        order.setUser(userService.getUserFromContext());
         order = orderRepository.save(order);
 
         Transaction transaction = new Transaction();
@@ -54,6 +62,12 @@ public class OrderServiceImpl implements OrderService {
         order.setTransactions(Collections.singleton(transaction));
         order = orderRepository.save(order);
         return order;
+    }
+
+    @Override
+    public void approveOrder(Order order) {
+        Order o = orderRepository.getOne(order.getId());
+        cartService.clearShoppingCartByProducts(o.getProducts());
     }
 
     @Override

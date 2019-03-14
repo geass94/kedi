@@ -1,7 +1,5 @@
 package ge.idealab.kedi.dto;
 
-import ge.idealab.kedi.model.order.Transaction;
-import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.user.Address;
 
 import java.math.BigDecimal;
@@ -13,6 +11,7 @@ import java.util.Set;
 public class OrderDTO {
     private Long id;
     private String uuid;
+    private UserDTO user;
     private List<ProductDTO> products = new ArrayList<>();
     private Set<TransactionDTO> transactions = new HashSet<>();
     private Address shippingAddress;
@@ -91,5 +90,13 @@ public class OrderDTO {
 
     public void setSubTotal(BigDecimal subTotal) {
         this.subTotal = subTotal;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 }

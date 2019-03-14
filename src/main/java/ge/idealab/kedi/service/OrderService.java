@@ -7,5 +7,6 @@ import ge.idealab.kedi.payload.request.InitPaymentRequest;
 
 public interface OrderService {
     Order placeOrder(OrderDTO orderDTO);
+    void approveOrder(Order order);
     PaymentRequest initPayment(InitPaymentRequest initPaymentRequest);
 }

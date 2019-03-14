@@ -26,6 +26,8 @@ public class PaymentServiceImpl implements PaymentService {
     private OrderRepository orderRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private OrderService orderService;
 
 
     @Override

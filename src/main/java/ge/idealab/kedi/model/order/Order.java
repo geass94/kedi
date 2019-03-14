@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.user.Address;
+import ge.idealab.kedi.model.user.User;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,7 +22,10 @@ import java.util.Set;
 public class Order extends BaseStatusAuditEntity {
     @Column
     private String uuid;
-    @ManyToMany(fetch = FetchType.LAZY,
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
@@ -106,5 +110,13 @@ public class Order extends BaseStatusAuditEntity {
 
     public void setSubTotal(BigDecimal subTotal) {
         this.subTotal = subTotal;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
