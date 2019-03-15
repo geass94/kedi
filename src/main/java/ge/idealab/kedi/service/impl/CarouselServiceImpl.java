@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,11 +33,29 @@ public class CarouselServiceImpl implements CarouselService {
 
     @Override
     public Carousel getOneByArea(String area) {
-        return carouselRepository.findByAreaAndStatus(area, Status.ACTIVE);
+        return carouselRepository.findFirstByAreaAndStatus(area, Status.ACTIVE);
+    }
+
+    @Override
+    public Carousel switchStatus(CarouselDTO carouselDTO, Long id) {
+        Carousel c = carouselRepository.getOne(id);
+        c.setStatus(carouselDTO.getStatus() == Status.ACTIVE ? Status.DISABLED : Status.ACTIVE);
+        c = carouselRepository.save(c);
+        return c;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Carousel c = carouselRepository.getOne(id);
+        c.setStatus(Status.DELETED);
+        carouselRepository.save(c);
     }
 
     @Override
     public List<Carousel> getAll() {
-        return carouselRepository.findAllByStatus(Status.ACTIVE);
+        List<Status> statuses = new ArrayList<>();
+        statuses.add(Status.ACTIVE);
+        statuses.add(Status.DISABLED);
+        return carouselRepository.findAllByStatusIn(statuses);
     }
 }

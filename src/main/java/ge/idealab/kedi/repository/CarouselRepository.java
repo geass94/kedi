@@ -11,5 +11,6 @@ import java.util.List;
 public interface CarouselRepository extends JpaRepository<Carousel, Long> {
     Carousel findByStatus(Status status);
     Carousel findByAreaAndStatus(String area, Status status);
-    List<Carousel> findAllByStatus(Status status);
+    Carousel findFirstByAreaAndStatus(String area, Status status);
+    List<Carousel> findAllByStatusIn(List<Status> statuses);
 }

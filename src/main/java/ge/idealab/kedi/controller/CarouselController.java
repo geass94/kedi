@@ -32,6 +32,11 @@ public class CarouselController {
         return ResponseEntity.ok(this.mapCarousel(carouselService.getOneByArea(area)));
     }
 
+    @GetMapping("/get-by-id/{id}")
+    public ResponseEntity<?> getCarouselById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.mapCarousel(carouselService.getOne(id)));
+    }
+
     private List<CarouselDTO> mapCarousels(List<Carousel> carousels) {
         ModelMapper modelMapper = new ModelMapper();
         List<CarouselDTO> carouselDTOS = new ArrayList<>();

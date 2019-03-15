@@ -1,10 +1,16 @@
 package ge.idealab.kedi.dto;
 
+import ge.idealab.kedi.model.converters.StatusConverter;
+import ge.idealab.kedi.model.enums.Status;
+
+import javax.persistence.Convert;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarouselDTO {
     private Long id;
+    @Convert(converter = StatusConverter.class)
+    private Status status;
     private String name;
     private String area;
     private String sliderEffect;
@@ -75,5 +81,13 @@ public class CarouselDTO {
 
     public void setCarouselFiles(List<CarouselFileDTO> carouselFiles) {
         this.carouselFiles = carouselFiles;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

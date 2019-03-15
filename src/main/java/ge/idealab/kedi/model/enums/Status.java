@@ -12,7 +12,8 @@ public enum Status {
     CANCELED(8, "CANCELED"),
     PAID(9, "PAID"),
     DECLINED(10, "DECLINED"),
-    FAILED(11, "FAILED");
+    FAILED(11, "FAILED"),
+    DISABLED(12, "DISABLED");
 
     private int id;
     private String name;

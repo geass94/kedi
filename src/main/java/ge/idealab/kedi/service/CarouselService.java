@@ -9,5 +9,7 @@ public interface CarouselService {
     Carousel create(CarouselDTO carouselDTO);
     Carousel getOne(Long id);
     Carousel getOneByArea(String area);
+    Carousel switchStatus(CarouselDTO carouselDTO, Long id);
+    void delete(Long id);
     List<Carousel> getAll();
 }

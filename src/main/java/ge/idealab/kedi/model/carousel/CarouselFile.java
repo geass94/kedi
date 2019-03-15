@@ -17,6 +17,10 @@ public class CarouselFile extends File {
     @JoinColumn(name="carousel_id")
     private Carousel carousel;
     @Column
+    private String title;
+    @Column
+    private String heading;
+    @Column
     private String caption;
     @Column
     private String externalURL;
@@ -43,5 +47,21 @@ public class CarouselFile extends File {
 
     public void setExternalURL(String externalURL) {
         this.externalURL = externalURL;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
     }
 }

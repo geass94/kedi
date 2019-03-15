@@ -5,6 +5,8 @@ public class CarouselFileDTO {
     private String name;
     private String fileType;
     private String fileUrl;
+    private String title;
+    private String heading;
     private String caption;
     private String externalURL;
 
@@ -54,5 +56,21 @@ public class CarouselFileDTO {
 
     public void setExternalURL(String externalURL) {
         this.externalURL = externalURL;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
     }
 }

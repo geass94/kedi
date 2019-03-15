@@ -61,6 +61,8 @@ public class CarouselFileServiceImpl implements CarouselFileService {
         List<CarouselFile> carouselFiles = new ArrayList<>();
         for (CarouselFileDTO c : carouselFileDTOS) {
             CarouselFile o = carouselFileRepository.getOne(c.getId());
+            o.setTitle(c.getTitle());
+            o.setHeading(c.getHeading());
             o.setCaption(c.getCaption());
             o.setExternalURL(c.getExternalURL());
             carouselFiles.add(o);

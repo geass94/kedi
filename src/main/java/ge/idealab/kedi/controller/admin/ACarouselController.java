@@ -34,6 +34,18 @@ public class ACarouselController {
         return ResponseEntity.ok(this.mapCarousel(carouselService.create(carouselDTO)));
     }
 
+    @PutMapping("/switch-status/{cid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> switchStatus(@PathVariable Long cid, @RequestBody CarouselDTO carouselDTO) {
+        return ResponseEntity.ok(this.mapCarousel(carouselService.switchStatus(carouselDTO, cid)));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteCarousel(@PathVariable Long id) {
+        carouselService.delete(id);
+    }
+
     @PostMapping("/add-captions")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addCaptions(@RequestBody List<CarouselFileDTO> carouselFileDTOS) {
