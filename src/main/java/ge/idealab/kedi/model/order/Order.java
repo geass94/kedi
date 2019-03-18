@@ -1,6 +1,7 @@
 package ge.idealab.kedi.model.order;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.product.Product;
@@ -24,6 +25,7 @@ public class Order extends BaseStatusAuditEntity {
     private String uuid;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", nullable=false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User user;
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
