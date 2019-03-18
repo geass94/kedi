@@ -1,6 +1,7 @@
 package ge.idealab.kedi.service.impl;
 
 import ge.idealab.kedi.dto.CarouselDTO;
+import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.carousel.Carousel;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.repository.CarouselRepository;
@@ -28,6 +29,9 @@ public class CarouselServiceImpl implements CarouselService {
 
     @Override
     public Carousel getOne(Long id) {
+        Carousel c1 = carouselRepository.getOne(id);
+        if (c1.equals(null))
+            throw new ResourceNotFoundException("Carousel", "Id", id);
         return carouselRepository.getOne(id);
     }
 
