@@ -241,7 +241,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getRealtedProducts(Long productId) {
         Product product = productRepository.getOne(productId);
-        return productRepository.findAllByCategoryListAndIdIsNotInAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
+        return productRepository.findAllByCategoryListInAndIdIsNotAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
     }
 
     @Override
