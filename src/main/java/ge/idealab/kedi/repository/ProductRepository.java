@@ -31,7 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllBySaleIsGreaterThanAndStatus(Float sale, Status status);
     List<Product> findAllBySaleIsGreaterThanAndCountDownIsAfterAndStatus(Float sale, Date countdown, Status status);
 
-    @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.status = :status ORDER BY RAND() ASC")
+    @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.countDown = NULL AND p.status = :status ORDER BY RAND() ASC")
     List<Product> findSaleOff(@Param("sale") Float sale, @Param("status") Status status);
 
 
