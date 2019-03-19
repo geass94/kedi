@@ -3,12 +3,10 @@ package ge.idealab.kedi.service.impl;
 import ge.idealab.kedi.dto.OrderDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.model.CARTU.PaymentRequest;
-import ge.idealab.kedi.model.bag.Cart;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.order.Order;
 import ge.idealab.kedi.model.order.Transaction;
 import ge.idealab.kedi.model.product.Product;
-import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.InitPaymentRequest;
 import ge.idealab.kedi.repository.OrderRepository;
 import ge.idealab.kedi.repository.TransactionRepository;
@@ -40,8 +38,13 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         BigDecimal subTotal = BigDecimal.ZERO;
         String uuid = UUID.randomUUID().toString();
+
         for (ProductDTO p : orderDTO.getProducts()) {
-            subTotal = subTotal.add(p.getPrice());
+            if (orderDTO.getProducts().containsAll( p.getBundle().getProducts() )) {
+                subTotal = subTotal.add( p.getBundle().getPrice() );
+            } else {
+                subTotal = subTotal.add(p.getPrice());
+            }
         }
         order.setSubTotal(subTotal.setScale(2));
         order.setUuid(uuid);
