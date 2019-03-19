@@ -35,6 +35,10 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.getOne(id);
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        if (product.getBundle() != null) {
+            List<ProductDTO> bundleProducts = this.mapProducts(product.getBundle().getProducts());
+            productDTO.getBundle().setProducts(bundleProducts);
+        }
         productDTO.setProductFiles(mapFiles(product));
         return ResponseEntity.ok(productDTO);
     }
