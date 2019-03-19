@@ -74,7 +74,7 @@ public class AProductController {
     @PostMapping("/set-sale")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> setSale(@RequestBody SaleRequest saleRequest) {
-        List<Product> products = productService.setSale(saleRequest.getProducts(), saleRequest.getSale());
+        List<Product> products = productService.setSale(saleRequest.getProducts(), saleRequest.getSale(), saleRequest.getCountDown());
         return ResponseEntity.ok(this.mapProducts(products));
     }
 

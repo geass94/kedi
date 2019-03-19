@@ -8,6 +8,7 @@ import ge.idealab.kedi.model.enums.Size;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public class ProductDTO {
@@ -28,6 +29,7 @@ public class ProductDTO {
     private List<CategoryDTO> categoryList;
     private List<ProductFileDTO> productFiles;
     private Float sale;
+    private Date countDown;
     private Long quantity;
     private Boolean promoted;
     private BundleDTO bundle;
@@ -173,5 +175,13 @@ public class ProductDTO {
 
     public void setBundle(BundleDTO bundle) {
         this.bundle = bundle;
+    }
+
+    public Date getCountDown() {
+        return countDown;
+    }
+
+    public void setCountDown(Date countDown) {
+        this.countDown = countDown;
     }
 }

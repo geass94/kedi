@@ -29,6 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByCreatedAtAfterAndStatus(Date date, Status status);
     List<Product> findAllByCategoryListInAndStatus(List<Category> categories, Status status);
     List<Product> findAllBySaleIsGreaterThanAndStatus(Float sale, Status status);
+    List<Product> findAllBySaleIsGreaterThanAndCountDownIsAfterAndStatus(Float sale, Date countdown, Status status);
 
     @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.status = :status ORDER BY RAND() ASC")
     List<Product> findSaleOff(@Param("sale") Float sale, @Param("status") Status status);

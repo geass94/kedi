@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public interface ProductService {
@@ -24,14 +25,14 @@ public interface ProductService {
     List<Product> getProductVariants(Long[] variantIds);
 
     List<Product> togglePromotion(List<ProductDTO> productDTOS);
-    List<Product> setSale(List<ProductDTO> productDTOS, Float sale);
+    List<Product> setSale(List<ProductDTO> productDTOS, Float sale, Date countDown);
     List<Product> refillStock(List<ProductDTO> productDTOS, Long quantity);
     List<Product> getProductsForBundling();
 
     List<Product> getProductsWithBundles();
 
     List<Product> getFeaturedProducts();
-    List<Product> getBestSellerProducts();
+    List<Product> getBestSaleProducts();
     List<Product> getProductsOnSale();
     List<Product> getRealtedProducts(Long productId);
     List<Product> getNewProducts();

@@ -128,6 +128,11 @@ public class ProductController {
         return ResponseEntity.ok(this.mapProducts(productService.getProductsOnSale()));
     }
 
+    @GetMapping("/get-best-sale")
+    public ResponseEntity<?> getBestSaleProducts() {
+        return ResponseEntity.ok(this.mapProducts(productService.getBestSaleProducts()));
+    }
+
     private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
         List<ProductFileDTO> productFileDTOS = new ArrayList<>();

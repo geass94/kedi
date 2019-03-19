@@ -16,6 +16,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -40,6 +41,8 @@ public class Product extends BaseStatusAuditEntity {
     private String description;
     @Column
     private Boolean promoted = false;
+    @Column
+    private Date countDown;
 
 //  Specifications
     @NotNull
@@ -204,5 +207,13 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
+    }
+
+    public Date getCountDown() {
+        return countDown;
+    }
+
+    public void setCountDown(Date countDown) {
+        this.countDown = countDown;
     }
 }

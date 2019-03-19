@@ -187,10 +187,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> setSale(List<ProductDTO> productDTOS, Float sale) {
+    public List<Product> setSale(List<ProductDTO> productDTOS, Float sale, Date countDown) {
         List<Product> products = new ArrayList<>();
         for (ProductDTO p : productDTOS) {
             Product o = productRepository.getOne(p.getId());
+            if (countDown != null) {
+                o.setCountDown(countDown);
+            }
             o.setSale( sale );
             products.add(o);
         }
@@ -226,8 +229,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getBestSellerProducts() {
-        return null;
+    public List<Product> getBestSaleProducts() {
+        return productRepository.findAllBySaleIsGreaterThanAndCountDownIsAfterAndStatus(1f, new Date(), Status.ACTIVE);
     }
 
     @Override
