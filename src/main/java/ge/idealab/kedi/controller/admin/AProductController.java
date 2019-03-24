@@ -20,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/product")
@@ -108,9 +106,9 @@ public class AProductController {
         return ResponseEntity.ok(productDTO);
     }
 
-    private Set<ProductFileDTO> mapFiles(Product product){
+    private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
-        Set<ProductFileDTO> productFileDTOS = new HashSet<>();
+        List<ProductFileDTO> productFileDTOS = new ArrayList<>();
         for(ProductFile productFile: product.getProductFiles()){
             productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
         }

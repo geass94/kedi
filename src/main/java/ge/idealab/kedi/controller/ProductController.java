@@ -20,9 +20,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -139,9 +137,9 @@ public class ProductController {
         return ResponseEntity.ok(this.mapProducts(productService.getBestSaleProducts()));
     }
 
-    private Set<ProductFileDTO> mapFiles(Product product){
+    private List<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
-        Set<ProductFileDTO> productFileDTOS = new HashSet<>();
+        List<ProductFileDTO> productFileDTOS = new ArrayList<>();
         for(ProductFile productFile: product.getProductFiles()){
             productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
         }

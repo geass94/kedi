@@ -9,15 +9,15 @@ import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.converters.SizeConverter;
 import ge.idealab.kedi.model.enums.Sex;
 import ge.idealab.kedi.model.enums.Size;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -61,11 +61,11 @@ public class Product extends BaseStatusAuditEntity {
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
-    private Set<Category> categoryList;
+    private List<Category> categoryList;
 
 //  File attachments
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
-    private Set<ProductFile> productFiles = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    private List<ProductFile> productFiles = new ArrayList<>();
 
 //  Product Variants
     @Column
@@ -129,6 +129,14 @@ public class Product extends BaseStatusAuditEntity {
         this.promoted = promoted;
     }
 
+    public Date getCountDown() {
+        return countDown;
+    }
+
+    public void setCountDown(Date countDown) {
+        this.countDown = countDown;
+    }
+
     public Color getColor() {
         return color;
     }
@@ -161,19 +169,19 @@ public class Product extends BaseStatusAuditEntity {
         this.manufacturer = manufacturer;
     }
 
-    public Set<Category> getCategoryList() {
+    public List<Category> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(Set<Category> categoryList) {
+    public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
 
-    public Set<ProductFile> getProductFiles() {
+    public List<ProductFile> getProductFiles() {
         return productFiles;
     }
 
-    public void setProductFiles(Set<ProductFile> productFiles) {
+    public void setProductFiles(List<ProductFile> productFiles) {
         this.productFiles = productFiles;
     }
 
@@ -207,13 +215,5 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
-    }
-
-    public Date getCountDown() {
-        return countDown;
-    }
-
-    public void setCountDown(Date countDown) {
-        this.countDown = countDown;
     }
 }

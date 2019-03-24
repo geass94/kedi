@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public class ProductDTO {
     private Long id;
@@ -27,8 +26,8 @@ public class ProductDTO {
     private Sex sex = Sex.MALE;
     private String description;
     private ManufacturerDTO manufacturer;
-    private Set<CategoryDTO> categoryList;
-    private Set<ProductFileDTO> productFiles;
+    private List<CategoryDTO> categoryList;
+    private List<ProductFileDTO> productFiles;
     private Float sale;
     private Date countDown;
     private Long quantity;
@@ -103,19 +102,19 @@ public class ProductDTO {
         this.manufacturer = manufacturer;
     }
 
-    public Set<CategoryDTO> getCategoryList() {
+    public List<CategoryDTO> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(Set<CategoryDTO> categoryList) {
+    public void setCategoryList(List<CategoryDTO> categoryList) {
         this.categoryList = categoryList;
     }
 
-    public Set<ProductFileDTO> getProductFiles() {
+    public List<ProductFileDTO> getProductFiles() {
         return productFiles;
     }
 
-    public void setProductFiles(Set<ProductFileDTO> productFiles) {
+    public void setProductFiles(List<ProductFileDTO> productFiles) {
         this.productFiles = productFiles;
     }
 

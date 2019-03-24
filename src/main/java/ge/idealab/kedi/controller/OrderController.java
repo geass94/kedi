@@ -37,6 +37,7 @@ public class OrderController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getOrderHistory(){
         ModelMapper modelMapper = new ModelMapper();
+
         List<OrderDTO> orderDTOS = new ArrayList<>();
         for (Order order : orderService.getOrderHistory()){
             orderDTOS.add(modelMapper.map(order, OrderDTO.class));
