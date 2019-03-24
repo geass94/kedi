@@ -9,15 +9,15 @@ import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.converters.SizeConverter;
 import ge.idealab.kedi.model.enums.Sex;
 import ge.idealab.kedi.model.enums.Size;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "products")
@@ -61,11 +61,11 @@ public class Product extends BaseStatusAuditEntity {
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
-    private List<Category> categoryList;
+    private Set<Category> categoryList;
 
 //  File attachments
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
-    private List<ProductFile> productFileList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    private Set<ProductFile> productFiles = new HashSet<>();
 
 //  Product Variants
     @Column
@@ -161,20 +161,20 @@ public class Product extends BaseStatusAuditEntity {
         this.manufacturer = manufacturer;
     }
 
-    public List<Category> getCategoryList() {
+    public Set<Category> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
+    public void setCategoryList(Set<Category> categoryList) {
         this.categoryList = categoryList;
     }
 
-    public List<ProductFile> getProductFileList() {
-        return productFileList;
+    public Set<ProductFile> getProductFiles() {
+        return productFiles;
     }
 
-    public void setProductFileList(List<ProductFile> productFileList) {
-        this.productFileList = productFileList;
+    public void setProductFiles(Set<ProductFile> productFiles) {
+        this.productFiles = productFiles;
     }
 
     public Boolean getBaseProduct() {

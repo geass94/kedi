@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/cart")
@@ -83,10 +85,10 @@ public class CartController {
         return cartDTOS;
     }
 
-    private List<ProductFileDTO> mapFiles(Product product){
+    private Set<ProductFileDTO> mapFiles(Product product){
         ModelMapper modelMapper = new ModelMapper();
-        List<ProductFileDTO> productFileDTOS = new ArrayList<>();
-        for(ProductFile productFile: product.getProductFileList()){
+        Set<ProductFileDTO> productFileDTOS = new HashSet<>();
+        for(ProductFile productFile: product.getProductFiles()){
             productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
         }
         return productFileDTOS;

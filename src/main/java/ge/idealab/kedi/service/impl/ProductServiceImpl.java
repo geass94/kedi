@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
             product.setManufacturer(manufacturer);
         }
 
-        List<Category> categories = new ArrayList<>();
+        Set<Category> categories = new HashSet<>();
         for(Category category: product.getCategoryList()){
             if(category.getId() != null){
                 categories.add(categoryRepository.getOne(category.getId()));
@@ -126,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
         if (p.getDescription() != null)
             p1.setDescription(p.getDescription());
         if (p.getCategoryList() != null) {
-            List<Category> categories = new ArrayList<>();
+            Set<Category> categories = new HashSet<>();
             for (CategoryDTO c : p.getCategoryList()){
                 categories.add(categoryRepository.getOne(c.getId()));
             }
@@ -241,7 +241,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getRealtedProducts(Long productId) {
         Product product = productRepository.getOne(productId);
-        return productRepository.findAllByCategoryListInAndIdIsNotAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
+        return productRepository.findAllByCategoryListInAndIdIsNotAndStatus((List<Category>) product.getCategoryList(), productId, Status.ACTIVE);
     }
 
     @Override

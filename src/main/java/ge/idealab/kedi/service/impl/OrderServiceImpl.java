@@ -7,6 +7,7 @@ import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.order.Order;
 import ge.idealab.kedi.model.order.Transaction;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.payload.request.InitPaymentRequest;
 import ge.idealab.kedi.repository.OrderRepository;
 import ge.idealab.kedi.repository.TransactionRepository;
@@ -87,6 +88,14 @@ public class OrderServiceImpl implements OrderService {
                 "000000008001387-00000001"
         );
         return paymentRequest;
+    }
+
+    @Override
+    public List<Order> getOrderHistory() {
+        Set<Status> statuses = new HashSet<>();
+        statuses.add(Status.ACTIVE); statuses.add(Status.ORDERED); statuses.add(Status.DECLINED); statuses.add(Status.PAID);
+        User user = userService.getUserFromContext();
+        return orderRepository.findAllByUserAndStatusIsInOrderByStatusDesc(user, statuses);
     }
 
     List<Product> mapProductDTOs(List<ProductDTO> productDTOS) {
