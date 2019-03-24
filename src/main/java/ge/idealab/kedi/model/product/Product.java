@@ -46,7 +46,7 @@ public class Product extends BaseStatusAuditEntity {
 
 //  Specifications
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="color_id", nullable=false)
     private Color color;
     @Convert(converter = SizeConverter.class)
@@ -54,10 +54,10 @@ public class Product extends BaseStatusAuditEntity {
     private Size size;
     @Convert(converter = SexConverter.class)
     private Sex sex = Sex.MALE;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="manufacturer_id", nullable=false)
     private Manufacturer manufacturer;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
