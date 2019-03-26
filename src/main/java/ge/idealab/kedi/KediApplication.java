@@ -49,37 +49,37 @@ public class KediApplication {
             authorities.add(new Authority("ROLE_USER"));
             authorities = authorityRepository.saveAll(authorities);
 
-            User admin = new User("admin", "admin@localhost", passwordEncoder.encode("admin1234"), AuthProvider.local, authorities);
+            User admin = new User("admin", "admin@kedi.ge", passwordEncoder.encode("Kf*E]U/c]4ZVZfE_"), AuthProvider.local, authorities);
             userRepository.save(admin);
-            User geass = new User("geass", "okoridze@yahoo.com", passwordEncoder.encode("1234"), AuthProvider.local, authorities);
+            User geass = new User("root", "okoridze@yahoo.com", passwordEncoder.encode("1234"), AuthProvider.local, authorities);
             userRepository.save(geass);
-            for (int i = 0; i < 10; i++){
-                if (i % 3 == 0){
-                    Category category = new Category();
-                    List<Category> subCategories = new ArrayList<>();
-                    category.setName("Category ["+i+"]");
-                    category = categoryRepository.save(category);
-                    for (int j = 0; j < 3; j++){
-                        Category subCategory = new Category();
-                        subCategory.setName("Category ["+i+"] - Subcategory ["+j+"]");
-                        subCategory.setParent(category);
-                        subCategories.add(subCategory);
-                    }
-                    categoryRepository.saveAll(subCategories);
-                }else{
-                    Category category = new Category();
-                    category.setName("Category ["+i+"]");
-                    categoryRepository.save(category);
-                }
-            }
-
-            for (int i = 0; i < 5; i++){
-                colorRepository.save(new Color("["+i+"] Color"));
-            }
-
-            for (int i = 0; i < 5; i++){
-                manufacturerRepository.save(new Manufacturer("["+i+"] Manufacturer"));
-            }
+//            for (int i = 0; i < 10; i++){
+//                if (i % 3 == 0){
+//                    Category category = new Category();
+//                    List<Category> subCategories = new ArrayList<>();
+//                    category.setName("Category ["+i+"]");
+//                    category = categoryRepository.save(category);
+//                    for (int j = 0; j < 3; j++){
+//                        Category subCategory = new Category();
+//                        subCategory.setName("Category ["+i+"] - Subcategory ["+j+"]");
+//                        subCategory.setParent(category);
+//                        subCategories.add(subCategory);
+//                    }
+//                    categoryRepository.saveAll(subCategories);
+//                }else{
+//                    Category category = new Category();
+//                    category.setName("Category ["+i+"]");
+//                    categoryRepository.save(category);
+//                }
+//            }
+//
+//            for (int i = 0; i < 5; i++){
+//                colorRepository.save(new Color("["+i+"] Color"));
+//            }
+//
+//            for (int i = 0; i < 5; i++){
+//                manufacturerRepository.save(new Manufacturer("["+i+"] Manufacturer"));
+//            }
         }
     }
 
