@@ -1,12 +1,12 @@
 package ge.idealab.kedi.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
-import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.converters.ConditionConverter;
 import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.converters.SizeConverter;
+import ge.idealab.kedi.model.enums.Condition;
 import ge.idealab.kedi.model.enums.Sex;
 import ge.idealab.kedi.model.enums.Size;
 import org.hibernate.annotations.NotFound;
@@ -29,6 +29,12 @@ public class Product extends BaseStatusAuditEntity {
     @Column
     @NotNull
     private String name;
+    @Column
+    private String referenceCode;
+    @Column
+    private String barCode;
+    @Convert(converter = ConditionConverter.class)
+    private Condition condition;
     @Column
     @NotNull
     private BigDecimal price = BigDecimal.valueOf(0);
@@ -215,5 +221,29 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
+    }
+
+    public String getReferenceCode() {
+        return referenceCode;
+    }
+
+    public void setReferenceCode(String referenceCode) {
+        this.referenceCode = referenceCode;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 }

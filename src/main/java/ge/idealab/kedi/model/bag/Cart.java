@@ -7,8 +7,7 @@ import ge.idealab.kedi.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+
 @Entity
 @Table(name = "shopping_cart")
 public class Cart extends BaseStatusAuditEntity {

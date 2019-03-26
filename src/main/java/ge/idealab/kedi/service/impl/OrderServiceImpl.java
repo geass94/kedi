@@ -40,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal subTotal = BigDecimal.ZERO;
         String uuid = UUID.randomUUID().toString();
 
+
         for (ProductDTO p : orderDTO.getProducts()) {
             if (orderDTO.getProducts().containsAll( p.getBundle().getProducts() )) {
                 subTotal = subTotal.add( p.getBundle().getPrice() );
@@ -47,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
                 subTotal = subTotal.add(p.getPrice());
             }
         }
+
         order.setSubTotal(subTotal.setScale(2));
         order.setUuid(uuid);
         order.setStatus(Status.ORDERED);

@@ -1,6 +1,7 @@
-package ge.idealab.kedi.model;
+package ge.idealab.kedi.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ge.idealab.kedi.model.BaseStatusAuditEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

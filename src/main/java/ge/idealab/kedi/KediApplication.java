@@ -2,10 +2,7 @@ package ge.idealab.kedi;
 
 import ge.idealab.kedi.config.AppProperties;
 import ge.idealab.kedi.config.FileStorageProperties;
-import ge.idealab.kedi.model.Category;
 import ge.idealab.kedi.model.enums.AuthProvider;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
 import ge.idealab.kedi.model.user.Authority;
 import ge.idealab.kedi.model.user.User;
 import ge.idealab.kedi.repository.*;

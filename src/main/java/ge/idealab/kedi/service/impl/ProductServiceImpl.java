@@ -4,7 +4,7 @@ import ge.idealab.kedi.dto.BundleDTO;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
-import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.product.Category;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Bundle;
 import ge.idealab.kedi.model.product.Color;

@@ -3,7 +3,7 @@ package ge.idealab.kedi.service;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
-import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.product.Category;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
 

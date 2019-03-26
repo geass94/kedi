@@ -1,7 +1,6 @@
 package ge.idealab.kedi.dto;
 
 import com.fasterxml.jackson.annotation.*;
-import ge.idealab.kedi.model.product.Product;
 
 import java.math.BigDecimal;
 import java.util.List;

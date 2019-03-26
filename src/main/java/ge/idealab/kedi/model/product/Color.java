@@ -1,6 +1,5 @@
 package ge.idealab.kedi.model.product;
 
-import ge.idealab.kedi.model.BaseEntity;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 
 import javax.persistence.*;

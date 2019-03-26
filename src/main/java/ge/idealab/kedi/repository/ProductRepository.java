@@ -1,6 +1,6 @@
 package ge.idealab.kedi.repository;
 
-import ge.idealab.kedi.model.Category;
+import ge.idealab.kedi.model.product.Category;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Color;
 import ge.idealab.kedi.model.product.Manufacturer;
