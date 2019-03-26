@@ -54,7 +54,7 @@ public class SpecificationServiceImpl implements SpecificationService {
     public Category addCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
         category.setName(categoryDTO.getName());
-        if (categoryDTO.getParent() != null) {
+        if (categoryDTO.getParent() != null && categoryDTO.getParent().getId() != null) {
             Category parent = categoryRepository.getOne(categoryDTO.getParent().getId());
             category.setParent(parent);
         }
