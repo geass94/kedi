@@ -53,7 +53,7 @@ public class SpecificationController {
     public ResponseEntity<?> getParentCategories(){
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByParentIsNullAndStatus(Status.ACTIVE)){
+        for(Category model : categoryRepository.findAllByParentIsNullAndStatus(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, CategoryDTO.class));
         }
         return ResponseEntity.ok(dtos);
