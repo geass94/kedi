@@ -19,7 +19,7 @@ public class BasicPageServiceImpl implements BasicPageService {
     @Override
     public Boolean checkAlias(String alias) {
         Integer count = basicPageRepository.checkAlias(alias);
-        return count == 1;
+        return count == 0;
     }
 
     @Override
