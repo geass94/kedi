@@ -33,8 +33,6 @@ public class Product extends BaseStatusAuditEntity {
     private String referenceCode;
     @Column
     private String barCode;
-    @Convert(converter = ConditionConverter.class)
-    private Condition condition;
     @Column
     @NotNull
     private BigDecimal price = BigDecimal.valueOf(0);
@@ -239,11 +237,4 @@ public class Product extends BaseStatusAuditEntity {
         this.barCode = barCode;
     }
 
-    public Condition getCondition() {
-        return condition;
-    }
-
-    public void setCondition(Condition condition) {
-        this.condition = condition;
-    }
 }

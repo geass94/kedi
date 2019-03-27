@@ -12,6 +12,6 @@ public interface BasicPageRepository extends JpaRepository<BasicPage, Long> {
     BasicPage findByAlias(String alias);
     Page<BasicPage> findAllByStatus(Pageable pageable, Status status);
 
-    @Query("SELECT count(id) FROM BasicPage b WHERE b.alias = :alias")
-    Integer checkAlias(@Param("alias") String alias);
+    @Query("SELECT count(id) FROM BasicPage b WHERE b.alias = :alias AND b.status = :status")
+    Integer checkAlias(@Param("alias") String alias, @Param("status") Status status);
 }

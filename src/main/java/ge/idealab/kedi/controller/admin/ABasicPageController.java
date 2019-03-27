@@ -40,6 +40,12 @@ public class ABasicPageController {
         return basicPageService.checkAlias(alias);
     }
 
+    @DeleteMapping("/delete-page/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long id){
+        basicPageService.delete(id);
+    }
+
     @GetMapping("/get-all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllPages(@RequestParam("sort") String sort,

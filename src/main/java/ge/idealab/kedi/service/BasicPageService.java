@@ -11,4 +11,5 @@ public interface BasicPageService {
     BasicPage getByAlias(String alias);
     BasicPage update(BasicPageDTO basicPageDTO, Long id);
     Page<BasicPage> getAll(Pageable pageable);
+    void delete(Long id);
 }
