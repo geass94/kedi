@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://kedi.ge:3306/kedi_api?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost/kedi_api?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
     username: root
     password: Root123$
     testWhileIdle: true
