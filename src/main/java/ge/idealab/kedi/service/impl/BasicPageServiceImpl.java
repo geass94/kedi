@@ -17,6 +17,12 @@ public class BasicPageServiceImpl implements BasicPageService {
     private BasicPageRepository basicPageRepository;
 
     @Override
+    public Boolean checkAlias(String alias) {
+        Integer count = basicPageRepository.checkAlias(alias);
+        return count == 1;
+    }
+
+    @Override
     public BasicPage create(BasicPageDTO basicPageDTO) {
         ModelMapper modelMapper = new ModelMapper();
         if(basicPageDTO.getAlias() == null){

@@ -27,7 +27,7 @@ public class Carousel extends BaseStatusAuditEntity {
     private Double height = 480d;
     @Column
     private String dimensionUnit = "px";
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "carousel")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "carousel")
     private List<CarouselFile> carouselFiles = new ArrayList<>();
 
     public String getName() {

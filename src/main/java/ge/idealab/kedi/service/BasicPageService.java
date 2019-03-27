@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BasicPageService {
+    Boolean checkAlias(String alias);
     BasicPage create(BasicPageDTO basicPageDTO);
     BasicPage getByAlias(String alias);
     BasicPage update(BasicPageDTO basicPageDTO, Long id);

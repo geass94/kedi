@@ -34,6 +34,12 @@ public class ABasicPageController {
         return ResponseEntity.ok(this.mapBasicPage(basicPage));
     }
 
+    @GetMapping("/check-alias/{alias}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Boolean checkAlias(@PathVariable String alias) {
+        return basicPageService.checkAlias(alias);
+    }
+
     @GetMapping("/get-all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllPages(@RequestParam("sort") String sort,
