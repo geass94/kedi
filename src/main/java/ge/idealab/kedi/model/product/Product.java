@@ -54,6 +54,8 @@ public class Product extends BaseStatusAuditEntity {
     @JoinColumn(name="color_id", nullable=false)
     private Color color;
     @NotNull
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="size_id", nullable=false)
     private Size size;
     @Convert(converter = SexConverter.class)
     private Sex sex = Sex.MALE;
