@@ -3,12 +3,12 @@ package ge.idealab.kedi.model.product;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
-import ge.idealab.kedi.model.converters.ConditionConverter;
 import ge.idealab.kedi.model.converters.SexConverter;
-import ge.idealab.kedi.model.converters.SizeConverter;
-import ge.idealab.kedi.model.enums.Condition;
 import ge.idealab.kedi.model.enums.Sex;
-import ge.idealab.kedi.model.enums.Size;
+import ge.idealab.kedi.model.product.attribute.Category;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Size;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -53,7 +53,6 @@ public class Product extends BaseStatusAuditEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="color_id", nullable=false)
     private Color color;
-    @Convert(converter = SizeConverter.class)
     @NotNull
     private Size size;
     @Convert(converter = SexConverter.class)

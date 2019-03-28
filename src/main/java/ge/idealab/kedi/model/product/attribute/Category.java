@@ -1,4 +1,4 @@
-package ge.idealab.kedi.model.product;
+package ge.idealab.kedi.model.product.attribute;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;

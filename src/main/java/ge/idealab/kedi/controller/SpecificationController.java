@@ -3,13 +3,16 @@ package ge.idealab.kedi.controller;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
-import ge.idealab.kedi.model.product.Category;
+import ge.idealab.kedi.dto.SizeDTO;
+import ge.idealab.kedi.model.product.attribute.Category;
 import ge.idealab.kedi.model.enums.Status;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Size;
 import ge.idealab.kedi.repository.CategoryRepository;
 import ge.idealab.kedi.repository.ColorRepository;
 import ge.idealab.kedi.repository.ManufacturerRepository;
+import ge.idealab.kedi.repository.SizeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,8 @@ public class SpecificationController {
     private CategoryRepository categoryRepository;
     @Autowired
     private ManufacturerRepository manufacturerRepository;
+    @Autowired
+    private SizeRepository sizeRepository;
 
     @GetMapping("/get-colors")
     public ResponseEntity<?> getColors(){
@@ -65,6 +70,16 @@ public class SpecificationController {
         List<ManufacturerDTO> dtos = new ArrayList<>();
         for(Manufacturer model: manufacturerRepository.findAllByStatus(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, ManufacturerDTO.class));
+        }
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/get-sizes")
+    public ResponseEntity<?> getSizes(){
+        ModelMapper modelMapper = new ModelMapper();
+        List<SizeDTO> dtos = new ArrayList<>();
+        for(Size model: sizeRepository.findAllByStatus(Status.ACTIVE)){
+            dtos.add(modelMapper.map(model, SizeDTO.class));
         }
         return ResponseEntity.ok(dtos);
     }

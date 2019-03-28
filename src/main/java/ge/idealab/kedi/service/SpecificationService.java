@@ -3,9 +3,11 @@ package ge.idealab.kedi.service;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
-import ge.idealab.kedi.model.product.Category;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.dto.SizeDTO;
+import ge.idealab.kedi.model.product.attribute.Category;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Size;
 
 import java.util.List;
 
@@ -22,4 +24,8 @@ public interface SpecificationService {
     Manufacturer addManufacturer(ManufacturerDTO manufacturerDTO);
     void deleteManufacturer(Long id);
     void saveManufacturer(ManufacturerDTO manufacturerDTO, Long id);
-}
+
+    Size addSize(SizeDTO sizeDTO);
+    void deleteSize(Long id);
+    void saveSize(SizeDTO sizeDTO, Long id)
+;}

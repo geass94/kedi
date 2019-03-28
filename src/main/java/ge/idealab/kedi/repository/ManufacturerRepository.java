@@ -1,7 +1,7 @@
 package ge.idealab.kedi.repository;
 
 import ge.idealab.kedi.model.enums.Status;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

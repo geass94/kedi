@@ -3,9 +3,11 @@ package ge.idealab.kedi.controller.admin;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
-import ge.idealab.kedi.model.product.Category;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.dto.SizeDTO;
+import ge.idealab.kedi.model.product.attribute.Category;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Size;
 import ge.idealab.kedi.service.SpecificationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +97,27 @@ public class ASpecificationController {
     @PreAuthorize("hasRole('ADMIN')")
     public boolean deleteManufacturer(@PathVariable Long cid){
         specificationService.deleteManufacturer(cid);
+        return true;
+    }
+
+    @PostMapping("/add-size")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> addSize(@RequestBody SizeDTO sizeDTO){
+        ModelMapper modelMapper = new ModelMapper();
+        Size manufacturer = specificationService.addSize(sizeDTO);
+        return ResponseEntity.ok(modelMapper.map(manufacturer, ManufacturerDTO.class));
+    }
+
+    @PutMapping("/save-size/{cid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void saveSize(@RequestBody SizeDTO sizeDTO, @PathVariable Long cid){
+        specificationService.saveSize(sizeDTO, cid);
+    }
+
+    @DeleteMapping("/delete-size/{cid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public boolean deleteSize(@PathVariable Long cid){
+        specificationService.deleteSize(cid);
         return true;
     }
 }

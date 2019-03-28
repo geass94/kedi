@@ -4,17 +4,15 @@ import ge.idealab.kedi.dto.BundleDTO;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
-import ge.idealab.kedi.model.product.Category;
+import ge.idealab.kedi.model.product.attribute.Category;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.Bundle;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.model.product.attribute.Size;
 import ge.idealab.kedi.payload.response.PriceRange;
-import ge.idealab.kedi.repository.CategoryRepository;
-import ge.idealab.kedi.repository.ColorRepository;
-import ge.idealab.kedi.repository.ManufacturerRepository;
-import ge.idealab.kedi.repository.ProductRepository;
+import ge.idealab.kedi.repository.*;
 import ge.idealab.kedi.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +35,18 @@ public class ProductServiceImpl implements ProductService {
     private ColorRepository colorRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private SizeRepository sizeRepository;
 
     @Override
     public Product create(ProductDTO productDTO) {
         ModelMapper modelMapper = new ModelMapper();
         Product product = modelMapper.map(productDTO, Product.class);
+
+        if(product.getSize().getId() != null) {
+            Size size = sizeRepository.getOne(product.getSize().getId());
+            product.setSize(size);
+        }
 
         if(product.getColor().getId() != null){
             Color color = colorRepository.getOne(product.getColor().getId());
@@ -135,11 +140,13 @@ public class ProductServiceImpl implements ProductService {
         if (p.getSex() != null)
             p1.setSex(p.getSex());
         if (p.getSex() != null)
-            p1.setSize(p.getSize());
+            p1.setSize(modelMapper.map(p.getSize(), Size.class));
         if (p.getColor() != null)
             p1.setColor(modelMapper.map(p.getColor(), Color.class));
         if (p.getManufacturer() != null)
             p1.setManufacturer(modelMapper.map(p.getManufacturer(), Manufacturer.class));
+        if (p.getSize() != null)
+            p1.setSize(modelMapper.map(p.getSize(), Size.class));
         p1.setUpdatedAt(new Date());
         p1 = productRepository.save(p1);
         return p1;

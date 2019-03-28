@@ -1,9 +1,9 @@
 package ge.idealab.kedi.repository;
 
-import ge.idealab.kedi.model.product.Category;
+import ge.idealab.kedi.model.product.attribute.Category;
 import ge.idealab.kedi.model.enums.Status;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

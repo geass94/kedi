@@ -1,9 +1,7 @@
 package ge.idealab.kedi.dto;
 
 import ge.idealab.kedi.model.converters.SexConverter;
-import ge.idealab.kedi.model.converters.SizeConverter;
 import ge.idealab.kedi.model.enums.Sex;
-import ge.idealab.kedi.model.enums.Size;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,9 +17,8 @@ public class ProductDTO {
     private BigDecimal price;
     @NotNull
     private ColorDTO color;
-    @Convert(converter = SizeConverter.class)
     @NotNull
-    private Size size;
+    private SizeDTO size;
     @Convert(converter = SexConverter.class)
     private Sex sex = Sex.MALE;
     private String description;
@@ -70,11 +67,11 @@ public class ProductDTO {
         this.color = color;
     }
 
-    public Size getSize() {
+    public SizeDTO getSize() {
         return size;
     }
 
-    public void setSize(Size size) {
+    public void setSize(SizeDTO size) {
         this.size = size;
     }
 

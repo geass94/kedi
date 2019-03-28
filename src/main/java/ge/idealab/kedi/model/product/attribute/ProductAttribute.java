@@ -1,4 +1,4 @@
-package ge.idealab.kedi.model.product;
+package ge.idealab.kedi.model.product.attribute;
 
 public class ProductAttribute {
     private String name;

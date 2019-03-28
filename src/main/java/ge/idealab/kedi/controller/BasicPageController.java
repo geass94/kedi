@@ -15,4 +15,5 @@ public class BasicPageController {
     public ResponseEntity<?> getPageByAlias(@PathVariable String alias) {
         return ResponseEntity.ok(basicPageService.getByAlias(alias));
     }
+
 }

@@ -3,13 +3,16 @@ package ge.idealab.kedi.service.impl;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ColorDTO;
 import ge.idealab.kedi.dto.ManufacturerDTO;
-import ge.idealab.kedi.model.product.Category;
+import ge.idealab.kedi.dto.SizeDTO;
+import ge.idealab.kedi.model.product.attribute.Category;
 import ge.idealab.kedi.model.enums.Status;
-import ge.idealab.kedi.model.product.Color;
-import ge.idealab.kedi.model.product.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Color;
+import ge.idealab.kedi.model.product.attribute.Manufacturer;
+import ge.idealab.kedi.model.product.attribute.Size;
 import ge.idealab.kedi.repository.CategoryRepository;
 import ge.idealab.kedi.repository.ColorRepository;
 import ge.idealab.kedi.repository.ManufacturerRepository;
+import ge.idealab.kedi.repository.SizeRepository;
 import ge.idealab.kedi.service.SpecificationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,8 @@ public class SpecificationServiceImpl implements SpecificationService {
     private ColorRepository colorRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private SizeRepository sizeRepository;
 
     @Override
     public List<Category> addCategories(List<CategoryDTO> categoryDTOS) {
@@ -134,5 +139,28 @@ public class SpecificationServiceImpl implements SpecificationService {
         Manufacturer manufacturer = manufacturerRepository.getOne(id);
         manufacturer.setName(manufacturerDTO.getName());
         manufacturerRepository.save(manufacturer);
+    }
+
+    @Override
+    public Size addSize(SizeDTO sizeDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        Size size = modelMapper.map(sizeDTO, Size.class);
+        return sizeRepository.save(size);
+    }
+
+    @Override
+    public void deleteSize(Long id) {
+        Size size = sizeRepository.getOne(id);
+        size.setStatus(Status.DELETED);
+        sizeRepository.save(size);
+    }
+
+    @Override
+    public void saveSize(SizeDTO sizeDTO, Long id) {
+        Size size = sizeRepository.getOne(id);
+        size.setCountrySuffix(sizeDTO.getCountrySuffix());
+        size.setGenderSuffix(sizeDTO.getGenderSuffix());
+        size.setSize(sizeDTO.getSize());
+        sizeRepository.save(size);
     }
 }
