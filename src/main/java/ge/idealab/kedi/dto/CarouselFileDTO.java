@@ -9,6 +9,7 @@ public class CarouselFileDTO {
     private String heading;
     private String caption;
     private String externalURL;
+    private String label;
 
     public Long getId() {
         return id;
@@ -72,5 +73,13 @@ public class CarouselFileDTO {
 
     public void setHeading(String heading) {
         this.heading = heading;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

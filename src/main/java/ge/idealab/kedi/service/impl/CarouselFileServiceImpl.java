@@ -65,6 +65,7 @@ public class CarouselFileServiceImpl implements CarouselFileService {
             o.setHeading(c.getHeading());
             o.setCaption(c.getCaption());
             o.setExternalURL(c.getExternalURL());
+            o.setLabel(c.getLabel());
             carouselFiles.add(o);
         }
         carouselFiles = carouselFileRepository.saveAll(carouselFiles);

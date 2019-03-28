@@ -24,6 +24,8 @@ public class CarouselFile extends File {
     private String caption;
     @Column
     private String externalURL;
+    @Column
+    private String label;
 
     public Carousel getCarousel() {
         return carousel;
@@ -63,5 +65,13 @@ public class CarouselFile extends File {
 
     public void setHeading(String heading) {
         this.heading = heading;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
