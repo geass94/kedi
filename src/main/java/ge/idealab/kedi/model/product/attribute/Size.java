@@ -20,6 +20,12 @@ public class Size extends BaseStatusAuditEntity {
     private String genderSuffix;
     @Column
     private String size;
+    @Column
+    private Float width;
+    @Column
+    private Float depth;
+    @Column
+    private Float length;
 
     public String getCountrySuffix() {
         return countrySuffix;
@@ -43,5 +49,29 @@ public class Size extends BaseStatusAuditEntity {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public void setWidth(Float width) {
+        this.width = width;
+    }
+
+    public Float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(Float depth) {
+        this.depth = depth;
+    }
+
+    public Float getLength() {
+        return length;
+    }
+
+    public void setLength(Float length) {
+        this.length = length;
     }
 }

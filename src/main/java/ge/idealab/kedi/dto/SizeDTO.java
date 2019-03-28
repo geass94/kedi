@@ -5,6 +5,9 @@ public class SizeDTO {
     private String countrySuffix;
     private String genderSuffix;
     private String size;
+    private Float width;
+    private Float depth;
+    private Float length;
 
     public Long getId() {
         return id;
@@ -36,5 +39,29 @@ public class SizeDTO {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public void setWidth(Float width) {
+        this.width = width;
+    }
+
+    public Float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(Float depth) {
+        this.depth = depth;
+    }
+
+    public Float getLength() {
+        return length;
+    }
+
+    public void setLength(Float length) {
+        this.length = length;
     }
 }
