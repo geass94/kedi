@@ -70,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
         if (product.getProductVariantId() != null && product.getProductVariantIds() != null && product.getProductVariantIds().length > 0){
             Product base = productRepository.getOne(product.getProductVariantId());
             base.setTotalQuantity( base.getTotalQuantity() + product.getQuantity() );
+            productRepository.save(base);
             product.setBaseProduct(false);
             product = productRepository.save(product);
             product.setProductVariantId(product.getId());
