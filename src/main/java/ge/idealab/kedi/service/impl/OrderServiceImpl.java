@@ -42,11 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
 
         for (ProductDTO p : orderDTO.getProducts()) {
-            if (orderDTO.getProducts().containsAll( p.getBundle().getProducts() )) {
-                subTotal = subTotal.add( p.getBundle().getPrice() );
-            } else {
-                subTotal = subTotal.add(p.getPrice());
-            }
+            subTotal = subTotal.add(p.getPrice());
         }
 
         order.setSubTotal(subTotal.setScale(2));
