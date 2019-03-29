@@ -58,11 +58,13 @@ public class Product extends BaseStatusAuditEntity {
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="size_id", nullable=false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Size size;
     @Convert(converter = SexConverter.class)
     private Sex sex = Sex.MALE;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="manufacturer_id", nullable=false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Manufacturer manufacturer;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "product_category",
