@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "colors")
 public class Color extends BaseStatusAuditEntity {
-    @Column
+    @Column(unique = true)
     private String name;
     @Column
     private String hex;

@@ -117,6 +117,7 @@ public class SpecificationServiceImpl implements SpecificationService {
     public void saveColor(ColorDTO colorDTO, Long id) {
         Color color = colorRepository.getOne(id);
         color.setName(colorDTO.getName());
+        color.setHex(colorDTO.getHex());
         colorRepository.save(color);
     }
 
