@@ -1,6 +1,7 @@
 package ge.idealab.kedi.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 import ge.idealab.kedi.model.converters.SexConverter;
@@ -52,6 +53,7 @@ public class Product extends BaseStatusAuditEntity {
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="color_id", nullable=false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Color color;
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
