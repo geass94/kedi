@@ -42,7 +42,6 @@ public class ProductServiceImpl implements ProductService {
     public Product create(ProductDTO productDTO) {
         ModelMapper modelMapper = new ModelMapper();
         Product product = modelMapper.map(productDTO, Product.class);
-        product.setTotalQuantity(product.getQuantity());
         if(product.getSize().getId() != null) {
             Size size = sizeRepository.getOne(product.getSize().getId());
             product.setSize(size);
@@ -69,6 +68,8 @@ public class ProductServiceImpl implements ProductService {
         product.setCategoryList(categories);
 
         if (product.getProductVariantId() != null && product.getProductVariantIds() != null && product.getProductVariantIds().length > 0){
+            Product base = productRepository.getOne(product.getProductVariantId());
+            base.setTotalQuantity( base.getTotalQuantity() + product.getQuantity() );
             product.setBaseProduct(false);
             product = productRepository.save(product);
             product.setProductVariantId(product.getId());
@@ -80,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
             updateProductVariants(product.getProductVariantIds());
         }else{
             product.setBaseProduct(true);
+            product.setTotalQuantity(product.getQuantity());
             product = productRepository.save(product);
 
             product.setProductVariantId(product.getId());
@@ -136,7 +138,11 @@ public class ProductServiceImpl implements ProductService {
         ModelMapper modelMapper = new ModelMapper();
         Product p1 = productRepository.getOne(id);
 
-
+        if (p.getQuantity() != null) {
+            Long difference = p.getQuantity() - p1.getQuantity();
+            p1.setTotalQuantity( p1.getTotalQuantity() + difference );
+            p1.setQuantity(p.getQuantity());
+        }
 
         if (p.getName() != null)
             p1.setName(p.getName());
