@@ -97,6 +97,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getOneByParams(Long id, Long sizeId) {
+        if (sizeId > 0) {
+            Size size = sizeRepository.getOne(sizeId);
+            return productRepository.findFirstByIdAndSizeAndStatus(id, size, Status.ACTIVE);
+        } else {
+            return productRepository.findById(id).orElseThrow(
+                    () -> new ResourceNotFoundException("Product", "id", id)
+            );
+        }
+    }
+
+    @Override
     public Page<Product> getPaginatedProducts(Pageable pageable) {
         return productRepository.findAllByBaseProductIsTrue(pageable);
     }

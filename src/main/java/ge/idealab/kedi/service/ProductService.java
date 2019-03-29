@@ -14,6 +14,7 @@ import java.util.List;
 public interface ProductService {
     Product create(ProductDTO productDTO);
     Product getOne(Long id);
+    Product getOneByParams(Long id, Long sizeId);
     Product update(ProductDTO productDTO, Long id);
     Product createBundle(BundleDTO bundleDTO);
 

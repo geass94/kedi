@@ -5,6 +5,7 @@ import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.attribute.Color;
 import ge.idealab.kedi.model.product.attribute.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.model.product.attribute.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    Product findFirstByIdAndSizeAndStatus(Long id, Size size, Status status);
+
     Page<Product> findAllByBaseProductIsTrue(Pageable pageable);
     Page<Product> findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndStatus(Pageable pageable, List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max, Status status);
 

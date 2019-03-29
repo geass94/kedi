@@ -23,9 +23,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/get-product-by-id/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id){
+    public ResponseEntity<?> getProductById(@PathVariable Long id, @RequestParam("size") String size){
         ModelMapper modelMapper = new ModelMapper();
-        Product product = productService.getOne(id);
+        Product product = productService.getOneByParams(id, size != null ? Long.valueOf(size) : 0L);
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         if (product.getBundle() != null) {
             List<ProductDTO> bundleProducts = this.mapProducts(product.getBundle().getProducts());
