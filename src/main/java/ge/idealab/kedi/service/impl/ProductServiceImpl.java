@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     public Product create(ProductDTO productDTO) {
         ModelMapper modelMapper = new ModelMapper();
         Product product = modelMapper.map(productDTO, Product.class);
-
+        product.setTotalQuantity(product.getQuantity());
         if(product.getSize().getId() != null) {
             Size size = sizeRepository.getOne(product.getSize().getId());
             product.setSize(size);
@@ -135,6 +135,8 @@ public class ProductServiceImpl implements ProductService {
     public Product update(ProductDTO p, Long id) {
         ModelMapper modelMapper = new ModelMapper();
         Product p1 = productRepository.getOne(id);
+
+
 
         if (p.getName() != null)
             p1.setName(p.getName());

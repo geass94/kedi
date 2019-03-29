@@ -41,6 +41,8 @@ public class Product extends BaseStatusAuditEntity {
     @NotNull
     private Long quantity = 1L;
     @Column
+    private Long totalQuantity = 1L;
+    @Column
     private Float sale = 0f;
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -242,4 +244,11 @@ public class Product extends BaseStatusAuditEntity {
         this.barCode = barCode;
     }
 
+    public Long getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(Long totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
 }

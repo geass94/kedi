@@ -28,6 +28,7 @@ public class ProductDTO {
     private Float sale;
     private Date countDown;
     private Long quantity;
+    private Long totalQuantity;
     private Boolean promoted;
     private BundleDTO bundle;
 
@@ -180,5 +181,13 @@ public class ProductDTO {
 
     public void setCountDown(Date countDown) {
         this.countDown = countDown;
+    }
+
+    public Long getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(Long totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 }

@@ -23,7 +23,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/get-product-by-id/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id, @RequestParam("size") String size){
+    public ResponseEntity<?> getProductById(@PathVariable Long id, @RequestParam(value = "size", required=false) String size){
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.getOneByParams(id, size != null ? Long.valueOf(size) : 0L);
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
