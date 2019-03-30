@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface OrderService {
     Order placeOrder(OrderDTO orderDTO);
-    void approveOrder(Order order);
+    void finalizeOrder(Order order);
     PaymentRequest initPayment(InitPaymentRequest initPaymentRequest);
 
     List<Order> getOrderHistory();

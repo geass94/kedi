@@ -73,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void approveOrder(Order order) {
+    public void finalizeOrder(Order order) {
         Order o = orderRepository.getOne(order.getId());
         cartService.clearShoppingCartByProducts(o.getProducts());
     }

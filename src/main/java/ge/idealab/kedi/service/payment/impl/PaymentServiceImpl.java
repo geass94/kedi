@@ -57,7 +57,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             BigDecimal total = this.transactionsTotal(transactions);
 
-            if (total.compareTo(confirmRequest.getAmount().divide(new BigDecimal(100)).setScale(2)) == 0) {
+            if (total.compareTo( confirmRequest.getAmount().divide(new BigDecimal(100)).setScale(2)) == 0) {
                 order.setStatus(Status.VALIDATING);
                 orderRepository.save(order);
 
@@ -83,7 +83,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             order.setStatus(Status.PAID);
             orderRepository.save(order);
-
+            orderService.finalizeOrder(order);
             for (Transaction transaction : transactions) {
                 Transaction t = new Transaction();
                 t.setOrder(order);

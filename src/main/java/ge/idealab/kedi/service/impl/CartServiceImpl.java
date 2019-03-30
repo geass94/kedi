@@ -90,7 +90,7 @@ public class CartServiceImpl implements CartService {
     public void clearShoppingCartByProducts(List<Product> products) {
         List<Cart> cartList = cartRepository.findAllByUserAndProductInAndSavedForLaterIsFalseAndWishlistIsFalseAndStatus(userService.getUserFromContext(), products, Status.ACTIVE);
         for (Cart cart : cartList) {
-            cart.setStatus(Status.BOUGHT);
+            cart.setStatus(Status.LOCKED);
             cartRepository.save(cart);
         }
     }
