@@ -24,8 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 //    List<Product> findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max);
     List<Product> findAllByProductVariantIdIn(Long[] ids);
-    List<Product> findAllByBundleIsNullAndStatus(Status status);
-    List<Product> findAllByBundleIsNotNullAndStatus(Status status);
+    List<Product> findAllByMakeBundleIsFalseAndStatus(Status status);
+    List<Product> findAllByMakeBundleIsTrueAndBundledProductsContainsAndStatus(Product product, Status status);
 
 
     List<Product> findByPromotedIsTrueAndStatus(Status status);

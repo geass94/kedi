@@ -4,37 +4,46 @@ import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.enums.Sex;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class ProductDTO {
     private Long id;
-    @NotNull
     private String name;
-    @NotNull
-    private BigDecimal price;
-    @NotNull
+    private String referenceCode;
+    private String barCode;
+    private BigDecimal price = BigDecimal.valueOf(0);
+    private Long quantity = 1L;
+    private Long totalQuantity = 1L;
+    private Float sale = 0f;
+    private String description;
+    private Boolean promoted = false;
+    private Date countDown;
+
+    //  Specifications
     private ColorDTO color;
-    @NotNull
+
     private SizeDTO size;
     @Convert(converter = SexConverter.class)
     private Sex sex = Sex.MALE;
-    private String description;
-    private ManufacturerDTO manufacturer;
-    private List<CategoryDTO> categoryList;
-    private List<ProductFileDTO> productFiles;
-    private Float sale;
-    private Date countDown;
-    private Long quantity;
-    private Long totalQuantity;
-    private Boolean promoted;
-    private BundleDTO bundle;
 
-    private Boolean baseProduct;
+    private ManufacturerDTO manufacturer;
+
+    private List<CategoryDTO> categoryList;
+
+    //  File attachments
+    private List<ProductFileDTO> productFiles = new ArrayList<>();
+
+    //  Product Variants
+    private Boolean baseProduct = false;
     private Long productVariantId;
     private Long[] productVariantIds;
+
+    //  Bundles and gifts
+    private List<ProductDTO> bundledProducts = new ArrayList<>();
+    private Boolean makeBundle = false;
 
     public Long getId() {
         return id;
@@ -52,12 +61,76 @@ public class ProductDTO {
         this.name = name;
     }
 
+    public String getReferenceCode() {
+        return referenceCode;
+    }
+
+    public void setReferenceCode(String referenceCode) {
+        this.referenceCode = referenceCode;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
+
+    public Long getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(Long totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
+
+    public Float getSale() {
+        return sale;
+    }
+
+    public void setSale(Float sale) {
+        this.sale = sale;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getPromoted() {
+        return promoted;
+    }
+
+    public void setPromoted(Boolean promoted) {
+        this.promoted = promoted;
+    }
+
+    public Date getCountDown() {
+        return countDown;
+    }
+
+    public void setCountDown(Date countDown) {
+        this.countDown = countDown;
     }
 
     public ColorDTO getColor() {
@@ -82,14 +155,6 @@ public class ProductDTO {
 
     public void setSex(Sex sex) {
         this.sex = sex;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public ManufacturerDTO getManufacturer() {
@@ -140,54 +205,19 @@ public class ProductDTO {
         this.productVariantIds = productVariantIds;
     }
 
-
-    public Float getSale() {
-        return sale;
+    public List<ProductDTO> getBundledProducts() {
+        return bundledProducts;
     }
 
-    public void setSale(Float sale) {
-        this.sale = sale;
+    public void setBundledProducts(List<ProductDTO> bundledProducts) {
+        this.bundledProducts = bundledProducts;
     }
 
-
-    public Long getQuantity() {
-        return quantity;
+    public Boolean getMakeBundle() {
+        return makeBundle;
     }
 
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-
-    public Boolean getPromoted() {
-        return promoted;
-    }
-
-    public void setPromoted(Boolean promoted) {
-        this.promoted = promoted;
-    }
-
-    public BundleDTO getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(BundleDTO bundle) {
-        this.bundle = bundle;
-    }
-
-    public Date getCountDown() {
-        return countDown;
-    }
-
-    public void setCountDown(Date countDown) {
-        this.countDown = countDown;
-    }
-
-    public Long getTotalQuantity() {
-        return totalQuantity;
-    }
-
-    public void setTotalQuantity(Long totalQuantity) {
-        this.totalQuantity = totalQuantity;
+    public void setMakeBundle(Boolean makeBundle) {
+        this.makeBundle = makeBundle;
     }
 }

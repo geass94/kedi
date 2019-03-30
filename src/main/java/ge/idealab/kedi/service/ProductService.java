@@ -30,7 +30,7 @@ public interface ProductService {
     List<Product> refillStock(List<ProductDTO> productDTOS, Long quantity);
     List<Product> getProductsForBundling();
 
-    List<Product> getProductsWithBundles();
+    List<Product> getProductsWithBundles(Long pid);
 
     List<Product> getFeaturedProducts();
     List<Product> getBestSaleProducts();

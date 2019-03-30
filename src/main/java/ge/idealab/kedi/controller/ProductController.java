@@ -27,10 +27,10 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.getOneByParams(id, size != null ? Long.valueOf(size) : 0L);
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-        if (product.getBundle() != null) {
-            List<ProductDTO> bundleProducts = this.mapProducts(product.getBundle().getProducts());
-            productDTO.getBundle().setProducts(bundleProducts);
-        }
+//        if (product.getBundle() != null) {
+//            List<ProductDTO> bundleProducts = this.mapProducts(product.getBundle().getProducts());
+//            productDTO.getBundle().setProducts(bundleProducts);
+//        }
         productDTO.setProductFiles(mapFiles(product));
         return ResponseEntity.ok(productDTO);
     }
@@ -98,9 +98,9 @@ public class ProductController {
         return ResponseEntity.ok(pageImpl);
     }
 
-    @GetMapping("/get-bundles")
-    public ResponseEntity<?> getBundles() {
-        List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsWithBundles());
+    @GetMapping("/get-bundles-for-product/{pid}")
+    public ResponseEntity<?> getBundles(@PathVariable Long pid) {
+        List<ProductDTO> productDTOS = this.mapProducts(productService.getProductsWithBundles(pid));
         return ResponseEntity.ok(productDTOS);
     }
 

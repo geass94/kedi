@@ -6,7 +6,6 @@ import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.product.attribute.Category;
 import ge.idealab.kedi.model.enums.Status;
-import ge.idealab.kedi.model.product.Bundle;
 import ge.idealab.kedi.model.product.attribute.Color;
 import ge.idealab.kedi.model.product.attribute.Manufacturer;
 import ge.idealab.kedi.model.product.Product;
@@ -175,19 +174,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createBundle(BundleDTO bundleDTO) {
-        ModelMapper modelMapper = new ModelMapper();
-        Product parent = productRepository.getOne(bundleDTO.getParent().getId());
-        Bundle bundle = new Bundle();
-        bundle.setParent(parent);
-        List<Product> products = new ArrayList<>();
+        Product bundle = this.create(bundleDTO.getProduct());
+        List<Product> productsToBundle = new ArrayList<>();
         for (ProductDTO p : bundleDTO.getProducts()) {
-            products.add(modelMapper.map(p, Product.class));
+            productsToBundle.add( productRepository.getOne(p.getId()) );
         }
-        bundle.setProducts(products);
-        bundle.setPrice(bundleDTO.getPrice());
-        bundle.setSale(bundleDTO.getSale());
-        parent.setBundle(bundle);
-        return productRepository.save(parent);
+        bundle.setBundledProducts(productsToBundle);
+        bundle.setMakeBundle(true);
+        return productRepository.save(bundle);
     }
 
     @Override
@@ -243,12 +237,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsForBundling() {
-        return productRepository.findAllByBundleIsNullAndStatus(Status.ACTIVE);
+        return productRepository.findAllByMakeBundleIsFalseAndStatus(Status.ACTIVE);
     }
 
     @Override
-    public List<Product> getProductsWithBundles() {
-        return productRepository.findAllByBundleIsNotNullAndStatus(Status.ACTIVE);
+    public List<Product> getProductsWithBundles(Long pid) {
+        return productRepository.findAllByMakeBundleIsTrueAndBundledProductsContainsAndStatus(productRepository.getOne(pid), Status.ACTIVE);
     }
 
     @Override

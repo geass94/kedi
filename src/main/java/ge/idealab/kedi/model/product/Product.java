@@ -87,10 +87,13 @@ public class Product extends BaseStatusAuditEntity {
     private Long[] productVariantIds;
 
 //  Bundles and gifts
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="bundle_id")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private Bundle bundle;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "bundled_products",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "bundled_product_id", referencedColumnName = "id", nullable = false))
+    private List<Product> bundledProducts = new ArrayList<>();
+    @Column
+    private Boolean makeBundle = false;
 
     public String getName() {
         return name;
@@ -98,6 +101,22 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getReferenceCode() {
+        return referenceCode;
+    }
+
+    public void setReferenceCode(String referenceCode) {
+        this.referenceCode = referenceCode;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
     }
 
     public BigDecimal getPrice() {
@@ -114,6 +133,14 @@ public class Product extends BaseStatusAuditEntity {
 
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
+    }
+
+    public Long getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(Long totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     public Float getSale() {
@@ -220,35 +247,19 @@ public class Product extends BaseStatusAuditEntity {
         this.productVariantIds = productVariantIds;
     }
 
-    public Bundle getBundle() {
-        return bundle;
+    public List<Product> getBundledProducts() {
+        return bundledProducts;
     }
 
-    public void setBundle(Bundle bundle) {
-        this.bundle = bundle;
+    public void setBundledProducts(List<Product> bundledProducts) {
+        this.bundledProducts = bundledProducts;
     }
 
-    public String getReferenceCode() {
-        return referenceCode;
+    public Boolean getMakeBundle() {
+        return makeBundle;
     }
 
-    public void setReferenceCode(String referenceCode) {
-        this.referenceCode = referenceCode;
-    }
-
-    public String getBarCode() {
-        return barCode;
-    }
-
-    public void setBarCode(String barCode) {
-        this.barCode = barCode;
-    }
-
-    public Long getTotalQuantity() {
-        return totalQuantity;
-    }
-
-    public void setTotalQuantity(Long totalQuantity) {
-        this.totalQuantity = totalQuantity;
+    public void setMakeBundle(Boolean makeBundle) {
+        this.makeBundle = makeBundle;
     }
 }
