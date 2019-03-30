@@ -1,31 +1,41 @@
-package ge.idealab.kedi.model.banner;
+package ge.idealab.kedi.dto;
 
-import ge.idealab.kedi.model.BaseStatusAuditEntity;
+import ge.idealab.kedi.model.converters.StatusConverter;
+import ge.idealab.kedi.model.enums.Status;
 
-import javax.persistence.*;
+import javax.persistence.Convert;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "banners")
-public class Banner extends BaseStatusAuditEntity {
-    @Column
+public class BannerDTO {
+    private Long id;
+    @Convert(converter = StatusConverter.class)
+    private Status status;
     private String name;
-    @Column
     private String area;
-    @Column
     private String sliderEffect;
-    @Column
+    private Date validTill;
     private Double width = 600d;
-    @Column
     private Double height = 480d;
-    @Column
     private String dimensionUnit = "px";
-    @Column
-    private Date validTill = new Date();
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "banner")
-    private List<BannerFile> bannerFiles = new ArrayList<>();
+    private List<BannerFileDTO> bannerFiles = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;
@@ -75,19 +85,19 @@ public class Banner extends BaseStatusAuditEntity {
         this.dimensionUnit = dimensionUnit;
     }
 
+    public List<BannerFileDTO> getBannerFiles() {
+        return bannerFiles;
+    }
+
+    public void setBannerFiles(List<BannerFileDTO> bannerFiles) {
+        this.bannerFiles = bannerFiles;
+    }
+
     public Date getValidTill() {
         return validTill;
     }
 
     public void setValidTill(Date validTill) {
         this.validTill = validTill;
-    }
-
-    public List<BannerFile> getBannerFiles() {
-        return bannerFiles;
-    }
-
-    public void setBannerFiles(List<BannerFile> bannerFiles) {
-        this.bannerFiles = bannerFiles;
     }
 }

@@ -1,37 +1,46 @@
-package ge.idealab.kedi.model.banner;
+package ge.idealab.kedi.dto;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import ge.idealab.kedi.model.File;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "banner_files")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class BannerFile extends File {
-    @ManyToOne
-    @JoinColumn(name="banner_id")
-    private Banner banner;
-    @Column
+public class BannerFileDTO {
+    private Long id;
+    private String name;
+    private String fileType;
+    private String fileUrl;
     private String title;
-    @Column
     private String heading;
-    @Column
     private String caption;
-    @Column
     private String externalURL;
-    @Column
     private String label;
 
-    public Banner getBanner() {
-        return banner;
+    public Long getId() {
+        return id;
     }
 
-    public void setBanner(Banner banner) {
-        this.banner = banner;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public String getTitle() {
