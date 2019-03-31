@@ -19,7 +19,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findFirstByIdAndSizeAndStatus(Long id, Size size, Status status);
 
-    Page<Product> findAllByBaseProductIsTrue(Pageable pageable);
+    Page<Product> findAllByBaseProductIsTrueAndMakeBundleIsFalse(Pageable pageable);
     Page<Product> findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndMakeBundleIsFalseAndStatus(Pageable pageable, List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max, Status status);
 
 //    List<Product> findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max);

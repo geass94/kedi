@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getPaginatedProducts(Pageable pageable) {
-        return productRepository.findAllByBaseProductIsTrue(pageable);
+        return productRepository.findAllByBaseProductIsTrueAndMakeBundleIsFalse(pageable);
     }
 
     @Override
