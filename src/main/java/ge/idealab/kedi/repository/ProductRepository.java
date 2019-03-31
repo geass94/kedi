@@ -31,6 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByPromotedIsTrueAndStatus(Status status);
     List<Product> findAllByCreatedAtAfterAndMakeBundleIsFalseAndStatus(Date date, Status status);
     List<Product> findAllByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndStatus(List<Category> categories, Long id, Status status);
+    List<Product> findDistinctByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndStatus(List<Category> categories, Long id, Status status);
     List<Product> findAllBySaleIsGreaterThanAndStatus(Float sale, Status status);
     List<Product> findAllBySaleIsGreaterThanAndCountDownIsAfterAndMakeBundleIsFalseAndStatus(Float sale, Date countdown, Status status);
 
