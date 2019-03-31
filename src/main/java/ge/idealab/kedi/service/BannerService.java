@@ -9,6 +9,7 @@ public interface BannerService {
     Banner create(BannerDTO bannerDTO);
     Banner getOne(Long id);
     Banner getOneByArea(String area);
+    List<Banner> getAllByArea(String area);
     Banner switchStatus(BannerDTO bannerDTO, Long id);
     void delete(Long id);
     List<Banner> getAll();

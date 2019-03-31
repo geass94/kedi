@@ -10,5 +10,7 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
     Banner findByStatus(Status status);
     Banner findByAreaAndStatus(String area, Status status);
     Banner findFirstByAreaAndStatus(String area, Status status);
+    List<Banner> findAllByAreaAndStatus(String area, Status status);
+
     List<Banner> findAllByStatusIn(List<Status> statuses);
 }

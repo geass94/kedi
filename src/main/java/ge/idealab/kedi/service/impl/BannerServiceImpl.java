@@ -6,7 +6,6 @@ import ge.idealab.kedi.model.banner.Banner;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.repository.BannerRepository;
 import ge.idealab.kedi.service.BannerService;
-import ge.idealab.kedi.service.BannerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,11 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public Banner getOneByArea(String area) {
         return bannerRepository.findFirstByAreaAndStatus(area, Status.ACTIVE);
+    }
+
+    @Override
+    public List<Banner> getAllByArea(String area) {
+        return bannerRepository.findAllByAreaAndStatus(area, Status.ACTIVE);
     }
 
     @Override

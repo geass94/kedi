@@ -32,6 +32,11 @@ public class BannerController {
         return ResponseEntity.ok(this.mapBanner(bannerService.getOneByArea(area)));
     }
 
+    @GetMapping("/get-all-by-area/{area}")
+    public ResponseEntity<?> getBannersByArea(@PathVariable String area) {
+        return ResponseEntity.ok(this.mapBanners(bannerService.getAllByArea(area)));
+    }
+
     @GetMapping("/get-by-id/{id}")
     public ResponseEntity<?> getBannerById(@PathVariable Long id) {
         return ResponseEntity.ok(this.mapBanner(bannerService.getOne(id)));
