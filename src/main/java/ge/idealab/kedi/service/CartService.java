@@ -2,6 +2,7 @@ package ge.idealab.kedi.service;
 
 import ge.idealab.kedi.model.bag.Cart;
 import ge.idealab.kedi.model.product.Product;
+import ge.idealab.kedi.model.user.User;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface CartService {
 
     List<Cart> getUserCart();
 
-    void clearShoppingCartByProducts(List<Product> products);
+    void clearShoppingCartByProducts(List<Product> products, User user);
 }

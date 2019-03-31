@@ -87,8 +87,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void clearShoppingCartByProducts(List<Product> products) {
-        List<Cart> cartList = cartRepository.findAllByUserAndProductInAndSavedForLaterIsFalseAndWishlistIsFalseAndStatus(userService.getUserFromContext(), products, Status.ACTIVE);
+    public void clearShoppingCartByProducts(List<Product> products, User user) {
+        List<Cart> cartList = cartRepository.findAllByUserAndProductIsInAndSavedForLaterIsFalseAndWishlistIsFalseAndStatus(user, products, Status.ACTIVE);
         for (Cart cart : cartList) {
             cart.setStatus(Status.LOCKED);
             cartRepository.save(cart);
