@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findFirstByIdAndSizeAndStatus(Long id, Size size, Status status);
 
     Page<Product> findAllByBaseProductIsTrue(Pageable pageable);
-    Page<Product> findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndStatus(Pageable pageable, List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max, Status status);
+    Page<Product> findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndMakeBundleIsFalseAndStatus(Pageable pageable, List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max, Status status);
 
 //    List<Product> findAllByCategoryListInAndColorInAndManufacturerInAndPriceBetween(List<Category> categories, List<Color> colors, List<Manufacturer> manufacturers, BigDecimal min, BigDecimal max);
     List<Product> findAllByProductVariantIdIn(Long[] ids);
@@ -29,12 +29,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
     List<Product> findByPromotedIsTrueAndStatus(Status status);
-    List<Product> findAllByCreatedAtAfterAndStatus(Date date, Status status);
-    List<Product> findAllByCategoryListInAndIdIsNotAndStatus(List<Category> categories, Long id, Status status);
+    List<Product> findAllByCreatedAtAfterAndMakeBundleIsFalseAndStatus(Date date, Status status);
+    List<Product> findAllByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndStatus(List<Category> categories, Long id, Status status);
     List<Product> findAllBySaleIsGreaterThanAndStatus(Float sale, Status status);
-    List<Product> findAllBySaleIsGreaterThanAndCountDownIsAfterAndStatus(Float sale, Date countdown, Status status);
+    List<Product> findAllBySaleIsGreaterThanAndCountDownIsAfterAndMakeBundleIsFalseAndStatus(Float sale, Date countdown, Status status);
 
-    @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.countDown = NULL AND p.status = :status ORDER BY RAND() ASC")
+    @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.countDown = NULL AND p.status = :status AND p.makeBundle = false ORDER BY RAND() ASC")
     List<Product> findSaleOff(@Param("sale") Float sale, @Param("status") Status status);
 
 

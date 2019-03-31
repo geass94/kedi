@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
         }
         maxPrice = maxPrice.add(BigDecimal.ONE);
         minPrice = minPrice.subtract(BigDecimal.ONE);
-        return productRepository.findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndStatus(pageable, categories, colors, manufacturers, minPrice, maxPrice, Status.ACTIVE);
+        return productRepository.findDistinctByCategoryListInAndColorInAndManufacturerInAndPriceBetweenAndMakeBundleIsFalseAndStatus(pageable, categories, colors, manufacturers, minPrice, maxPrice, Status.ACTIVE);
     }
 
     @Override
@@ -252,7 +252,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getBestSaleProducts() {
-        return productRepository.findAllBySaleIsGreaterThanAndCountDownIsAfterAndStatus(1f, new Date(), Status.ACTIVE);
+        return productRepository.findAllBySaleIsGreaterThanAndCountDownIsAfterAndMakeBundleIsFalseAndStatus(1f, new Date(), Status.ACTIVE);
     }
 
     @Override
@@ -263,7 +263,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getRealtedProducts(Long productId) {
         Product product = productRepository.getOne(productId);
-        return productRepository.findAllByCategoryListInAndIdIsNotAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
+        return productRepository.findAllByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
     }
 
     @Override
@@ -271,7 +271,7 @@ public class ProductServiceImpl implements ProductService {
         Instant now = Instant.now(); //current date
         Instant before = now.minus(Duration.ofDays(30));
         Date dateBefore = Date.from(before);
-        return productRepository.findAllByCreatedAtAfterAndStatus(dateBefore, Status.ACTIVE);
+        return productRepository.findAllByCreatedAtAfterAndMakeBundleIsFalseAndStatus(dateBefore, Status.ACTIVE);
     }
 
     private void updateProductVariants(Long[] ids){
