@@ -15,7 +15,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,14 +32,14 @@ public class MenuController {
     @Autowired
     private ColorRepository colorRepository;
 
-    @GetMapping("/get-sidebar/{pid}")
-    public ResponseEntity<?> getMenu(@PathVariable Long pid){
+    @GetMapping("/get-sidebar")
+    public ResponseEntity<?> getMenu(){
         ModelMapper modelMapper = new ModelMapper();
         MenuDTO menu = new MenuDTO();
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<ManufacturerDTO> manufacturerDTOList = new ArrayList<>();
         List<ColorDTO> colorDTOList = new ArrayList<>();
-        List<Category> categories = categoryRepository.findAllByParentIsAndStatus(categoryRepository.getOne(pid), Status.ACTIVE);
+        List<Category> categories = categoryRepository.findAllByStatus(Status.ACTIVE);
         List<Color> colors = colorRepository.findAllByStatus(Status.ACTIVE);
         List<Manufacturer> manufacturers = manufacturerRepository.findAllByStatus(Status.ACTIVE);
 
