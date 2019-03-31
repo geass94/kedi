@@ -64,6 +64,17 @@ public class SpecificationController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/get-categories-by-parent/{pid}")
+    public ResponseEntity<?> getCategoriesByParent(@PathVariable Long pid) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        List<Category> categories = categoryRepository.findAllByParentIsAndStatus(categoryRepository.getOne(pid), Status.ACTIVE);
+        for (Category category : categories) {
+            categoryDTOList.add(modelMapper.map(category, CategoryDTO.class));
+        }
+        return ResponseEntity.ok(categoryDTOList);
+    }
+
     @GetMapping("/get-manufacturers")
     public ResponseEntity<?> getManufacturers(){
         ModelMapper modelMapper = new ModelMapper();

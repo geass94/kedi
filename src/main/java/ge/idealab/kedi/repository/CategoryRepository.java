@@ -12,4 +12,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByStatus(Status status);
     List<Category> findAllByStatusOrderByParent(Status status);
     List<Category> findAllByIdIn(Long[] ids);
+
+    List<Category> findAllByParentIsAndStatus(Category category, Status status);
 }
