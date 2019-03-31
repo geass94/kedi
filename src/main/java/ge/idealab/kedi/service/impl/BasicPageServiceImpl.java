@@ -35,7 +35,7 @@ public class BasicPageServiceImpl implements BasicPageService {
 
     @Override
     public BasicPage getByAlias(String alias) {
-        BasicPage basicPage = basicPageRepository.findByAlias(alias);
+        BasicPage basicPage = basicPageRepository.findByAliasAndStatus(alias, Status.ACTIVE);
         if (basicPage == null) {
             throw new ResourceNotFoundException("Page", "alias",  alias);
         }

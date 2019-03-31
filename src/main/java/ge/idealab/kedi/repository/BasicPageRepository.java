@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface BasicPageRepository extends JpaRepository<BasicPage, Long> {
-    BasicPage findByAlias(String alias);
+    BasicPage findByAliasAndStatus(String alias, Status status);
     Page<BasicPage> findAllByStatus(Pageable pageable, Status status);
 
     @Query("SELECT count(id) FROM BasicPage b WHERE b.alias = :alias AND b.status = :status")
