@@ -184,7 +184,8 @@ public class ProductServiceImpl implements ProductService {
         }
         bundle.setBundledProducts(productsToBundle);
         bundle.setMakeBundle(true);
-        List<ProductFile> productFileList = new ArrayList<>();
+        bundle.setBaseProduct(false);
+        bundle = productRepository.save(bundle);
         for (ProductFile pf : bundle.getBundledProducts().get(0).getProductFiles()) {
             ProductFile pf1 = new ProductFile();
             pf1.setProduct(bundle);
@@ -195,12 +196,9 @@ public class ProductServiceImpl implements ProductService {
             pf1.setFileUrl(pf.getFileUrl());
             pf1.setName(pf.getName());
             pf1.setOriginalName(pf.getOriginalName());
-            pf1 = productFileRepository.save(pf1);
-            productFileList.add(pf1);
+            productFileRepository.save(pf1);
         }
-        bundle.setBaseProduct(false);
-//        bundle.setProductFiles(productFileList);
-        return productRepository.save(bundle);
+        return bundle;
     }
 
     @Override
