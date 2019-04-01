@@ -4,6 +4,7 @@ import ge.idealab.kedi.dto.BundleDTO;
 import ge.idealab.kedi.dto.CategoryDTO;
 import ge.idealab.kedi.dto.ProductDTO;
 import ge.idealab.kedi.exception.ResourceNotFoundException;
+import ge.idealab.kedi.model.product.ProductFile;
 import ge.idealab.kedi.model.product.attribute.Category;
 import ge.idealab.kedi.model.enums.Status;
 import ge.idealab.kedi.model.product.attribute.Color;
@@ -36,6 +37,8 @@ public class ProductServiceImpl implements ProductService {
     private CategoryRepository categoryRepository;
     @Autowired
     private SizeRepository sizeRepository;
+    @Autowired
+    private ProductFileRepository productFileRepository;
 
     @Override
     public Product create(ProductDTO productDTO) {
@@ -181,7 +184,13 @@ public class ProductServiceImpl implements ProductService {
         }
         bundle.setBundledProducts(productsToBundle);
         bundle.setMakeBundle(true);
-        bundle.setProductFiles(bundle.getBundledProducts().get(0).getProductFiles());
+        List<ProductFile> productFileList = new ArrayList<>();
+        for (ProductFile pf : bundle.getBundledProducts().get(0).getProductFiles()) {
+            pf.setProduct(bundle);
+            ProductFile pf1 = productFileRepository.save(pf);
+            productFileList.add(pf1);
+        }
+        bundle.setProductFiles(productFileList);
         return productRepository.save(bundle);
     }
 
