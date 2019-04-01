@@ -181,6 +181,7 @@ public class ProductServiceImpl implements ProductService {
         }
         bundle.setBundledProducts(productsToBundle);
         bundle.setMakeBundle(true);
+        bundle.setProductFiles(bundle.getBundledProducts().get(0).getProductFiles());
         return productRepository.save(bundle);
     }
 
