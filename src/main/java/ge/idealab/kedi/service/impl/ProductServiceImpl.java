@@ -199,7 +199,7 @@ public class ProductServiceImpl implements ProductService {
             productFileList.add(pf1);
         }
         bundle.setBaseProduct(false);
-        bundle.setProductFiles(productFileList);
+//        bundle.setProductFiles(productFileList);
         return productRepository.save(bundle);
     }
 
