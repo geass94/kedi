@@ -186,8 +186,16 @@ public class ProductServiceImpl implements ProductService {
         bundle.setMakeBundle(true);
         List<ProductFile> productFileList = new ArrayList<>();
         for (ProductFile pf : bundle.getBundledProducts().get(0).getProductFiles()) {
-            pf.setProduct(bundle);
-            ProductFile pf1 = productFileRepository.save(pf);
+            ProductFile pf1 = new ProductFile();
+            pf1.setProduct(bundle);
+            pf1.setExtension(pf.getExtension());
+            pf1.setFileSize(pf.getFileSize());
+            pf1.setFileType(pf.getFileType());
+            pf1.setStatus(Status.ACTIVE);
+            pf1.setFileUrl(pf.getFileUrl());
+            pf1.setName(pf.getName());
+            pf1.setOriginalName(pf.getOriginalName());
+            pf1 = productFileRepository.save(pf1);
             productFileList.add(pf1);
         }
         bundle.setBaseProduct(false);
