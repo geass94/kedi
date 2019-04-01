@@ -66,13 +66,21 @@ public class SpecificationController {
 
     @GetMapping("/get-categories-by-parent/{pid}")
     public ResponseEntity<?> getCategoriesByParent(@PathVariable Long pid) {
+        List<CategoryDTO> categories = this.getChildren(categoryRepository.getOne(pid));
+        return ResponseEntity.ok(categories);
+    }
+
+    List<CategoryDTO> getChildren(Category category) {
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        List<Category> categories = categoryRepository.findAllByParentIsAndStatus(categoryRepository.getOne(pid), Status.ACTIVE);
-        for (Category category : categories) {
-            categoryDTOList.add(modelMapper.map(category, CategoryDTO.class));
+        List<Category> children = categoryRepository.findAllByParentIsAndStatus(category, Status.ACTIVE);
+        if (children.size() > 0) {
+            for (Category child : children) {
+                categoryDTOList.add(modelMapper.map(child, CategoryDTO.class));
+                this.getChildren(child);
+            }
         }
-        return ResponseEntity.ok(categoryDTOList);
+        return categoryDTOList;
     }
 
     @GetMapping("/get-manufacturers")
