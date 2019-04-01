@@ -288,7 +288,7 @@ public class ProductServiceImpl implements ProductService {
         Instant now = Instant.now(); //current date
         Instant before = now.minus(Duration.ofDays(30));
         Date dateBefore = Date.from(before);
-        return productRepository.findAllByCreatedAtAfterAndMakeBundleIsFalseAndStatus(dateBefore, Status.ACTIVE);
+        return productRepository.findAllByCreatedAtAfterAndMakeBundleIsFalseAndBaseProductIsTrueAndStatus(dateBefore, Status.ACTIVE);
     }
 
     private void updateProductVariants(Long[] ids){
