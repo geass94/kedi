@@ -63,6 +63,11 @@ public class SpecificationServiceImpl implements SpecificationService {
             Category parent = categoryRepository.getOne(categoryDTO.getParent().getId());
             category.setParent(parent);
         }
+        category.setWeight(categoryDTO.getWeight());
+//        if (category.getWeight() > 0 && category.getParent() != null) {
+//            category.setWeight( category.getParent().getWeight() * category.getWeight() );
+//        }
+
         category = categoryRepository.save(category);
         return category;
     }

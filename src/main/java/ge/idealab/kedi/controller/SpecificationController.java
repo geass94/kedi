@@ -48,7 +48,7 @@ public class SpecificationController {
     public ResponseEntity<?> getCategories(){
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model: categoryRepository.findAllByStatusOrderByParent(Status.ACTIVE)){
+        for(Category model: categoryRepository.findAllByStatusOrderByParentDesc(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, CategoryDTO.class));
         }
         return ResponseEntity.ok(dtos);
@@ -58,7 +58,7 @@ public class SpecificationController {
     public ResponseEntity<?> getParentCategories(){
         ModelMapper modelMapper = new ModelMapper();
         List<CategoryDTO> dtos = new ArrayList<>();
-        for(Category model : categoryRepository.findAllByParentIsNullAndStatus(Status.ACTIVE)){
+        for(Category model : categoryRepository.findAllByParentIsNullAndStatusOrderByWeightAsc(Status.ACTIVE)){
             dtos.add(modelMapper.map(model, CategoryDTO.class));
         }
         return ResponseEntity.ok(dtos);

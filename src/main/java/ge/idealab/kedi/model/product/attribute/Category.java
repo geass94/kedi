@@ -13,6 +13,9 @@ public class Category extends BaseStatusAuditEntity {
     @Column
     private String name;
 
+    @Column
+    private Integer weight = 0;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_id")
@@ -43,5 +46,13 @@ public class Category extends BaseStatusAuditEntity {
 
     public void setChildren(List<Category> children) {
         this.children = children;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 }

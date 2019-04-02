@@ -9,6 +9,7 @@ import java.util.List;
 public class CategoryDTO {
     private Long id;
     private String name;
+    private Integer weight = 0;
     private CategoryDTO parent;
     private List<CategoryDTO> children = new ArrayList<CategoryDTO>();
 
@@ -43,5 +44,13 @@ public class CategoryDTO {
 
     public void setChildren(List<CategoryDTO> children) {
         this.children = children;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 }

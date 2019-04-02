@@ -39,7 +39,7 @@ public class MenuController {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<ManufacturerDTO> manufacturerDTOList = new ArrayList<>();
         List<ColorDTO> colorDTOList = new ArrayList<>();
-        List<Category> categories = categoryRepository.findAllByStatus(Status.ACTIVE);
+        List<Category> categories = categoryRepository.findAllByStatusOrderByWeightAsc(Status.ACTIVE);
         List<Color> colors = colorRepository.findAllByStatus(Status.ACTIVE);
         List<Manufacturer> manufacturers = manufacturerRepository.findAllByStatus(Status.ACTIVE);
 
