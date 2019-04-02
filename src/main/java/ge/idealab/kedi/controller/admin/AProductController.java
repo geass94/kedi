@@ -7,6 +7,7 @@ import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.product.ProductFile;
 import ge.idealab.kedi.payload.request.RefillStockRequest;
 import ge.idealab.kedi.payload.request.SaleRequest;
+import ge.idealab.kedi.repository.ColorRepository;
 import ge.idealab.kedi.service.FileService;
 import ge.idealab.kedi.service.ProductFileService;
 import ge.idealab.kedi.service.ProductService;
@@ -32,6 +33,8 @@ public class AProductController {
     private ProductFileService productFileService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private ColorRepository colorRepository;
 
     @PostMapping("/add-product")
     @PreAuthorize("hasRole('ADMIN')")
@@ -43,15 +46,20 @@ public class AProductController {
 
     @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addProductFile(@Valid @RequestPart("product-id") String productId, @Valid @RequestPart("files") MultipartFile[] multipartFiles){
+    public ResponseEntity<?> addProductFile(@Valid @RequestPart("product-id") String productId, @Valid @RequestPart("color-id") String colorId, @Valid @RequestPart("files") MultipartFile[] multipartFiles){
         ModelMapper modelMapper = new ModelMapper();
-        Product product = productService.getOne(Long.valueOf(productId));
+        Product p = productService.getOne(Long.valueOf(productId));
+        List<Product> products = productService.getProductVariants(p.getProductVariantIds());
         List<ProductFileDTO> productFileDTOS = new ArrayList<>();
-        for(MultipartFile multipartFile: multipartFiles){
-            ProductFile productFile = modelMapper.map(fileService.uploadFile(multipartFile), ProductFile.class);
-            productFile.setProduct(product);
-            productFile = productFileService.create(productFile);
-            productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
+        for(Product product : products) {
+            if (product.getColor() == colorRepository.getOne(Long.valueOf(colorId))) {
+                for(MultipartFile multipartFile: multipartFiles){
+                    ProductFile productFile = modelMapper.map(fileService.uploadFile(multipartFile), ProductFile.class);
+                    productFile.setProduct(product);
+                    productFile = productFileService.create(productFile);
+                    productFileDTOS.add(modelMapper.map(productFile, ProductFileDTO.class));
+                }
+            }
         }
         return ResponseEntity.ok(productFileDTOS);
     }
