@@ -93,6 +93,8 @@ public class SpecificationServiceImpl implements SpecificationService {
             original.setName(edited.getName());
         }
 
+        original.setWeight(edited.getWeight());
+
         if (edited.getChildren() != null) {
 //            original.setChildren(edited.getChildren());
         }
