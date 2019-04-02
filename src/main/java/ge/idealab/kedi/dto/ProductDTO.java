@@ -17,7 +17,7 @@ import java.util.List;
 @JsonIdentityInfo(
         generator= ObjectIdGenerators.IntSequenceGenerator.class,
         property="@id",
-        scope = Product.class)
+        scope = ProductDTO.class)
 public class ProductDTO {
     private Long id;
     private String name;
