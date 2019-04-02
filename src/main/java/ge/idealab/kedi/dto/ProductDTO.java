@@ -41,9 +41,9 @@ public class ProductDTO {
 
     //  Product Variants
     private Boolean baseProduct = false;
-    private Product baseVariant;
+    private ProductDTO baseVariant;
     @JsonIgnore
-    private List<Product> variants;
+    private List<ProductDTO> variants;
 
     //  Bundles and gifts
     private List<ProductDTO> bundledProducts = new ArrayList<>();
@@ -209,19 +209,19 @@ public class ProductDTO {
         this.makeBundle = makeBundle;
     }
 
-    public Product getBaseVariant() {
+    public ProductDTO getBaseVariant() {
         return baseVariant;
     }
 
-    public void setBaseVariant(Product baseVariant) {
+    public void setBaseVariant(ProductDTO baseVariant) {
         this.baseVariant = baseVariant;
     }
 
-    public List<Product> getVariants() {
+    public List<ProductDTO> getVariants() {
         return variants;
     }
 
-    public void setVariants(List<Product> variants) {
+    public void setVariants(List<ProductDTO> variants) {
         this.variants = variants;
     }
 }

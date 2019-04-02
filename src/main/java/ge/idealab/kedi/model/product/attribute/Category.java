@@ -1,6 +1,7 @@
 package ge.idealab.kedi.model.product.attribute;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ge.idealab.kedi.model.BaseStatusAuditEntity;
 
 import javax.persistence.*;
@@ -19,9 +20,11 @@ public class Category extends BaseStatusAuditEntity {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Category> children = new ArrayList<Category>();
 
     public String getName() {
