@@ -2,6 +2,7 @@ package ge.idealab.kedi.controller;
 
 import ge.idealab.kedi.dto.CarouselDTO;
 import ge.idealab.kedi.dto.CarouselFileDTO;
+import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.carousel.Carousel;
 import ge.idealab.kedi.model.carousel.CarouselFile;
 import ge.idealab.kedi.service.CarouselService;
@@ -29,7 +30,11 @@ public class CarouselController {
 
     @GetMapping("/get-by-area/{area}")
     public ResponseEntity<?> getCarouselByArea(@PathVariable String area) {
-        return ResponseEntity.ok(this.mapCarousel(carouselService.getOneByArea(area)));
+        Carousel carousel = carouselService.getOneByArea(area);
+        if (carousel == null) {
+            throw new ResourceNotFoundException("Carousel", "area", area);
+        }
+        return ResponseEntity.ok(this.mapCarousel(carousel));
     }
 
     @GetMapping("/get-by-id/{id}")
