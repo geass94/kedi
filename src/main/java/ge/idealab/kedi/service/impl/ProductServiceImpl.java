@@ -69,26 +69,34 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setCategoryList(categories);
 
-        if (product.getProductVariantId() != null && product.getProductVariantIds() != null && product.getProductVariantIds().length > 0){
-            Product base = productRepository.getOne(product.getProductVariantId());
+        if (product.getBaseVariant() != null){
+            Product base = productRepository.getOne(product.getBaseVariant().getId());
             base.setTotalQuantity( base.getTotalQuantity() + product.getQuantity() );
-            productRepository.save(base);
+            base = productRepository.save(base);
+
             product.setBaseProduct(false);
             product = productRepository.save(product);
-            product.setProductVariantId(product.getId());
+            product.setBaseVariant(base);
 
-            Long[] variants = Arrays.copyOf(product.getProductVariantIds(), product.getProductVariantIds().length + 1);
-            variants[product.getProductVariantIds().length] = product.getProductVariantId();
-            product.setProductVariantIds(variants);
+            List<Product> variants = base.getVariants();
+            if (!variants.contains(product)) {
+                variants.add(product);
+            }
+            base.setVariants(variants);
+            productRepository.save(base);
+//            product.setVariants(variants);
             product = productRepository.save(product);
-            updateProductVariants(product.getProductVariantIds());
+//            updateProductVariants(product.getProductVariantIds());
         }else{
             product.setBaseProduct(true);
             product.setTotalQuantity(product.getQuantity());
             product = productRepository.save(product);
 
-            product.setProductVariantId(product.getId());
-            product.setProductVariantIds(new Long[]{product.getProductVariantId()});
+            product.setBaseVariant(product);
+
+            List<Product> variants = new ArrayList<>();
+            variants.add(product);
+            product.setVariants(variants);
             product = productRepository.save(product);
         }
         return product;
@@ -119,12 +127,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductVariants(Long[] variantIds) {
-        return productRepository.findAllByProductVariantIdIn(variantIds);
+    public List<Product> getProductVariants(Product product) {
+        return productRepository.findAllByBaseVariant(product);
     }
 
     @Override
-    public Page<Product> getPaginatedProductsByFilter(Long[] catIds, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+    public Page<Product> getPaginatedProductsByFilter(List<Long> catIds, List<Long> colorIds, List<Long> manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         List<Category> categories = this.mapCategoryIdsToCategories(catIds);
         List<Color> colors = this.mapColorIdsToColors(colorIds);
         List<Manufacturer> manufacturers = this.mapManufacturerIdsToManufacturers(manuIds);
@@ -291,32 +299,32 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAllByCreatedAtAfterAndMakeBundleIsFalseAndBaseProductIsTrueAndStatus(dateBefore, Status.ACTIVE);
     }
 
-    private void updateProductVariants(Long[] ids){
-        for(Long id: ids){
-            Product product = productRepository.getOne(id);
-            product.setProductVariantIds(ids);
-            productRepository.save(product);
-        }
+    private void updateProductVariants(List<Long> ids){
+//        for(Long id: ids){
+//            Product product = productRepository.getOne(id);
+//            product.setProductVariantIds(ids);
+//            productRepository.save(product);
+//        }
     }
 
-    private List<Category> mapCategoryIdsToCategories(Long[] ids){
-        if (ids.length > 0) {
+    private List<Category> mapCategoryIdsToCategories(List<Long> ids){
+        if (ids.size() > 0) {
             return categoryRepository.findAllByIdIn(ids);
         } else {
             return categoryRepository.findAll();
         }
     }
 
-    private List<Color> mapColorIdsToColors(Long[] ids){
-        if (ids.length > 0) {
+    private List<Color> mapColorIdsToColors(List<Long> ids){
+        if (ids.size() > 0) {
             return colorRepository.findAllByIdIn(ids);
         } else {
             return colorRepository.findAll();
         }
     }
 
-    private List<Manufacturer> mapManufacturerIdsToManufacturers(Long[] ids){
-        if (ids.length > 0) {
+    private List<Manufacturer> mapManufacturerIdsToManufacturers(List<Long> ids){
+        if (ids.size() > 0) {
             return manufacturerRepository.findAllByIdIn(ids);
         } else {
             return manufacturerRepository.findAll();

@@ -63,9 +63,9 @@ public class ProductController {
     }
 
     @GetMapping("/get-product-variants")
-    public ResponseEntity<?> getProductVariants(@RequestParam("ids") String[] variantIds){
+    public ResponseEntity<?> getProductVariants(@RequestParam("id") Long id){
 
-        List<Product> products = productService.getProductVariants(stringArrayToLongArray(variantIds));
+        List<Product> products = productService.getProductVariants(productService.getOne(id));
         List<ProductDTO> productDTOS = this.mapProducts(products);
 
         return ResponseEntity.ok(productDTOS);
@@ -81,9 +81,9 @@ public class ProductController {
                                                  @RequestParam("order") String order,
                                                  @RequestParam("page") String page){
 
-        Long[] categories = this.stringArrayToLongArray(categorIds);
-        Long[] colors = this.stringArrayToLongArray(colorIds);
-        Long[] manufacturers = this.stringArrayToLongArray(manufacturerIds);
+        List<Long> categories = this.stringArrayToLongArray(categorIds);
+        List<Long> colors = this.stringArrayToLongArray(colorIds);
+        List<Long> manufacturers = this.stringArrayToLongArray(manufacturerIds);
         BigDecimal maxPrice = BigDecimal.valueOf(Double.valueOf(max_price));
         BigDecimal minPrice = BigDecimal.valueOf(Double.valueOf(min_price));
 
@@ -149,10 +149,11 @@ public class ProductController {
         return productDTOS;
     }
 
-    private Long[] stringArrayToLongArray(String[] numbers) {
-        Long[] result = new Long[numbers.length];
+    private List<Long> stringArrayToLongArray(String[] numbers) {
+//        Long[] result = new Long[numbers.length];
+        List<Long> result = new ArrayList<>();
         for (int i = 0; i < numbers.length; i++)
-            result[i] = Long.valueOf(numbers[i]);
+            result.add(Long.valueOf(numbers[i]));
         return result;
     }
 }

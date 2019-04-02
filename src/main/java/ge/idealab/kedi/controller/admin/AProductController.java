@@ -49,7 +49,7 @@ public class AProductController {
     public ResponseEntity<?> addProductFile(@Valid @RequestPart("product-id") String productId, @Valid @RequestPart("color-id") String colorId, @Valid @RequestPart("files") MultipartFile[] multipartFiles){
         ModelMapper modelMapper = new ModelMapper();
         Product p = productService.getOne(Long.valueOf(productId));
-        List<Product> products = productService.getProductVariants(p.getProductVariantIds());
+        List<Product> products = productService.getProductVariants(p.getBaseVariant());
         List<ProductFileDTO> productFileDTOS = new ArrayList<>();
         for(Product product : products) {
             if (product.getColor() == colorRepository.getOne(Long.valueOf(colorId))) {

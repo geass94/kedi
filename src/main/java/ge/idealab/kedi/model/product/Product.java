@@ -23,8 +23,9 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        generator=ObjectIdGenerators.IntSequenceGenerator.class,
+        property="@id",
+        scope = Product.class)
 public class Product extends BaseStatusAuditEntity {
 //  Basic information
     @Column
@@ -72,6 +73,7 @@ public class Product extends BaseStatusAuditEntity {
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_product_id")),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name="fk_prdctr_categoryid")))
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Category> categoryList;
 
 //  File attachments
@@ -81,10 +83,16 @@ public class Product extends BaseStatusAuditEntity {
 //  Product Variants
     @Column
     private Boolean baseProduct = false;
-    @Column
-    private Long productVariantId;
-    @Column
-    private Long[] productVariantIds;
+    @ManyToOne(cascade={CascadeType.MERGE})
+    @JoinColumn(name="base_variant_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Product baseVariant;
+    @JoinTable(name = "product_variants", joinColumns = {
+            @JoinColumn(name = "variant_product_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "base_product_id", referencedColumnName = "id", nullable = false)})
+    @ManyToMany
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Product> variants = new ArrayList<Product>();
 
 //  Bundles and gifts
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -231,20 +239,20 @@ public class Product extends BaseStatusAuditEntity {
         this.baseProduct = baseProduct;
     }
 
-    public Long getProductVariantId() {
-        return productVariantId;
+    public Product getBaseVariant() {
+        return baseVariant;
     }
 
-    public void setProductVariantId(Long productVariantId) {
-        this.productVariantId = productVariantId;
+    public void setBaseVariant(Product baseVariant) {
+        this.baseVariant = baseVariant;
     }
 
-    public Long[] getProductVariantIds() {
-        return productVariantIds;
+    public List<Product> getVariants() {
+        return variants;
     }
 
-    public void setProductVariantIds(Long[] productVariantIds) {
-        this.productVariantIds = productVariantIds;
+    public void setVariants(List<Product> variants) {
+        this.variants = variants;
     }
 
     public List<Product> getBundledProducts() {

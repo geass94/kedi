@@ -1,7 +1,10 @@
 package ge.idealab.kedi.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.enums.Sex;
+import ge.idealab.kedi.model.product.Product;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -38,8 +41,9 @@ public class ProductDTO {
 
     //  Product Variants
     private Boolean baseProduct = false;
-    private Long productVariantId;
-    private Long[] productVariantIds;
+    private Product baseVariant;
+    @JsonIgnore
+    private List<Product> variants;
 
     //  Bundles and gifts
     private List<ProductDTO> bundledProducts = new ArrayList<>();
@@ -189,22 +193,6 @@ public class ProductDTO {
         this.baseProduct = baseProduct;
     }
 
-    public Long getProductVariantId() {
-        return productVariantId;
-    }
-
-    public void setProductVariantId(Long productVariantId) {
-        this.productVariantId = productVariantId;
-    }
-
-    public Long[] getProductVariantIds() {
-        return productVariantIds;
-    }
-
-    public void setProductVariantIds(Long[] productVariantIds) {
-        this.productVariantIds = productVariantIds;
-    }
-
     public List<ProductDTO> getBundledProducts() {
         return bundledProducts;
     }
@@ -219,5 +207,21 @@ public class ProductDTO {
 
     public void setMakeBundle(Boolean makeBundle) {
         this.makeBundle = makeBundle;
+    }
+
+    public Product getBaseVariant() {
+        return baseVariant;
+    }
+
+    public void setBaseVariant(Product baseVariant) {
+        this.baseVariant = baseVariant;
+    }
+
+    public List<Product> getVariants() {
+        return variants;
+    }
+
+    public void setVariants(List<Product> variants) {
+        this.variants = variants;
     }
 }

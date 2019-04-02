@@ -21,9 +21,9 @@ public interface ProductService {
     PriceRange priceRange();
 
     Page<Product> getPaginatedProducts(Pageable pageable);
-    Page<Product> getPaginatedProductsByFilter(Long[] catId, Long[] colorIds, Long[] manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
+    Page<Product> getPaginatedProductsByFilter(List<Long> catId, List<Long> colorIds, List<Long> manuIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
-    List<Product> getProductVariants(Long[] variantIds);
+    List<Product> getProductVariants(Product product);
 
     List<Product> togglePromotion(List<ProductDTO> productDTOS);
     List<Product> setSale(List<ProductDTO> productDTOS, Float sale, Date countDown);
