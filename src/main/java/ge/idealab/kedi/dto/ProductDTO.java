@@ -1,7 +1,9 @@
 package ge.idealab.kedi.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.enums.Sex;
 import ge.idealab.kedi.model.product.Product;
@@ -12,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator= ObjectIdGenerators.IntSequenceGenerator.class,
+        property="@id",
+        scope = Product.class)
 public class ProductDTO {
     private Long id;
     private String name;
