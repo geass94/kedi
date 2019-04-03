@@ -1,9 +1,6 @@
 package ge.idealab.kedi.dto;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import ge.idealab.kedi.model.converters.SexConverter;
 import ge.idealab.kedi.model.enums.Sex;
 import ge.idealab.kedi.model.product.Product;
@@ -19,6 +16,7 @@ import java.util.List;
         property="@id",
         scope = ProductDTO.class)
 public class ProductDTO {
+    @JsonProperty("id")
     private Long id;
     private String name;
     private String referenceCode;
@@ -47,7 +45,7 @@ public class ProductDTO {
 
     //  Product Variants
     private Boolean baseProduct = false;
-    private ProductDTO baseVariant;
+    private Long baseVariantId;
     @JsonIgnore
     private List<ProductDTO> variants;
 
@@ -215,12 +213,12 @@ public class ProductDTO {
         this.makeBundle = makeBundle;
     }
 
-    public ProductDTO getBaseVariant() {
-        return baseVariant;
+    public Long getBaseVariantId() {
+        return baseVariantId;
     }
 
-    public void setBaseVariant(ProductDTO baseVariant) {
-        this.baseVariant = baseVariant;
+    public void setBaseVariantId(Long baseVariantId) {
+        this.baseVariantId = baseVariantId;
     }
 
     public List<ProductDTO> getVariants() {

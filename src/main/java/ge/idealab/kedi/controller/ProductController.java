@@ -27,6 +27,7 @@ public class ProductController {
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.getOneByParams(id, size != null ? Long.valueOf(size) : 0L);
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        productDTO.setBaseVariantId(product.getBaseVariant().getId());
 //        if (product.getBundle() != null) {
 //            List<ProductDTO> bundleProducts = this.mapProducts(product.getBundle().getProducts());
 //            productDTO.getBundle().setProducts(bundleProducts);
@@ -50,6 +51,7 @@ public class ProductController {
         for(Product product: productPage.getContent()){
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setProductFiles(mapFiles(product));
+            productDTO.setBaseVariantId(product.getBaseVariant().getId());
             productDTOS.add(productDTO);
         }
 
@@ -144,6 +146,7 @@ public class ProductController {
         for(Product product: products){
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setProductFiles(mapFiles(product));
+            productDTO.setBaseVariantId(product.getBaseVariant().getId());
             productDTOS.add(productDTO);
         }
         return productDTOS;

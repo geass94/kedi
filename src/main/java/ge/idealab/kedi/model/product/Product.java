@@ -22,10 +22,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
-@JsonIdentityInfo(
-        generator=ObjectIdGenerators.IntSequenceGenerator.class,
-        property="@id",
-        scope = Product.class)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Product extends BaseStatusAuditEntity {
 //  Basic information
     @Column
@@ -83,15 +80,13 @@ public class Product extends BaseStatusAuditEntity {
 //  Product Variants
     @Column
     private Boolean baseProduct = false;
-    @ManyToOne(cascade={CascadeType.MERGE})
+    @ManyToOne(cascade={CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name="base_variant_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Product baseVariant;
     @JoinTable(name = "product_variants", joinColumns = {
             @JoinColumn(name = "variant_product_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "base_product_id", referencedColumnName = "id", nullable = false)})
-    @ManyToMany
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> variants = new ArrayList<Product>();
 
 //  Bundles and gifts

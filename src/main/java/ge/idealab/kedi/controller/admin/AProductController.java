@@ -41,7 +41,9 @@ public class AProductController {
     public ResponseEntity<?> addProduct(@RequestBody @Valid ProductDTO productDTO){
         ModelMapper modelMapper = new ModelMapper();
         Product product = productService.create(productDTO);
-        return ResponseEntity.ok(modelMapper.map(product, ProductDTO.class));
+        ProductDTO productDTO1 = modelMapper.map(product, ProductDTO.class);
+        productDTO1.setBaseVariantId(product.getBaseVariant().getId());
+        return ResponseEntity.ok(productDTO1);
     }
 
     @PostMapping(path = "/add-product-file", consumes = {"multipart/form-data"})
@@ -68,7 +70,9 @@ public class AProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Long pid) {
         ModelMapper modelMapper = new ModelMapper();
-        ProductDTO productDTO1 = modelMapper.map(productService.update(productDTO, pid), ProductDTO.class);
+        Product product = productService.update(productDTO, pid);
+        ProductDTO productDTO1 = modelMapper.map(product, ProductDTO.class);
+        productDTO1.setBaseVariantId(product.getBaseVariant().getId());
         return ResponseEntity.ok(productDTO1);
     }
 
@@ -129,6 +133,7 @@ public class AProductController {
         for(Product product: products){
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setProductFiles(mapFiles(product));
+            productDTO.setBaseVariantId(product.getBaseVariant().getId());
             productDTOS.add(productDTO);
         }
         return productDTOS;

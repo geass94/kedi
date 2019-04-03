@@ -44,6 +44,11 @@ public class ProductServiceImpl implements ProductService {
     public Product create(ProductDTO productDTO) {
         ModelMapper modelMapper = new ModelMapper();
         Product product = modelMapper.map(productDTO, Product.class);
+
+        if (productDTO.getBaseVariantId() != null && productDTO.getBaseVariantId() > 0) {
+            product.setBaseVariant(productRepository.getOne(productDTO.getBaseVariantId()));
+        }
+
         if(product.getSize().getId() != null) {
             Size size = sizeRepository.getOne(product.getSize().getId());
             product.setSize(size);
