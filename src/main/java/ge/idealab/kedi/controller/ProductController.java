@@ -1,6 +1,7 @@
 package ge.idealab.kedi.controller;
 
 import ge.idealab.kedi.dto.*;
+import ge.idealab.kedi.exception.ResourceNotFoundException;
 import ge.idealab.kedi.model.product.Product;
 import ge.idealab.kedi.model.product.ProductFile;
 import ge.idealab.kedi.service.ProductService;
@@ -118,7 +119,11 @@ public class ProductController {
 
     @GetMapping("/get-related-products/{pid}")
     public ResponseEntity<?> getRelatedProcust(@PathVariable Long pid) {
-        return ResponseEntity.ok(this.mapProducts(productService.getRealtedProducts(pid)));
+        List<ProductDTO> productDTOS = this.mapProducts(productService.getRealtedProducts(pid));
+        if (productDTOS == null) {
+            throw new ResourceNotFoundException("Products for", "ID", pid);
+        }
+        return ResponseEntity.ok(productDTOS);
     }
 
     @GetMapping("/get-sale-off")
