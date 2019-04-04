@@ -107,6 +107,15 @@ public class ProductController {
         return ResponseEntity.ok(productDTOS);
     }
 
+    @GetMapping("/get-all-bundles")
+    public ResponseEntity<?> getAllBundles() {
+        List<ProductDTO> products = this.mapProducts(productService.getAllBundles());
+        if (products == null) {
+            throw new ResourceNotFoundException("Bundles", "ACTIVE", 0);
+        }
+        return ResponseEntity.ok(products);
+    }
+
     @GetMapping("/get-featured-products")
     public ResponseEntity<?> getFeaturedProducts() {
         return ResponseEntity.ok(this.mapProducts(productService.getFeaturedProducts()));

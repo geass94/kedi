@@ -276,6 +276,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllBundles() {
+        return productRepository.findAllByMakeBundleIsTrueAndStatus(Status.ACTIVE);
+    }
+
+    @Override
     public List<Product> getFeaturedProducts() {
         return productRepository.findByPromotedIsTrueAndStatus(Status.ACTIVE);
     }

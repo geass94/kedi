@@ -36,6 +36,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findDistinctByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndBaseProductIsTrueAndStatus(List<Category> categories, Long id, Status status);
     List<Product> findAllBySaleIsGreaterThanAndStatus(Float sale, Status status);
     List<Product> findAllBySaleIsGreaterThanAndCountDownIsAfterAndMakeBundleIsFalseAndStatus(Float sale, Date countdown, Status status);
+    List<Product> findAllByMakeBundleIsTrueAndStatus(Status status);
 
     @Query("SELECT p FROM Product p WHERE p.sale > :sale AND p.countDown = NULL AND p.status = :status AND p.makeBundle = false ORDER BY RAND() ASC")
     List<Product> findSaleOff(@Param("sale") Float sale, @Param("status") Status status);

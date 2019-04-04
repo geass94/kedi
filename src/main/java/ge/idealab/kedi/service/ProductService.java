@@ -31,6 +31,7 @@ public interface ProductService {
     List<Product> getProductsForBundling();
 
     List<Product> getProductsWithBundles(Long pid);
+    List<Product> getAllBundles();
 
     List<Product> getFeaturedProducts();
     List<Product> getBestSaleProducts();
