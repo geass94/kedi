@@ -293,7 +293,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getRealtedProducts(Long productId) {
         Product product = productRepository.getOne(productId);
-        return productRepository.findDistinctByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
+        return productRepository.findDistinctByCategoryListInAndIdIsNotAndMakeBundleIsFalseAndBaseProductIsFalseAndStatus(product.getCategoryList(), productId, Status.ACTIVE);
     }
 
     @Override
